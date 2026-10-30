@@ -16,10 +16,10 @@ import {
 
 const TOKEN_KEY = 'cokitos_lab_auth_token';
 const USER_KEY = 'cokitos_lab_auth_user';
-const PROJECTS_STORAGE_KEY = 'cokitos_lab_projects_store';
-const LEADS_STORAGE_KEY = 'cokitos_lab_leads_store';
-const TASKS_STORAGE_KEY = 'cokitos_lab_tasks_store';
-const SETTINGS_STORAGE_KEY = 'cokitos_lab_settings_store';
+const PROJECTS_STORAGE_KEY = 'cokitos_lab_projects_v2';
+const LEADS_STORAGE_KEY = 'cokitos_lab_leads_v2';
+const TASKS_STORAGE_KEY = 'cokitos_lab_tasks_v2';
+const SETTINGS_STORAGE_KEY = 'cokitos_lab_settings_v2';
 
 function getStoredList<T>(key: string, fallback: T[]): T[] {
   if (typeof window === 'undefined') return fallback;

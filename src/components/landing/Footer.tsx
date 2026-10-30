@@ -107,28 +107,138 @@ export const Footer: React.FC<FooterProps> = ({
             </div>
 
             {/* Configurable Contact Information */}
-            <div className="lg:col-span-4">
+            {/* Configurable Contact Information & Global Hubs */}
+            <div className="lg:col-span-5">
               <span className="font-mono text-xs uppercase tracking-wider text-[#0B1F2D] block mb-2 font-bold">
-                {t.contactTitle}
+                {t.contactTitle} & Hubs Globales
               </span>
-              <ul className="space-y-2 text-xs">
-                <li className="flex items-center gap-2.5 text-[#1E3A52]">
-                  <Mail className="w-3.5 h-3.5 text-[#009bb3] shrink-0" />
-                  <a href={`mailto:${contactEmail}`} className="hover:text-[#009bb3] transition-colors font-mono font-medium">
-                    {contactEmail}
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5 text-[#1E3A52] font-mono">
-                  <Phone className="w-3.5 h-3.5 text-[#00897B] shrink-0" />
-                  <span>{contactPhone}</span>
-                </li>
-                <li className="flex items-center gap-2.5 text-[#1E3A52] font-mono">
-                  <MapPin className="w-3.5 h-3.5 text-[#009bb3] shrink-0" />
-                  <span>{location}</span>
-                </li>
-              </ul>
 
-              <div className="mt-3 pt-2 border-t border-[#CCE8F6]">
+              {/* Central Contact Coordinates */}
+              <div className="mb-3 p-2.5 rounded-lg bg-white border border-[#BCE4F7] text-xs space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase font-bold text-[#00897B] tracking-wider">
+                    Coordinación Global Central
+                  </span>
+                  <a
+                    href="https://wa.me/584224612534"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-[10px] font-mono font-bold text-[#00897B] hover:text-[#00D9F5] transition-colors"
+                  >
+                    WhatsApp Global: +58 422 461 2534
+                  </a>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[#1E3A52]">
+                  <a href={`mailto:${contactEmail}`} className="hover:text-[#009bb3] transition-colors font-mono font-medium flex items-center gap-1.5">
+                    <Mail className="w-3 h-3 text-[#009bb3] shrink-0" />
+                    <span>{contactEmail}</span>
+                  </a>
+                  <span className="font-mono text-[11px] text-[#64748B]">
+                    Web: cokitos-lab-international.vercel.app
+                  </span>
+                </div>
+              </div>
+
+              {/* 3 Regional Hubs & Representatives */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {/* Hub Francia */}
+                <div className="p-2 rounded bg-white border border-[#CDE9F7] text-[11px] flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1 font-bold text-[#0B1F2D] mb-0.5">
+                      <span>🇫🇷</span>
+                      <span>Hub Francia</span>
+                    </div>
+                    <div className="text-[#00897B] font-mono font-semibold text-[10px]">
+                      Morice Mojica
+                    </div>
+                    <div className="text-[#64748B] font-mono text-[10px]">
+                      +33 (77) 4853604
+                    </div>
+                  </div>
+                  <div className="mt-2 pt-1 border-t border-[#EAF6FD] flex items-center justify-between">
+                    <a
+                      href="https://wa.me/33774853604"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-mono font-bold text-[#009bb3] hover:underline"
+                    >
+                      WhatsApp ↗
+                    </a>
+                    <a
+                      href="mailto:cokito.int@gmail.com"
+                      className="text-[10px] font-mono text-[#64748B] hover:text-[#009bb3]"
+                    >
+                      Email
+                    </a>
+                  </div>
+                </div>
+
+                {/* Hub Venezuela */}
+                <div className="p-2 rounded bg-white border border-[#CDE9F7] text-[11px] flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1 font-bold text-[#0B1F2D] mb-0.5">
+                      <span>🇻🇪</span>
+                      <span>Hub Venezuela</span>
+                    </div>
+                    <div className="text-[#00897B] font-mono font-semibold text-[10px]">
+                      Ana T. Sandoval
+                    </div>
+                    <div className="text-[#64748B] font-mono text-[10px]">
+                      +58 (422) 4612534
+                    </div>
+                  </div>
+                  <div className="mt-2 pt-1 border-t border-[#EAF6FD] flex items-center justify-between">
+                    <a
+                      href="https://wa.me/584224612534"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-mono font-bold text-[#009bb3] hover:underline"
+                    >
+                      WhatsApp ↗
+                    </a>
+                    <a
+                      href="mailto:cokito.vzla@gmail.com"
+                      className="text-[10px] font-mono text-[#64748B] hover:text-[#009bb3]"
+                    >
+                      Email
+                    </a>
+                  </div>
+                </div>
+
+                {/* Hub USA */}
+                <div className="p-2 rounded bg-white border border-[#CDE9F7] text-[11px] flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center gap-1 font-bold text-[#0B1F2D] mb-0.5">
+                      <span>🇺🇸</span>
+                      <span>Hub USA</span>
+                    </div>
+                    <div className="text-[#00897B] font-mono font-semibold text-[10px]">
+                      Antonio Fuentes
+                    </div>
+                    <div className="text-[#64748B] font-mono text-[10px]">
+                      +1 (424) 3462359
+                    </div>
+                  </div>
+                  <div className="mt-2 pt-1 border-t border-[#EAF6FD] flex items-center justify-between">
+                    <a
+                      href="https://wa.me/14243462359"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-mono font-bold text-[#009bb3] hover:underline"
+                    >
+                      WhatsApp ↗
+                    </a>
+                    <a
+                      href="mailto:cokito.int@gmail.com"
+                      className="text-[10px] font-mono text-[#64748B] hover:text-[#009bb3]"
+                    >
+                      Email
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-2 border-t border-[#CCE8F6] flex items-center justify-between">
                 <button
                   onClick={() => {
                     trackSectionNavigation('/admin', 'footer_admin_link');
@@ -139,6 +249,9 @@ export const Footer: React.FC<FooterProps> = ({
                   <Lock className="w-3 h-3" />
                   <span>{t.crmLink}</span>
                 </button>
+                <span className="text-[10px] font-mono text-[#64748B]">
+                  Sede Virtual • Cokito’s Lab
+                </span>
               </div>
             </div>
 

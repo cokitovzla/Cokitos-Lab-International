@@ -52,12 +52,13 @@ class DatabaseManager {
       if (fs.existsSync(DB_PATH)) {
         const raw = fs.readFileSync(DB_PATH, 'utf-8');
         const parsed = JSON.parse(raw);
+        const hasOldMocks = !parsed.projects || parsed.projects.some((p: any) => p.id === 'proj_01' || p.id === 'proj_02');
         return {
           leads: parsed.leads || initialLeads,
           tasks: parsed.tasks || initialTasks,
-          projects: parsed.projects || initialProjects,
-          users: parsed.users || initialUsers,
-          settings: parsed.settings || initialSettings,
+          projects: hasOldMocks ? initialProjects : parsed.projects,
+          users: initialUsers,
+          settings: hasOldMocks || !parsed.settings?.hubs ? initialSettings : parsed.settings,
           activityLog: parsed.activityLog || [],
         };
       }

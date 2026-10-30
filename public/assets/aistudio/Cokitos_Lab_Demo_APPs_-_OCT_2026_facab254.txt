@@ -1,0 +1,209 @@
+Aqui esta la pagina de Cokito's Lab
+cokitos-lab-international.vercel.app
+El WhatsApp para Cokito deberìa ser: +584224612534
+El correo: cokito.int@gmail.com para el resto del mundo y cokito.vzla@gmail.com
+
+Ahora, en cada región tenemos un representante.
+En Francia, tenemos a 
+Morice Mojica
+Tel: +33 (77) 4853604 | cokito.int@gmail.com | WhatsApp: +33774853604
+
+En Venezuela, tenemos a:
+Ana Teresa Sandoval
+Tel: +58 (422) 4612534 | cokito.vzla@gmail.com | WhatsApp: +584224612534
+
+En USA, tenemos a:
+Antonio Fuentes
+Tel: +1 (424) 3462359 | cokito.int@gmail.com | WhatsApp: +14243462359
+
+------------------------------------------------------------------------------------------
+En cuanto al ambito legal:
+
+LISTO - Cokito's Lab - LegalTech - WebPage + CRM básico - Versión Alfa
+Se llama: BinLegal - Asesoría Legal Estratégica PYME
+bin-legal-beta-2-0.vercel.app
+
+Nombre del proyecto: BinLegal - Plataforma Web & CRM Operativo Legal
+Cliente o caso de uso: BinLegal (Despacho legal liderado por José Rafael Vásquez)
+Categoría: Plataforma Web
+Estado actual: pruebas
+Descripción directa: Plataforma web modular orientada a PYMEs que integra diagnóstico interactivo de riesgos corporativos con un CRM operativo centralizado para gestión de leads y expedientes legales. Permite captar solicitudes estructuradas en tiempo real y gestionarlas bajo un panel administrativo protegido con control de acceso por clave.
+Impacto o métrica clave: Reducción del tiempo de calificación de prospectos a menos de 24 horas y centralización 100% digital de solicitudes legales sin burocracia documental.
+Tags técnicos: React 19, TypeScript, Tailwind CSS, Vite, Firebase Firestore, Lucide Icons, SPA Routing
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Landing page de alta conversión con diagnóstico legal preventivo y asistente virtual Mr. Bin - Listo
+Conexión directa y persistente del formulario público con la base de datos Firestore y CRM - Listo
+Control de acceso y pasarela de seguridad por PIN para el panel administrativo - Listo
+Sincronización en tiempo real y portal de clientes para seguimiento de expedientes - En progreso
+
+-----------------------------------------------
+LISTO - Cokito's Lab - LegalTech - WebPage + CRM - Versión Beta
+Se llama: Cokito's Lab Demo | Legal + CRM | Beta 2.0
+cl-demo-legal-crm-beta-2-0.vercel.app
+Nombre del proyecto: LegalTech Suite & CRM Operativo (Cokito's Lab International)
+Cliente o caso de uso: Demostrador comercial y prototipo operativo para despachos jurídicos (Caso JurisNova)
+Categoría: CRM & Operaciones
+Estado actual: pruebas
+Descripción directa (1 o 2 oraciones): Plataforma web multilingüe que automatiza la captación y evaluación preliminar de consultas legales, sincronizándolas en tiempo real con un panel CRM administrativo para la gestión de prospectos, notas internas y expedientes procesales.
+Impacto o métrica clave: Centralización del 100% de solicitudes entrantes, reducción estimada del 70% en tiempos de triaje manual y cobertura operativa en 6 idiomas europeos.
+Tags técnicos: React 18, TypeScript, Tailwind CSS, Firebase Firestore, Vite, React Portals, Lucide Icons
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Arquitectura web multilingüe (ES, FR, EN, IT, DE, PT) y navegación móvil desacoplada mediante React Portals - Listo
+Panel CRM administrativo en tiempo real con pipeline de prospectos, notas internas y expedientes - Listo
+Asistente virtual judicial "Astro" con respuestas dinámicas y redirección a canales de atención - Listo
+Sincronización multi-rol de clientes y abogados en base de datos central - En progreso
+
+-----------------------------------------------
+Cokito's Lab - LegalTech - WebPage + CRM - Versión Omega
+Se llamará: Cokito's Lab Demo | Legal + CRM | Omega 1.0
+Esta versiòn aun está en desarrollo dentro del laboratorio pero tan pronto esté publica, actualizamos el link. 
+
+Nombre del proyecto: CRM Legal Omega
+Cliente o caso de uso: Demo de despacho jurídico ficticio de Cokito’s Lab
+Categoría: CRM & Operaciones
+Estado actual: en_desarrollo
+Descripción directa (1 o 2 oraciones): Centraliza el primer contacto con clientes, el seguimiento de solicitudes y la gestión de trámites y tareas legales. Permite organizar responsables, agenda y contactos según el trabajo asignado.
+Impacto o métrica clave: Centralización de solicitudes, trámites, tareas y contactos en un solo entorno.
+Tags técnicos: React, TypeScript, Vite, Tailwind CSS, Firebase
+3 a 4 hitos clave (indicando si están listos o en progreso):- Gestión y seguimiento de solicitudes - Listo
+- Vistas de lista y tarjetas en las áreas de trabajo - Listo
+- Gestión de trámites, tareas y responsables - En progreso
+- Identidad ficticia y web internacional multilingüe - En progreso
+
+
+
+------------------------------------------------------------------------------------------
+En cuanto al ambito de Idiomas:
+Tenemos a Guakytopia que es mi plataforma de enseñanza del idioma inglés:
+
+LISTO Güakytopia • Open the World. Start where you are. Keep going. | Beta 2.0
+https://guakytopia-beta-2-0.vercel.app/
+
+Nombre del proyecto: Güakytopia (Guakytopia) - Ecosistema Digital de Aprendizaje de Inglés
+Cliente o caso de uso: Interno de Cokito's Lab / Academia de Inglés de Teacher Cokitö (Ana T Sandoval)
+Categoría: Plataforma Web
+Estado actual: pruebas
+Descripción directa (1 o 2 oraciones): Plataforma web interactiva para la gestión de admisiones, evaluación diagnóstica de nivel, agendamiento y cobros automatizados de cursos de inglés. Centraliza el progreso pedagógico de los alumnos bajo un entorno confidencial con aula virtual, biblioteca de recursos y gamificación integrada.
+Impacto o métrica clave: Centralización de cobros multimoneda (PayPal Business internacional y Pago Móvil tasa oficial BCV) y automatización del 100% del diagnóstico de nivel y perfilado de alumnos.
+Tags técnicos: React, TypeScript, Tailwind CSS, Vite, PayPal SDK, Firebase Firestore, Schema.org JSON-LD, SEO Técnico, Canvas Confetti
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Pasarela de cobro dual (PayPal Business y Pago Móvil con tasa BCV en tiempo real) y flujo de identificación obligatoria de estudiantes - Listo
+Motor de prueba diagnóstica de nivel (50 preguntas) con evaluación automática, persistencia en perfil y protección ante reinicio - Listo
+Optimización SEO dual para posicionamiento unificado de "Güakytopia" y "Guakytopia" (Meta tags, Schema.org JSON-LD, Robots.txt y Sitemap.xml) - Listo
+Campus virtual gamificado con aula en vivo, biblioteca académica y control de privacidad confidencial - Listo
+------------------------------------------------------------------------------------------
+En cuanto al ambito del Training, tenemos una que estamos desarrollando para atletas en Venezuela.
+Se llama: Wetto's Training App | Beta 2.0
+https://wettos-app-beta20.vercel.app/
+
+Nombre del proyecto: Wetto Training App
+Cliente o caso de uso: Cokito's Lab / Atletas y Entrenadores de Resistencia
+Categoría: Plataforma Web
+Estado actual: pruebas
+Descripción directa (1 o 2 oraciones): Plataforma web progresiva para atletas de resistencia y multideporte que centraliza el registro de entrenamientos, métricas de recuperación, cálculo de capacidades físicas y planificación hacia competencias objetivo.
+Impacto o métrica clave: Centralización integral del historial deportivo, control de acceso basado en roles y automatización del cálculo de ritmos y metas sin depender de hojas de cálculo dispersas.
+Tags técnicos: React 19, TypeScript, Vite, Tailwind CSS, Firebase Auth, Cloud Firestore, Vitest, PWA
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Motor de capacidades por disciplina, validadores y formulación de objetivos - Listo
+Aislamiento de sesiones en modo invitado y control de acceso seguro por roles (RBAC) - Listo
+Registro e historial de entrenamientos multideporte sincronizado con Firestore - Listo
+Habilitación de acceso por correo/contraseña y sincronización con entrenadores múltiples - En progreso
+------------------------------------------------------------------------------------------
+En cuanto a servicios para comercios, tenemos una plataforma de fidelizacion del cliente:
+Se lama: Apetöy 2.0 — Disfrüta → Compärte → Multiplïca | Beta 2.0
+https://apetoy-beta-2-0.vercel.app/
+
+Nombre del proyecto: Apetöy - Ecosistema de Fidelización & Recompensas Multicomercio
+Cliente o caso de uso: Red de Comercios Aliados de Caracas / Apetöy Club (Iniciativa Cökitö's Lab)
+Categoría: Plataforma Web
+Estado actual: en_desarrollo
+Descripción directa: Plataforma web de fidelización y liquidación cruzada que digitaliza facturas fiscales SENIAT mediante OCR, permitiendo transferir recompensas entre comercios y transformar consumos individuales en inteligencia de mercado detallada ítem por ítem bajo aislamiento estricto de datos.
+Impacto o métrica clave: Centralización y trazabilidad del 100% de los hábitos de consumo por ítem sin filtración de datos entre competidores, eliminando el fraude en puntos mediante respaldo fiscal y garantía digital.
+Tags técnicos: React, TypeScript, Tailwind CSS, Vite, Lucide Icons, Web Audio API, Simulación OCR, State Management
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Terminal de Cobro POS con validación de factura fiscal SENIAT, escaneo OCR de ítems y prevención antifraude - Listo
+Wallet del Cliente y Pasaporte de Beneficios con visor de garantías digitales y canje de saldos - Listo
+Directorio CRM y segmentación por hábitos/clusters caraqueños con aislamiento de privacidad - Listo
+Motor de vencimiento rodante de puntos a 12 meses con inmunidad para rango Royal - En progreso
+
+------------------------------------------------------------------------------------------
+En cuanto a RRHH, tenemos una plataforma que estamos desarrollando para Francia, Agir Ensemble:
+Se llama: Agir Ensemble Arles-sur-Tech. Tous droits réservés · Architecture SaaS multi-agences | Alfa 1.0
+https://agir-ensemble-nine.vercel.app/
+
+Nombre del proyecto: Agir Ensemble — Plateforme d'Intervention & Gestion Solidaire
+Cliente o caso de uso: Agir Ensemble (Asociación de inserción laboral y servicios a domicilio en Arles-sur-Tech / Haut-Vallespir, Francia)
+Categoría: Software a Medida
+Estado actual: pruebas
+Descripción directa: Plataforma web dual (modo estándar y modo simplificado para adultos mayores) que digitaliza las solicitudes de servicios de jardinería, limpieza y mantenimiento del hogar, automatizando la inspección de insumos mediante visión artificial y optimizando la coordinación operativa de la secretaría y los trabajadores de campo.
+Impacto o métrica clave: Eliminación del 100% de los desplazamientos previos de supervisión gracias a la auditoría fotográfica con IA, reducción del tiempo de asignación y gestión de presupuestos de horas a minutos, y centralización del control de cobros manuales (cheques/transferencias).
+Tags técnicos: React, TypeScript, Tailwind CSS, Google Cloud Firestore, Gemini AI Vision, Vite, PWA
+3 a 4 hitos clave (indicando si están listos o en progreso):
+Catálogo de 17 servicios oficiales con cotización dinámica, cesta multi-prestación, estimación de superficie y solicitud de vehículo utilitario - Listo
+Asistente accesible con modo adaptado a la tercera edad y escaneo inteligente de insumos/herramientas vía IA - Listo
+Panel de coordinación para secretaría con asignación en binôme/equipo, escalado automático de propuestas y control de pagos offline (cheques) - Listo
+Portal de campo para empleados con registro de hitos de servicio en tiempo real y aviso de compañeros/vehículo - Listo
+
+
+
+------------------------------------------------------------------------------------------
+PROMPT PARA LLENAR EN CADA MVP:
+
+Actúa como líder técnico de este proyecto. Necesito una ficha técnica resumida y directa para incorporarla al portafolio y CRM central de Cokito's Lab. 
+
+Por favor, responde ÚNICAMENTE con este formato exacto:
+
+- Nombre del proyecto: [Nombre claro de la aplicación]
+- Cliente o caso de uso: [Nombre de la empresa, cliente o si es interno de Cokito's Lab]
+- Categoría: [Software a Medida | Automatización | CRM & Operaciones | Plataforma Web | Inteligencia de Negocios]
+- Estado actual: [en_desarrollo | pruebas | entregado]
+- Descripción directa (1 o 2 oraciones): [Qué problema resuelve o qué hace el sistema, sin relleno de marketing]
+- Impacto o métrica clave: [Ej: Ahorro de horas, centralización de datos, automatización de pedidos, etc.]
+- Tags técnicos: [Ej: React, TypeScript, APIs, Tailwind, etc.]
+- 3 a 4 hitos clave (indicando si están listos o en progreso):
+  * [Hito 1] - [Listo / En progreso]
+  * [Hito 2] - [Listo / En progreso]
+  * [Hito 3] - [Listo / En progreso]
+
+----------------------------------------------------------------------------------------
+PROMPT PARA EL BANNER EN CADA MVP:
+
+Por favor, agrega o actualiza al final del Footer (justo antes o encima de la línea de copyright/derechos reservados) el banner unificado de autoría y créditos de Cokito's Lab con el siguiente diseño, formato y enlaces:
+Estructura y Estilo Visual:
+Contenedor con borde superior sutil, tarjeta con bordes redondeados (rounded-xl), fondo degradado muy claro (from-emerald-50/70 via-white to-teal-50/60), borde esmeralda (border border-emerald-300/80) y padding compacto (px-3.5 py-2.5 sm:px-4 sm:py-3).
+A la izquierda:
+Insignia estilo tabla periódica de los elementos: fondo degradado oscuro de laboratorio (from-emerald-600 via-teal-900 to-slate-950), borde esmeralda neón (border-emerald-400), resplandor atómico (shadow-[0_0_12px_rgba(16,185,129,0.35)]), número atómico "31" arriba a la izquierda, símbolo en mayúsculas "CL" en el centro y "LAB" en la parte inferior. Debe ser clickeable y dirigir a https://cokitos-lab-international.vercel.app.
+Texto en 2 líneas exactas:
+Línea 1: «Esta solución tecnológica fue desarrollada por Cokito's Lab» (con "Cokito's Lab" como enlace a https://cokitos-lab-international.vercel.app en color esmeralda negrita).
+Línea 2: «¿Quieres una plataforma a la medida para tu negocio? ¡Tú también puedes tener la tuya!»
+A la derecha (2 botones de acción):
+Botón 1 (Web Oficial): Estilo minimalista blanco/esmeralda con icono Globe y ExternalLink hacia https://cokitos-lab-international.vercel.app.
+Botón 2 (WhatsApp Lab): Estilo temático científico "Breaking Bad x El Laboratorio de Dexter": fondo negro/esmeralda profundo (bg-gradient-to-r from-slate-950 via-[#03241b] to-slate-950), borde esmeralda neón (border-2 border-emerald-400/90), matraz FlaskConical de Lucide con líquido lima (text-lime-400), punto titilante verde (animate-pulse) y texto «¡Quiero mi plataforma!».
+REGLA CRÍTICA DE MENSAJE DINÁMICO DE WHATSAPP:
+El enlace de WhatsApp debe dirigirse al número: +584224612534
+IMPORTANTE: En el parámetro text= de la URL de WhatsApp debes incluir dinámicamente el nombre de ESTE proyecto/empresa actual codificado en URL. Ejemplo:
+https://wa.me/584224612534?text=Hola%20Cokito%27s%20Lab,%20vi%20la%20plataforma%20de%20[INSERTAR_NOMBRE_DEL_PROYECTO_AQUÍ]%20y%20quiero%20crear%20una%20soluci%C3%B3n%20tecnol%C3%B3gica%20para%20mi%20empresa
+Conserva intacto el resto del diseño y funcionalidad de la página existente.
+Y por favor segurate que el banner que acabamos de integrar de Cokito's Lab, por favor estè en orden con el diseño de pagina, que no haga constraste. Usa el color de fondo que mejor le vaya
+Y en la mejor posición, bien sea arriba del Footer actual o debajo, peor yo creo que es mejor siempre arriba.
+
+FR:
+Por favor, agrega o actualiza al final del Footer de esta aplicación el banner unificado de autoría y créditos de Cokito's Lab. Dado que este sitio web está en francés, adapta todos los textos del banner y el mensaje de WhatsApp al idioma francés de la siguiente manera:
+
+1. Estructura y Estilo Visual:
+- Contenedor con borde superior sutil, tarjeta con bordes redondeados (`rounded-xl`), fondo degradado muy claro (`from-emerald-50/70 via-white to-teal-50/60`), borde esmeralda (`border border-emerald-300/80`) y padding compacto (`px-3.5 py-2.5 sm:px-4 sm:py-3`).
+- A la izquierda:
+  * Insignia estilo tabla periódica de los elementos: fondo degradado oscuro de laboratorio (`from-emerald-600 via-teal-900 to-slate-950`), borde esmeralda neón (`border-emerald-400`), resplandor atómico (`shadow-[0_0_12px_rgba(16,185,129,0.35)]`), número atómico "31" arriba a la izquierda, símbolo en mayúsculas "CL" en el centro y "LAB" en la parte inferior. Dirige a https://cokitos-lab-international.vercel.app.
+  * Texto en 2 líneas exactas en francés:
+    - Línea 1: «Cette solution technologique a été développée par Cokito's Lab» (con "Cokito's Lab" como enlace a https://cokitos-lab-international.vercel.app en color esmeralda negrita).
+    - Línea 2: «Vous souhaitez une plateforme sur mesure pour votre entreprise ? Obtenez la vôtre !»
+- A la derecha (2 botones de acción):
+  * Botón 1 (Web Oficial): Texto «Site Officiel» con iconos Globe y ExternalLink hacia https://cokitos-lab-international.vercel.app.
+  * Botón 2 (WhatsApp Lab): Estilo temático científico "Breaking Bad x El Laboratorio de Dexter": fondo negro/esmeralda profundo (`bg-gradient-to-r from-slate-950 via-[#03241b] to-slate-950`), borde esmeralda neón (`border-2 border-emerald-400/90`), matraz `FlaskConical` de Lucide con líquido lima (`text-lime-400`), punto titilante verde (`animate-pulse`) y texto en francés «Créer ma plateforme !».
+
+2. MENSAJE EN FRANCÉS PARA WHATSAPP:
+- El enlace de WhatsApp debe dirigirse al número: +584224612534
+- El texto codificado debe incluir el nombre de ESTE proyecto/empresa en francés:
+  `https://wa.me/584224612534?text=Bonjour%20Cokito%27s%20Lab,%20j%27ai%20vu%20la%20plateforme%20de%20[INSERTAR_NOMBRE_DEL_PROYECTO_AQUÍ]%20et%20je%20souhaite%20cr%C3%A9er%20une%20solution%20technologique%20pour%20mon%20entreprise`
+
+Conserva intacto el resto del diseño y funcionalidad de la página existente.

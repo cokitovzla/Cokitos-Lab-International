@@ -96,13 +96,15 @@ export interface Project {
   company?: string;
   description: string;
   status: ProjectStatus;
+  releasePhase?: string; // Uniform release phase: 'BETA 2.0', 'OMEGA DEMO', etc.
   assignedLead: string;
   startDate: string;
   targetDate?: string;
   milestones: ProjectMilestone[];
   internalNotes?: string;
   visibleOnLanding: boolean;
-  category: string;
+  category: string; // Primary category for display
+  categories?: string[]; // Global categories for multi-category matching
   outcomeMetric?: string;
   tags: string[];
   demoUrl?: string;

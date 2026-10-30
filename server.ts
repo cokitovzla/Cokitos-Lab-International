@@ -316,6 +316,7 @@ app.post('/api/projects', authMiddleware, (req: Request, res: Response) => {
     company,
     description: description || '',
     status: status || 'planificacion',
+    releasePhase: req.body.releasePhase || 'BETA 2.0',
     assignedLead: assignedLead || 'Director Cokito',
     startDate: startDate || new Date().toISOString().split('T')[0],
     targetDate,
@@ -323,6 +324,7 @@ app.post('/api/projects', authMiddleware, (req: Request, res: Response) => {
     internalNotes,
     visibleOnLanding: !!visibleOnLanding,
     category: category || 'Software a Medida',
+    categories: Array.isArray(req.body.categories) ? req.body.categories : [category || 'Software a Medida'],
     outcomeMetric,
     tags: Array.isArray(tags) ? tags : ['Tecnología'],
   });

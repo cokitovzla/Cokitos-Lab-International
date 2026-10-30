@@ -24,9 +24,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ currentUser }) => {
     descriptor: 'Laboratorio de innovación y tecnología aplicada',
     slogan: 'Menos caos. Automatiza. Escala.',
     philosophy: 'Transformamos ideas en sistemas que funcionan.',
-    contactEmail: 'contacto@cokitoslab.com',
-    contactPhone: '+58 412 000 0000',
-    location: 'Laboratorio Virtual & Operaciones Remotas',
+    contactEmail: 'cokito.int@gmail.com',
+    contactPhone: '+58 422 461 2534',
+    location: 'Francia 🇫🇷 • Venezuela 🇻🇪 • USA 🇺🇸',
     activeInquiries: true,
   });
 
@@ -184,6 +184,74 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ currentUser }) => {
           </button>
         </div>
       </form>
+
+      {/* Hubs Globales de Cokito's Lab */}
+      <div className="p-6 sm:p-8 rounded-2xl bg-[#081722] border border-[#16364d] space-y-4">
+        <div className="flex items-center justify-between pb-4 border-b border-[#143247]">
+          <div className="flex items-center gap-2 text-[#00D9F5]">
+            <Building2 className="w-5 h-5" />
+            <h3 className="text-base font-bold text-[#F5FBFF]">
+              Hubs Internacionales & Representaciones Regionales
+            </h3>
+          </div>
+          <span className="text-xs font-mono text-[#00E3B2]">
+            3 Sedes Operativas
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 rounded-xl bg-[#0B1F2D] border border-[#16364d] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-lg">🇫🇷</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#143247] text-[#00D9F5] uppercase">
+                Hub Europa
+              </span>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-[#F5FBFF]">Morice Mojica</h4>
+              <p className="text-xs font-mono text-[#00D9F5]">+33 (77) 4853604</p>
+              <p className="text-xs font-mono text-[#F5FBFF]/60">cokito.int@gmail.com</p>
+            </div>
+            <p className="text-[11px] text-[#F5FBFF]/70 pt-2 border-t border-[#143247]">
+              París / Occitania. Operaciones europeas, desarrollo SaaS y LegalTech.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#0B1F2D] border border-[#16364d] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-lg">🇻🇪</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00E3B2]/20 text-[#00E3B2] uppercase font-bold">
+                Hub Suramérica (Principal)
+              </span>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-[#F5FBFF]">Ana Teresa Sandoval</h4>
+              <p className="text-xs font-mono text-[#00E3B2]">+58 (422) 4612534</p>
+              <p className="text-xs font-mono text-[#F5FBFF]/60">cokito.vzla@gmail.com</p>
+            </div>
+            <p className="text-[11px] text-[#F5FBFF]/70 pt-2 border-t border-[#143247]">
+              Caracas. Captación regional, coordinación EdTech (Güakytopia) y retail.
+            </p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-[#0B1F2D] border border-[#16364d] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-lg">🇺🇸</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#143247] text-[#00D9F5] uppercase">
+                Hub Norteamérica
+              </span>
+            </div>
+            <div>
+              <h4 className="text-sm font-bold text-[#F5FBFF]">Antonio Fuentes</h4>
+              <p className="text-xs font-mono text-[#00D9F5]">+1 (424) 3462359</p>
+              <p className="text-xs font-mono text-[#F5FBFF]/60">cokito.int@gmail.com</p>
+            </div>
+            <p className="text-[11px] text-[#F5FBFF]/70 pt-2 border-t border-[#143247]">
+              Los Ángeles / Remoto. Expansión internacional, SportsTech y automatización.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Authorized Staff & Roles */}
       <div className="p-6 sm:p-8 rounded-2xl bg-[#081722] border border-[#16364d] space-y-4">

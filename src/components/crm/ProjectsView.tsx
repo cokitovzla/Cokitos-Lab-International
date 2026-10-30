@@ -110,6 +110,8 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
         ],
         visibleOnLanding,
         category,
+        categories: [category, 'CRM & Operaciones'],
+        releasePhase: 'BETA 2.0',
         outcomeMetric: outcomeMetric.trim() || undefined,
         tags: [category.split(' ')[0], 'Producción'],
       });
@@ -220,7 +222,12 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                       className="hover:bg-[#EAF6FD] transition-all cursor-pointer group"
                     >
                       <td className="py-3 px-4 font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
-                        <div>{proj.name}</div>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[9px] font-mono px-1.5 py-0.5 rounded font-extrabold uppercase bg-[#0B1F2D] text-[#00D9F5]">
+                            {proj.releasePhase || 'BETA 2.0'}
+                          </span>
+                          <span>{proj.name}</span>
+                        </div>
                         {proj.outcomeMetric && (
                           <div className="text-[10px] font-mono text-[#00897B] font-bold flex items-center gap-1 mt-0.5">
                             <Sparkles className="w-3 h-3" />
@@ -330,22 +337,27 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                     </button>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#F5FBFF] group-hover:text-[#00D9F5] transition-colors mb-1">
-                    {project.name}
-                  </h3>
-                  <p className="text-[11px] font-mono text-[#F5FBFF]/60 mb-2">
+                  <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded font-extrabold uppercase bg-[#0B1F2D] text-[#00D9F5]">
+                      {project.releasePhase || 'BETA 2.0'}
+                    </span>
+                    <h3 className="text-base font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
+                      {project.name}
+                    </h3>
+                  </div>
+                  <p className="text-[11px] font-mono text-[#64748B] mb-2">
                     Cliente: {project.company || project.clientName}
                   </p>
-                  <p className="text-xs text-[#F5FBFF]/75 line-clamp-2 leading-relaxed mb-4">
+                  <p className="text-xs text-[#1E3A52] line-clamp-2 leading-relaxed mb-4">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-[#143247] flex items-center justify-between text-xs font-mono">
+                <div className="pt-3 border-t border-[#D0EBF7] flex items-center justify-between text-xs font-mono">
                   <span className={`px-2 py-0.5 rounded border text-[10px] ${statusInfo.style}`}>
                     {statusInfo.label}
                   </span>
-                  <span className="text-[#00D9F5] font-bold tabular-nums">
+                  <span className="text-[#009bb3] font-bold tabular-nums">
                     {doneMilestones}/{totalMilestones} Hitos
                   </span>
                 </div>
@@ -361,7 +373,12 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
           <div className="w-full max-w-2xl bg-[#0B1F2D] border border-[#00D9F5]/40 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-[#143247] mb-3">
               <div>
-                <span className="text-xs font-mono text-[#00D9F5]">{selectedProject.category}</span>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs font-mono text-[#00D9F5]">{selectedProject.category}</span>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded font-extrabold uppercase bg-[#143247] text-[#00D9F5] border border-[#00D9F5]/30">
+                    {selectedProject.releasePhase || 'BETA 2.0'}
+                  </span>
+                </div>
                 <h3 className="text-lg font-bold text-[#F5FBFF]">{selectedProject.name}</h3>
                 <p className="text-xs font-mono text-[#F5FBFF]/60">Cliente: {selectedProject.clientName}</p>
               </div>

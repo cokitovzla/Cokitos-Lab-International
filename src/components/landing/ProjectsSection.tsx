@@ -31,11 +31,17 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
     loadProjects();
   }, []);
 
-  const categories = ['all', ...Array.from(new Set(projects.map(p => p.category)))];
+  // Extract all distinct global categories across projects
+  const allAvailableCategories = Array.from(
+    new Set(
+      projects.flatMap(p => (p.categories && p.categories.length > 0 ? p.categories : [p.category]))
+    )
+  );
+  const categories = ['all', ...allAvailableCategories];
 
   const filteredProjects = activeCategory === 'all'
     ? projects
-    : projects.filter(p => p.category === activeCategory);
+    : projects.filter(p => (p.categories ? p.categories.includes(activeCategory) : p.category === activeCategory));
 
   const statusLabels: Record<string, { label: string; color: string }> = {
     planificacion: { 
@@ -117,7 +123,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {filteredProjects.map((project) => {
               const statusInfo = statusLabels[project.status] || {
                 label: project.status,
@@ -145,23 +151,32 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
                   />
 
                   <div>
-                    {/* Lab Origin Seal */}
-                    <div className="flex items-center gap-1.5 mb-2.5 pb-2 border-b border-[#E0F2FE]">
-                      <FlaskConical className="w-3.5 h-3.5 text-[#00897B]" />
-                      <span className="text-[10px] font-mono tracking-wider uppercase text-[#0B1F2D] font-bold">
-                        Proyecto del Laboratorio de Cokito’s Lab
+                    {/* Lab Origin Seal & Uniform Release Phase Pill */}
+                    <div className="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-[#E0F2FE]">
+                      <div className="flex items-center gap-1.5 overflow-hidden">
+                        <FlaskConical className="w-3.5 h-3.5 text-[#00897B] shrink-0" />
+                        <span className="text-[10px] font-mono tracking-wider uppercase text-[#0B1F2D] font-bold truncate">
+                          Proyecto del Laboratorio de Cokito’s Lab
+                        </span>
+                      </div>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded font-extrabold uppercase tracking-wider bg-[#0B1F2D] text-[#00D9F5] border border-[#00D9F5]/40 shrink-0 shadow-2xs">
+                        {project.releasePhase || 'BETA 2.0'}
                       </span>
                     </div>
 
-                    {/* Header: Category & Status */}
+                    {/* Header: Category Badges & Status */}
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span
-                        className="text-xs font-mono font-bold"
-                        style={{ color: primaryColor === '#00D9F5' ? '#009bb3' : primaryColor }}
-                      >
-                        {project.category}
-                      </span>
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold ${statusInfo.color}`}>
+                      <div className="flex flex-wrap items-center gap-1">
+                        {(project.categories || [project.category]).map((c) => (
+                          <span
+                            key={c}
+                            className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded bg-white border border-[#BCE4F7] text-[#1E3A52]"
+                          >
+                            {c}
+                          </span>
+                        ))}
+                      </div>
+                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold shrink-0 ${statusInfo.color}`}>
                         {statusInfo.label}
                       </span>
                     </div>

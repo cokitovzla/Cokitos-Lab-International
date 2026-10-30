@@ -142,6 +142,8 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
         ],
         visibleOnLanding: true,
         category: projectCategory,
+        categories: [projectCategory, 'CRM & Operaciones'],
+        releasePhase: 'BETA 2.0',
         tags: [lead.projectType.toUpperCase(), 'Producción'],
       };
 
