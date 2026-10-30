@@ -81,6 +81,13 @@ export interface ProjectMilestone {
   dueDate?: string;
 }
 
+export interface ProjectColorTheme {
+  primary: string; // e.g. '#00D9F5' or '#8B5CF6'
+  secondary?: string; // e.g. '#00E3B2' or '#EC4899'
+  bgTint?: string; // e.g. 'rgba(0, 217, 245, 0.05)'
+  borderColor?: string;
+}
+
 export interface Project {
   id: string;
   leadId?: string;
@@ -98,7 +105,22 @@ export interface Project {
   category: string;
   outcomeMetric?: string;
   tags: string[];
+  demoUrl?: string;
+  colorTheme?: ProjectColorTheme;
   createdAt: string;
+}
+
+export interface LabHub {
+  id: string;
+  city: string;
+  country: string;
+  flag?: string;
+  leadPerson?: string;
+  role?: string;
+  email?: string;
+  phone?: string;
+  description?: string;
+  isMain?: boolean;
 }
 
 export interface User {
@@ -107,6 +129,7 @@ export interface User {
   email: string;
   role: 'admin' | 'especialista' | 'consultor';
   avatar?: string;
+  location?: string;
   createdAt: string;
 }
 
@@ -119,6 +142,7 @@ export interface LabSettings {
   contactPhone: string;
   location: string;
   activeInquiries: boolean;
+  hubs?: LabHub[];
 }
 
 export interface DashboardStats {

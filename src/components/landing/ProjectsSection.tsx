@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Project } from '../../types/index.ts';
 import { api } from '../../lib/api.ts';
+import { INITIAL_PROJECTS } from '../../lib/initialData.ts';
 import { Language, translations } from '../../lib/i18n.ts';
 import { trackSectionNavigation } from '../../lib/analytics.ts';
-import { CheckCircle2, Clock, Sparkles, FolderGit2 } from 'lucide-react';
+import { CheckCircle2, Clock, Sparkles, FolderGit2, ExternalLink, FlaskConical } from 'lucide-react';
 
 interface ProjectsSectionProps {
   currentLang: Language;
 }
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang }) => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
+  const [loading, setLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const t = translations[currentLang].projects;
@@ -20,11 +21,11 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
     async function loadProjects() {
       try {
         const res = await api.getPublicProjects();
-        setProjects(res.projects);
+        if (res.projects && res.projects.length > 0) {
+          setProjects(res.projects);
+        }
       } catch (e) {
         console.error('Error fetching public projects:', e);
-      } finally {
-        setLoading(false);
       }
     }
     loadProjects();
@@ -126,15 +127,38 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
               const completedMilestones = project.milestones.filter(m => m.done).length;
               const totalMilestones = project.milestones.length;
 
+              const primaryColor = project.colorTheme?.primary || '#00D9F5';
+              const secondaryColor = project.colorTheme?.secondary || '#00E3B2';
+
               return (
                 <div
                   key={project.id}
-                  className="p-5 rounded-xl lab-card-clean bg-[#F8FCFE] hover:bg-white border-[#CDE9F7] hover:border-[#00D9F5] hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group shadow-xs"
+                  style={{
+                    borderTop: `3px solid ${primaryColor}`,
+                  }}
+                  className="p-5 rounded-xl lab-card-clean bg-[#F8FCFE] hover:bg-white border-[#CDE9F7] hover:border-[#00D9F5] hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group shadow-xs relative overflow-hidden"
                 >
+                  {/* Subtle palette glow at top */}
+                  <div
+                    className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-2xl pointer-events-none transition-opacity group-hover:opacity-20"
+                    style={{ backgroundColor: primaryColor }}
+                  />
+
                   <div>
+                    {/* Lab Origin Seal */}
+                    <div className="flex items-center gap-1.5 mb-2.5 pb-2 border-b border-[#E0F2FE]">
+                      <FlaskConical className="w-3.5 h-3.5 text-[#00897B]" />
+                      <span className="text-[10px] font-mono tracking-wider uppercase text-[#0B1F2D] font-bold">
+                        Proyecto del Laboratorio de Cokito’s Lab
+                      </span>
+                    </div>
+
                     {/* Header: Category & Status */}
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="text-xs font-mono text-[#009bb3] font-bold">
+                      <span
+                        className="text-xs font-mono font-bold"
+                        style={{ color: primaryColor === '#00D9F5' ? '#009bb3' : primaryColor }}
+                      >
                         {project.category}
                       </span>
                       <span className={`text-[10px] font-mono px-2 py-0.5 rounded border font-semibold ${statusInfo.color}`}>
@@ -159,7 +183,13 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
 
                     {/* Impact metric if available */}
                     {project.outcomeMetric && (
-                      <div className="p-2.5 rounded-lg bg-[#EAF6FD] border border-[#00D9F5]/40 mb-4 flex items-center gap-2">
+                      <div
+                        className="p-2.5 rounded-lg border mb-4 flex items-center gap-2"
+                        style={{
+                          backgroundColor: `${primaryColor}10`,
+                          borderColor: `${primaryColor}40`,
+                        }}
+                      >
                         <Sparkles className="w-3.5 h-3.5 text-[#00897B] shrink-0" />
                         <span className="text-xs font-mono text-[#00897B] font-bold">
                           {project.outcomeMetric}
@@ -172,15 +202,16 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
                       <div className="mb-4">
                         <div className="flex items-center justify-between text-[11px] font-mono text-[#64748B] mb-1.5 font-semibold">
                           <span>{t.milestones}</span>
-                          <span className="tabular-nums font-bold text-[#009bb3]">
+                          <span className="tabular-nums font-bold" style={{ color: primaryColor === '#00D9F5' ? '#009bb3' : primaryColor }}>
                             {completedMilestones}/{totalMilestones}
                           </span>
                         </div>
                         <div className="w-full bg-[#E0F2FE] h-2 rounded-full overflow-hidden border border-[#BCE4F7]">
                           <div
-                            className="bg-gradient-to-r from-[#00D9F5] to-[#00E3B2] h-full rounded-full transition-all"
+                            className="h-full rounded-full transition-all"
                             style={{
                               width: `${(completedMilestones / totalMilestones) * 100}%`,
+                              background: `linear-gradient(90deg, ${primaryColor}, ${secondaryColor})`,
                             }}
                           />
                         </div>
@@ -188,16 +219,34 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
                     )}
                   </div>
 
-                  {/* Footer tags */}
-                  <div className="pt-3 border-t border-[#E0F2FE] flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] font-mono text-[#1E3A52] bg-[#EAF6FD] px-2 py-0.5 rounded border border-[#BCE4F7] font-medium"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  <div>
+                    {/* Demo / Live link if available */}
+                    {project.demoUrl && (
+                      <div className="mb-3">
+                        <a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => trackSectionNavigation(project.demoUrl!, 'project_demo_click')}
+                          className="w-full py-2 px-3 rounded-lg bg-[#0B1F2D] hover:bg-[#133045] text-white text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all shadow-xs group/btn border border-[#00D9F5]/40 hover:border-[#00D9F5]"
+                        >
+                          <span>Explorar en Producción</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-[#00D9F5] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                        </a>
+                      </div>
+                    )}
+
+                    {/* Footer tags */}
+                    <div className="pt-3 border-t border-[#E0F2FE] flex flex-wrap gap-1.5">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[10px] font-mono text-[#1E3A52] bg-[#EAF6FD] px-2 py-0.5 rounded border border-[#BCE4F7] font-medium"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                 </div>
