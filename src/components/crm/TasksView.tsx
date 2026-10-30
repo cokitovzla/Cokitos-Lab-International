@@ -322,7 +322,7 @@ export const TasksView: React.FC<TasksViewProps> = ({
                   className="w-full px-2 py-1.5 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                 >
                   <option value="Director Cokito">Director Cokito</option>
-                  <option value="Ingeniero de Sistemas">Ingeniero de Sistemas</option>
+                  <option value="Especialista de Sistemas">Especialista de Sistemas</option>
                 </select>
               </div>
 

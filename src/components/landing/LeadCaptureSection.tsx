@@ -41,6 +41,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
 
   const projectTypeOptions: { value: ProjectType; label: string }[] = [
     { value: 'software', label: currentLang === 'en' ? 'Custom Software & Platforms' : currentLang === 'fr' ? 'Logiciels et Systèmes sur Mesure' : 'Software a medida' },
+    { value: 'landing', label: currentLang === 'en' ? 'Landing Pages & Conversion Funnels' : currentLang === 'fr' ? 'Landing Pages et Tunnels de Conversion' : 'Landing pages y plataformas de captación' },
     { value: 'crm', label: currentLang === 'en' ? 'CRM & Operations Management' : currentLang === 'fr' ? 'CRM et Gestion Opérationnelle' : 'CRM y gestión operativa' },
     { value: 'automation', label: currentLang === 'en' ? 'Process Automation' : currentLang === 'fr' ? 'Automatisation des Processus' : 'Automatización de procesos' },
     { value: 'optimization', label: currentLang === 'en' ? 'Existing Systems Optimization' : currentLang === 'fr' ? 'Optimisation de Systèmes Existants' : 'Optimización de sistemas' },

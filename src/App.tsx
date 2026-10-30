@@ -13,6 +13,7 @@ import { MethodologySection } from './components/landing/MethodologySection.tsx'
 import { ProjectsSection } from './components/landing/ProjectsSection.tsx';
 import { LeadCaptureSection } from './components/landing/LeadCaptureSection.tsx';
 import { Footer } from './components/landing/Footer.tsx';
+import { MobileBottomBar } from './components/landing/MobileBottomBar.tsx';
 
 // CRM Components
 import { CrmLayout } from './components/crm/CrmLayout.tsx';
@@ -179,7 +180,7 @@ export default function App() {
       />
 
       {/* Main Landing Page Content */}
-      <main>
+      <main className="pb-16 lg:pb-0">
         <Hero
           onNavigateToSection={scrollToSection}
           currentLang={currentLang}
@@ -209,6 +210,14 @@ export default function App() {
         onNavigateToSection={scrollToSection}
         currentLang={currentLang}
         onLanguageChange={handleLanguageChange}
+      />
+
+      {/* Floating Mobile Bottom Navigation Dock */}
+      <MobileBottomBar
+        onNavigateToSection={scrollToSection}
+        onOpenAdmin={handleOpenAdmin}
+        isAdminAuthenticated={!!currentUser}
+        currentLang={currentLang}
       />
 
       {/* Admin Login Dialog */}

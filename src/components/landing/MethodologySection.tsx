@@ -107,10 +107,10 @@ export const MethodologySection: React.FC<MethodologySectionProps> = ({ currentL
                 <button
                   key={step.num}
                   onClick={() => handleStepClick(idx, step.code)}
-                  className={`p-4 rounded-xl text-left transition-all duration-200 cursor-pointer border ${
+                  className={`p-4 rounded-xl text-left transition-all duration-300 cursor-pointer border ${
                     isActive
-                      ? 'bg-white border-[#00D9F5] shadow-md shadow-[#00D9F5]/20 -translate-y-0.5 ring-2 ring-[#00D9F5]/20'
-                      : 'bg-white/80 border-[#D0EBF7] hover:border-[#00D9F5]/70 hover:bg-white'
+                      ? 'bg-[#0B1F2D] border-[#00D9F5] shadow-lg shadow-[#00D9F5]/25 -translate-y-0.5 ring-2 ring-[#00D9F5]/30 text-white'
+                      : 'bg-white hover:bg-[#F8FCFE] border-[#D0EBF7] hover:border-[#00D9F5]/70'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
@@ -125,18 +125,24 @@ export const MethodologySection: React.FC<MethodologySectionProps> = ({ currentL
                     </span>
                     <Icon
                       className={`w-4 h-4 ${
-                        isActive ? 'text-[#00897B]' : 'text-[#64748B]'
+                        isActive ? 'text-[#00D9F5]' : 'text-[#64748B]'
                       }`}
                     />
                   </div>
 
-                  <span className="font-mono text-[10px] text-[#009bb3] uppercase tracking-wider block mb-0.5 font-bold">
+                  <span className={`font-mono text-[10px] uppercase tracking-wider block mb-0.5 font-bold ${
+                    isActive ? 'text-[#00D9F5]' : 'text-[#009bb3]'
+                  }`}>
                     {step.code}
                   </span>
-                  <h3 className="text-base font-bold text-[#0B1F2D] mb-1">
+                  <h3 className={`text-base font-bold mb-1 ${
+                    isActive ? 'text-white' : 'text-[#0B1F2D]'
+                  }`}>
                     {step.title}
                   </h3>
-                  <p className="text-xs text-[#1E3A52] line-clamp-2 leading-relaxed">
+                  <p className={`text-xs line-clamp-2 leading-relaxed ${
+                    isActive ? 'text-[#D0E6F5]' : 'text-[#1E3A52]'
+                  }`}>
                     {step.tagline}
                   </p>
                 </button>
@@ -145,41 +151,41 @@ export const MethodologySection: React.FC<MethodologySectionProps> = ({ currentL
           </div>
         </div>
 
-        {/* Detailed Inspector Box for Active Stage */}
-        <div className="p-5 sm:p-7 rounded-xl lab-card-clean bg-white border border-[#BCE4F7] relative overflow-hidden shadow-md">
+        {/* Detailed Inspector Box for Active Stage (High-Contrast Dark Laboratory Console) */}
+        <div className="p-5 sm:p-7 rounded-xl bg-[#0B1F2D] border border-[#00D9F5]/40 text-[#F5FBFF] relative overflow-hidden shadow-[0_14px_40px_rgba(11,31,45,0.28)]">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div className="lg:col-span-8">
               
               <div className="flex items-center gap-3 mb-2">
-                <span className="font-mono text-xs font-bold text-[#00897B] bg-[#00D9F5]/15 px-2.5 py-0.5 rounded border border-[#00D9F5]/40">
+                <span className="font-mono text-xs font-bold text-[#00D9F5] bg-[#00D9F5]/20 px-2.5 py-0.5 rounded border border-[#00D9F5]/40">
                   {steps[activeStep].num} · {steps[activeStep].code}
                 </span>
-                <span className="text-xs font-mono text-[#00897B] font-semibold">
+                <span className="text-xs font-mono text-[#00E3B2] font-semibold">
                   Lab Pipeline Phase
                 </span>
               </div>
 
-              <h4 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] mb-2">
+              <h4 className="text-xl sm:text-2xl font-extrabold text-[#F5FBFF] mb-2">
                 {steps[activeStep].title}: {steps[activeStep].tagline}
               </h4>
 
-              <p className="text-xs sm:text-sm text-[#1E3A52] leading-relaxed mb-4">
+              <p className="text-xs sm:text-sm text-[#D0E6F5] leading-relaxed mb-4">
                 {steps[activeStep].description}
               </p>
 
               {/* Lab Criteria Checklist */}
               <div>
-                <span className="text-[11px] font-mono text-[#64748B] uppercase tracking-wider block mb-2 font-bold">
+                <span className="text-[11px] font-mono text-[#7E9EB5] uppercase tracking-wider block mb-2 font-bold">
                   {t.validationCriteria}
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                   {steps[activeStep].criteria.map((c) => (
                     <div
                       key={c}
-                      className="p-2 rounded bg-[#F0F9FF] border border-[#CDE9F7] text-xs text-[#1E3A52] font-mono flex items-center gap-2"
+                      className="p-2 rounded bg-[#0F2839] border border-[#1A384F] text-xs text-[#E8F4FA] font-mono flex items-center gap-2"
                     >
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#00897B] shrink-0" />
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#00E3B2] shrink-0" />
                       <span>{c}</span>
                     </div>
                   ))}
@@ -189,14 +195,14 @@ export const MethodologySection: React.FC<MethodologySectionProps> = ({ currentL
             </div>
 
             {/* Deliverable badge */}
-            <div className="lg:col-span-4 p-4 rounded-xl bg-[#EAF6FD] border border-[#00D9F5]/50 flex flex-col justify-center shadow-xs">
-              <span className="font-mono text-[10px] text-[#00897B] uppercase tracking-wider mb-1 font-bold">
+            <div className="lg:col-span-4 p-4 rounded-xl bg-[#133045] border border-[#00D9F5]/50 flex flex-col justify-center shadow-xs">
+              <span className="font-mono text-[10px] text-[#00D9F5] uppercase tracking-wider mb-1 font-bold">
                 {t.labDeliverable}
               </span>
-              <p className="text-sm font-bold text-[#0B1F2D] leading-snug mb-2">
+              <p className="text-sm font-bold text-[#F5FBFF] leading-snug mb-2">
                 {steps[activeStep].deliverable}
               </p>
-              <div className="text-[10px] font-mono text-[#64748B] pt-2 border-t border-[#BCE4F7]">
+              <div className="text-[10px] font-mono text-[#7E9EB5] pt-2 border-t border-[#1A384F]">
                 {t.qualityBadge}
               </div>
             </div>

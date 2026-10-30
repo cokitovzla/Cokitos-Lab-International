@@ -423,7 +423,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85">
           <div className="w-full max-w-lg bg-[#0B1F2D] border border-[#00D9F5]/40 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95">
             <h3 className="text-base font-bold text-[#F5FBFF] mb-3">
-              Registrar Nuevo Proyecto de Ingeniería
+              Registrar Nuevo Proyecto o Sistema
             </h3>
 
             <form onSubmit={handleCreateSubmit} className="space-y-3.5">

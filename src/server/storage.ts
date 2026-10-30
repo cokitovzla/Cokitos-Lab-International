@@ -42,9 +42,9 @@ const initialUsers: User[] = [
   },
   {
     id: 'user_lead_dev',
-    name: 'Ingeniero de Sistemas',
+    name: 'Especialista de Sistemas',
     email: 'anat.vacaviejavzla@gmail.com',
-    role: 'ingeniero',
+    role: 'especialista',
     createdAt: new Date(Date.now() - 20 * 86400000).toISOString(),
   }
 ];
@@ -80,7 +80,7 @@ const initialProjects: Project[] = [
     company: "Delta Logistics",
     description: "Flujo automatizado de ingesta de órdenes, verificación de pagos bancarios y generación de comprobantes fiscales electrónicos sin intervención manual.",
     status: "entregado",
-    assignedLead: "Ingeniero de Sistemas",
+    assignedLead: "Especialista de Sistemas",
     startDate: "2026-07-10",
     targetDate: "2026-09-20",
     milestones: [
@@ -217,7 +217,7 @@ const initialLeads: Lead[] = [
     contactPreference: 'call',
     dataConsent: true,
     status: 'reunion_programada',
-    assignedTo: 'Ingeniero de Sistemas',
+    assignedTo: 'Especialista de Sistemas',
     source: 'landing_page',
     createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
     updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
@@ -225,7 +225,7 @@ const initialLeads: Lead[] = [
       {
         id: 'n_4',
         content: 'Reunión programada para demostración de arquitectura base el viernes a las 10:00 AM.',
-        author: 'Ingeniero de Sistemas',
+        author: 'Especialista de Sistemas',
         createdAt: new Date(Date.now() - 1 * 86400000).toISOString(),
       }
     ],
@@ -234,7 +234,7 @@ const initialLeads: Lead[] = [
         id: 'a_5',
         type: 'status_change',
         description: 'Estado cambiado a "Reunión programada"',
-        author: 'Ingeniero de Sistemas',
+        author: 'Especialista de Sistemas',
         timestamp: new Date(Date.now() - 1 * 86400000).toISOString(),
       }
     ]

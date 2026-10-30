@@ -60,7 +60,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ type, onClose }) => {
                 1. Naturaleza de los Servicios
               </p>
               <p>
-                <strong>Cokito’s Lab</strong> es un laboratorio de innovación y tecnología aplicada especializado en software a medida, automatizaciones operativas, diseño de CRMs y consultoría de ingeniería.
+                <strong>Cokito’s Lab</strong> es un laboratorio de innovación y tecnología aplicada especializado en software a medida, automatizaciones operativas, diseño de CRMs y consultoría tecnológica.
               </p>
 
               <p className="font-semibold text-[#00D9F5]">

@@ -201,7 +201,7 @@ export const NewContactModal: React.FC<NewContactModalProps> = ({
                 className="w-full px-2 py-2 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] font-mono"
               >
                 <option value="Director Cokito">Director Cokito</option>
-                <option value="Ingeniero de Sistemas">Ingeniero de Sistemas</option>
+                <option value="Especialista de Sistemas">Especialista de Sistemas</option>
               </select>
             </div>
           </div>

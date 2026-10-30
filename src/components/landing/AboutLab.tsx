@@ -144,21 +144,21 @@ export const AboutLab: React.FC<AboutLabProps> = ({ currentLang }) => {
           })}
         </div>
 
-        {/* Philosophy Callout Banner (Light, Luminous, High-Contrast) */}
-        <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-r from-[#EBF7FD] via-white to-[#EBF7FD] border border-[#00D9F5]/45 hover:border-[#00D9F5] transition-all shadow-sm mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        {/* Philosophy Callout Banner (High-Contrast Laboratory Banner in Deep Navy #0B1F2D) */}
+        <div className="p-5 sm:p-6 rounded-xl bg-gradient-to-r from-[#0B1F2D] via-[#102d42] to-[#0B1F2D] border border-[#00D9F5]/45 hover:border-[#00D9F5] transition-all shadow-[0_10px_30px_rgba(11,31,45,0.22)] mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="max-w-2xl">
-            <span className="font-mono text-[11px] text-[#009bb3] uppercase tracking-wider block mb-1 font-bold">
+            <span className="font-mono text-[11px] text-[#00D9F5] uppercase tracking-wider block mb-1 font-bold">
               {t.philosophyTag}
             </span>
-            <h4 className="text-xl sm:text-2xl font-bold text-[#0B1F2D] mb-1.5">
+            <h4 className="text-xl sm:text-2xl font-bold text-[#F5FBFF] mb-1.5">
               {t.philosophyTitle}
             </h4>
-            <p className="text-xs sm:text-sm text-[#1E3A52] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#D0E6F5] leading-relaxed">
               {t.philosophyDesc}
             </p>
           </div>
-          <div className="shrink-0 p-3 rounded-lg bg-white border border-[#00E3B2] text-xs font-mono text-[#00897B] flex items-center gap-2 font-bold shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-[#00897B]" />
+          <div className="shrink-0 p-3 rounded-lg bg-[#06141F] border border-[#00E3B2] text-xs font-mono text-[#00E3B2] flex items-center gap-2 font-bold shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-[#00E3B2]" />
             <span>{t.guarantee}</span>
           </div>
         </div>
@@ -180,16 +180,16 @@ export const AboutLab: React.FC<AboutLabProps> = ({ currentLang }) => {
               return (
                 <div
                   key={item.name}
-                  className="p-4 rounded-xl lab-card-clean bg-white border-[#BCE4F7] hover:border-[#00D9F5] hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group cursor-default"
+                  className="p-4 rounded-xl lab-card-clean bg-white hover:bg-[#0B1F2D] border-[#BCE4F7] hover:border-[#00D9F5] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group cursor-default"
                 >
                   <div>
                     {/* Header Row: Icon + Name in the same line */}
                     <div className="flex items-center gap-2.5 mb-2.5">
-                      <div className="p-2 rounded-lg bg-[#F0F9FF] border border-[#BCE4F7] group-hover:border-[#00D9F5] group-hover:bg-[#E0F8FF] transition-colors shrink-0">
+                      <div className="p-2 rounded-lg bg-[#F0F9FF] border border-[#BCE4F7] group-hover:border-[#00D9F5] group-hover:bg-[#133045] transition-colors shrink-0">
                         <Icon className={`w-4 h-4 ${item.color}`} />
                       </div>
                       <div className="min-w-0">
-                        <h5 className="font-bold text-sm text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors leading-tight">
+                        <h5 className="font-bold text-sm text-[#0B1F2D] group-hover:text-white transition-colors leading-tight">
                           {item.name}
                         </h5>
                         <span className={`text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border ${item.badgeColor} mt-0.5 inline-block font-semibold`}>
@@ -199,7 +199,7 @@ export const AboutLab: React.FC<AboutLabProps> = ({ currentLang }) => {
                     </div>
 
                     {/* Rich Descriptive Text */}
-                    <p className="text-xs text-[#1E3A52] leading-relaxed pt-1.5 border-t border-[#E0F2FE]">
+                    <p className="text-xs text-[#1E3A52] group-hover:text-[#D0E6F5] transition-colors leading-relaxed pt-1.5 border-t border-[#E0F2FE] group-hover:border-[#1A384F]">
                       {item.desc}
                     </p>
                   </div>

@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
     {
       step: '02',
       title: t.step2,
-      category: currentLang === 'en' ? 'Engineering & Automation' : currentLang === 'fr' ? 'Ingénierie & Automatisation' : 'Ingeniería y Automatización',
+      category: currentLang === 'en' ? 'Systems & Automation' : currentLang === 'fr' ? 'Systèmes & Automatisation' : 'Sistemas y Automatización',
       desc: currentLang === 'en'
         ? 'We engineer rock-solid systems, reactive portals, custom CRMs, and continuous integration pipelines.'
         : currentLang === 'fr'
@@ -119,7 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
               </button>
             </div>
 
-            {/* Laboratory Trust Proof Strip (Clean, white tiles with cyan borders) */}
+            {/* Laboratory Trust Proof Strip */}
             <div className="pt-4 border-t border-[#D0EBF7] w-full grid grid-cols-3 gap-3 text-left">
               <div className="p-3 rounded-lg bg-white border border-[#BDE8F7] hover:border-[#00D9F5] transition-colors shadow-xs">
                 <span className="block font-mono text-xl sm:text-2xl font-bold text-[#0096AF] tabular-nums">{t.metric1Val}</span>
@@ -137,25 +137,25 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
 
           </div>
 
-          {/* Right Column: Interactive Systems Simulator (Crisp White Card with Cyan Borders) */}
+          {/* Right Column: Interactive Systems Simulator (High-Contrast Laboratory Console in Deep Navy #0B1F2D) */}
           <div className="lg:col-span-5 w-full">
-            <div className="lab-card-clean rounded-2xl p-5 sm:p-6 relative overflow-hidden">
+            <div className="bg-[#0B1F2D] border border-[#00D9F5]/40 rounded-2xl p-5 sm:p-6 relative overflow-hidden shadow-[0_14px_40px_rgba(11,31,45,0.3)]">
               
               {/* Header of instrument */}
-              <div className="flex items-center justify-between pb-3 border-b border-[#D8F0FA] mb-4">
+              <div className="flex items-center justify-between pb-3 border-b border-[#1A384F] mb-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-[#00D9F5] shadow-xs shadow-[#00D9F5]" />
-                  <span className="font-mono text-xs text-[#0B1F2D] font-bold uppercase tracking-wider">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#00D9F5] shadow-sm shadow-[#00D9F5] animate-pulse" />
+                  <span className="font-mono text-xs text-[#F5FBFF] font-bold uppercase tracking-wider">
                     {t.engineTitle}
                   </span>
                 </div>
-                <span className="font-mono text-[10px] text-[#0096AF] font-bold bg-[#E6F9FD] border border-[#00D9F5]/40 px-2 py-0.5 rounded">
+                <span className="font-mono text-[10px] text-[#00D9F5] font-bold bg-[#00D9F5]/15 border border-[#00D9F5]/40 px-2 py-0.5 rounded">
                   {t.engineVer}
                 </span>
               </div>
 
               {/* Stage selector tabs */}
-              <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#F0F8FC] rounded-lg border border-[#D0EBF7] mb-4">
+              <div className="grid grid-cols-3 gap-1.5 p-1 bg-[#06141F] rounded-lg border border-[#1A384F] mb-4">
                 {architectureFlows.map((flow, idx) => (
                   <button
                     key={flow.step}
@@ -163,7 +163,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
                     className={`py-1.5 px-2 text-center rounded-md transition-all font-mono text-xs cursor-pointer ${
                       activeStage === idx
                         ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
-                        : 'text-[#50728C] hover:text-[#0B1F2D] hover:bg-white'
+                        : 'text-[#7E9EB5] hover:text-[#F5FBFF] hover:bg-[#0B1F2D]'
                     }`}
                   >
                     <span className="block text-[9px] opacity-75">{flow.step}</span>
@@ -176,15 +176,15 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
               <div className="min-h-[190px] flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[11px] font-mono font-bold text-[#00A381] uppercase tracking-wider">
+                    <span className="text-[11px] font-mono font-bold text-[#00E3B2] uppercase tracking-wider">
                       {architectureFlows[activeStage].category}
                     </span>
-                    <span className="text-[11px] text-[#50728C] font-mono">
+                    <span className="text-[11px] text-[#7E9EB5] font-mono">
                       {t.phase} {activeStage + 1} / 3
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#1E3A52] leading-relaxed mb-3">
+                  <p className="text-xs text-[#D0E6F5] leading-relaxed mb-3">
                     {architectureFlows[activeStage].desc}
                   </p>
 
@@ -193,35 +193,35 @@ export const Hero: React.FC<HeroProps> = ({ onNavigateToSection, currentLang }) 
                     {architectureFlows[activeStage].nodes.map((node, i) => (
                       <div
                         key={node}
-                        className="flex items-center gap-2.5 p-2 rounded bg-[#F8FCFF] border border-[#D8F0FA] text-xs text-[#0B1F2D] hover:border-[#00D9F5] transition-colors shadow-2xs"
+                        className="flex items-center gap-2.5 p-2 rounded bg-[#0F2839] border border-[#1A384F] text-xs text-[#F5FBFF] hover:border-[#00D9F5] transition-colors"
                       >
-                        <span className="w-4 h-4 rounded flex items-center justify-center font-mono text-[9px] font-bold bg-[#E0F8FC] text-[#0096AF]">
+                        <span className="w-4 h-4 rounded flex items-center justify-center font-mono text-[9px] font-bold bg-[#00D9F5]/20 text-[#00D9F5]">
                           0{i + 1}
                         </span>
-                        <span className="font-mono text-[#0B1F2D] font-medium text-[11px] flex-1">{node}</span>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00A381]" />
+                        <span className="font-mono text-[#E8F4FA] font-medium text-[11px] flex-1">{node}</span>
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#00E3B2]" />
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Output indicator */}
-                <div className="pt-2.5 border-t border-[#D8F0FA] flex items-center justify-between text-xs font-mono">
-                  <span className="text-[#50728C] text-[11px]">{t.deliverable}</span>
-                  <span className="text-[#00A381] font-bold text-[11px] flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5 text-[#00A381]" />
+                <div className="pt-2.5 border-t border-[#1A384F] flex items-center justify-between text-xs font-mono">
+                  <span className="text-[#7E9EB5] text-[11px]">{t.deliverable}</span>
+                  <span className="text-[#00E3B2] font-bold text-[11px] flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-[#00E3B2]" />
                     {architectureFlows[activeStage].output}
                   </span>
                 </div>
               </div>
 
               {/* Bottom live indicator */}
-              <div className="mt-3 pt-2.5 border-t border-[#D8F0FA] flex items-center justify-between text-[10px] font-mono text-[#50728C]">
+              <div className="mt-3 pt-2.5 border-t border-[#1A384F] flex items-center justify-between text-[10px] font-mono text-[#7E9EB5]">
                 <span className="flex items-center gap-1.5">
-                  <Network className="w-3 h-3 text-[#0096AF]" />
+                  <Network className="w-3 h-3 text-[#00D9F5]" />
                   Cokito's Lab Reactive Matrix
                 </span>
-                <span className="text-[#0096AF] font-bold">{t.matrixStatus}</span>
+                <span className="text-[#00D9F5] font-bold">{t.matrixStatus}</span>
               </div>
 
             </div>

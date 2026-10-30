@@ -363,7 +363,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             <div className="flex items-center gap-2">
               <FolderGit2 className="w-4 h-4 text-indigo-600" />
               <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B1F2D]">
-                Lista de Proyectos de Ingeniería
+                Lista de Proyectos y Sistemas Tecnológicos
               </h3>
               <span className="text-[11px] font-mono text-indigo-700 bg-indigo-50 px-2 py-0.2 rounded border border-indigo-200 font-bold">
                 {projects.length} Sistemas

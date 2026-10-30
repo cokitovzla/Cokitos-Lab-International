@@ -4,6 +4,7 @@ export type ProjectType =
   | 'automation'
   | 'optimization'
   | 'consulting'
+  | 'landing'
   | 'idea';
 
 export type PipelineStage = 
@@ -104,7 +105,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  role: 'admin' | 'ingeniero' | 'consultor';
+  role: 'admin' | 'especialista' | 'consultor';
   avatar?: string;
   createdAt: string;
 }

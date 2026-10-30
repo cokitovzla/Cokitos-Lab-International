@@ -1,5 +1,5 @@
 import React from 'react';
-import { Monitor, RefreshCcw, Database, Gauge, Lightbulb, ArrowUpRight, Check } from 'lucide-react';
+import { Monitor, RefreshCcw, Database, Gauge, Lightbulb, Globe, ArrowUpRight, Check } from 'lucide-react';
 import { ProjectType } from '../../types/index.ts';
 import { Language, translations } from '../../lib/i18n.ts';
 import { trackSectionNavigation } from '../../lib/analytics.ts';
@@ -131,7 +131,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
         'System architecture blueprinting',
         'Objective timeline & cost projections',
         'Technical Product Requirements (PRD)',
-        'Engineering adoption roadmap'
+        'Strategic adoption roadmap'
       ] : currentLang === 'fr' ? [
         'Conception de l\'architecture logicielle',
         'Estimations objectives des coûts et délais',
@@ -147,6 +147,33 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
       badge: currentLang === 'en' ? 'Strategy' : currentLang === 'fr' ? 'Stratégie' : 'Estrategia',
       accentColor: 'text-[#00D9F5]',
       badgeColor: 'bg-[#00D9F5]/10 text-[#00D9F5] border-[#00D9F5]/30',
+    },
+    {
+      id: 'landing' as ProjectType,
+      number: '06',
+      title: t.items.landingTitle,
+      tagline: t.items.landingTag,
+      description: t.items.landingDesc,
+      deliverables: currentLang === 'en' ? [
+        'Conversion-centered UI/UX layout',
+        'Sub-second page performance (<1.2s)',
+        'Direct CRM lead intake syncing',
+        'SEO tags & event analytics integration'
+      ] : currentLang === 'fr' ? [
+        'Design axé sur la conversion maximale',
+        'Temps de chargement éclair (<1.2s)',
+        'Intégration directe des formulaires au CRM',
+        'Structure SEO et tracking analytique'
+      ] : [
+        'Diseño enfocado 100% en conversión',
+        'Velocidad de carga extrema (<1.2s)',
+        'Formularios conectados al CRM en tiempo real',
+        'Estructura SEO y analítica de eventos'
+      ],
+      icon: Globe,
+      badge: currentLang === 'en' ? 'Acquisition' : currentLang === 'fr' ? 'Acquisition' : 'Captación',
+      accentColor: 'text-[#00E3B2]',
+      badgeColor: 'bg-[#00E3B2]/10 text-[#00E3B2] border-[#00E3B2]/30',
     },
   ];
 
@@ -181,24 +208,21 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
           </div>
         </div>
 
-        {/* High-Contrast Bento-Grid (Clean, Light Cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {services.map((service, index) => {
+        {/* Symmetrical 3x2 Grid with Rich Dark Navy Hover State */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((service) => {
             const Icon = service.icon;
-            const isLarge = index === 0;
 
             return (
               <div
                 key={service.id}
-                className={`p-5 sm:p-6 rounded-xl lab-card-clean bg-[#F8FCFE] hover:bg-white border-[#CDE9F7] hover:border-[#00D9F5] hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group ${
-                  isLarge ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
-                }`}
+                className="p-5 sm:p-6 rounded-xl bg-[#F8FCFE] hover:bg-[#0B1F2D] border border-[#CDE9F7] hover:border-[#00D9F5] hover:shadow-[0_12px_35px_rgba(11,31,45,0.25)] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group cursor-default"
               >
                 <div>
                   {/* Top line: Number, Badge, Icon */}
                   <div className="flex items-center justify-between mb-3.5">
                     <div className="flex items-center gap-2.5">
-                      <span className="font-mono text-sm font-bold text-[#00897B] bg-[#00D9F5]/15 px-2 py-0.5 rounded border border-[#00D9F5]/40">
+                      <span className="font-mono text-sm font-bold text-[#00897B] group-hover:text-[#00D9F5] bg-[#00D9F5]/15 group-hover:bg-[#00D9F5]/25 px-2 py-0.5 rounded border border-[#00D9F5]/40 transition-colors">
                         {service.number}
                       </span>
                       <span className={`font-mono text-[10px] uppercase tracking-wider px-2 py-0.5 rounded border ${service.badgeColor} font-bold`}>
@@ -206,29 +230,29 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                       </span>
                     </div>
 
-                    <div className="p-2 rounded-lg bg-[#EAF6FD] border border-[#BCE4F7] group-hover:border-[#00D9F5] group-hover:bg-[#E0F8FF] transition-colors">
+                    <div className="p-2 rounded-lg bg-[#EAF6FD] group-hover:bg-[#133045] border border-[#BCE4F7] group-hover:border-[#00D9F5] transition-colors">
                       <Icon className={`w-5 h-5 ${service.accentColor}`} />
                     </div>
                   </div>
 
                   {/* Title & Tagline */}
-                  <h3 className="text-lg font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors mb-1">
+                  <h3 className="text-lg font-bold text-[#0B1F2D] group-hover:text-white transition-colors mb-1">
                     {service.title}
                   </h3>
-                  <p className="text-xs font-mono text-[#00897B] font-semibold mb-3">
+                  <p className="text-xs font-mono text-[#00897B] group-hover:text-[#00E3B2] font-semibold mb-3 transition-colors">
                     {service.tagline}
                   </p>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm text-[#1E3A52] leading-relaxed mb-4">
+                  <p className="text-xs sm:text-sm text-[#1E3A52] group-hover:text-[#D0E6F5] leading-relaxed mb-4 transition-colors">
                     {service.description}
                   </p>
 
                   {/* Deliverables Checklist */}
                   <div className="space-y-1.5 mb-6">
                     {service.deliverables.map((item) => (
-                      <div key={item} className="flex items-center gap-2 text-xs text-[#1E3A52] font-mono">
-                        <Check className="w-3.5 h-3.5 text-[#00897B] shrink-0" />
+                      <div key={item} className="flex items-center gap-2 text-xs text-[#1E3A52] group-hover:text-[#E8F4FA] font-mono transition-colors">
+                        <Check className="w-3.5 h-3.5 text-[#00897B] group-hover:text-[#00E3B2] shrink-0 transition-colors" />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -236,10 +260,10 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onSelectServic
                 </div>
 
                 {/* Bottom Action Button */}
-                <div className="pt-3 border-t border-[#E0F2FE]">
+                <div className="pt-3 border-t border-[#E0F2FE] group-hover:border-[#1A384F] transition-colors">
                   <button
                     onClick={() => handleServiceClick(service.id)}
-                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-md bg-[#EAF6FD] group-hover:bg-[#00D9F5] border border-[#BCE4F7] group-hover:border-[#00D9F5] text-[#0B1F2D] text-xs font-bold tracking-wide transition-all cursor-pointer shadow-xs"
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-md bg-[#EAF6FD] group-hover:bg-[#00D9F5] border border-[#BCE4F7] group-hover:border-[#00D9F5] text-[#0B1F2D] text-xs font-bold tracking-wide transition-all cursor-pointer shadow-xs group-hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
                   >
                     <span>{t.quoteBtn} {service.title.split(' ')[0]}</span>
                     <ArrowUpRight className="w-4 h-4 text-[#00897B] group-hover:text-[#0B1F2D] transition-colors" />
