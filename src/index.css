@@ -10,54 +10,50 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #0B1F2D;
-    color: #F5FBFF;
+    background-color: #F5FBFF;
+    color: #0B1F2D;
     overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.02em;
+    color: #0B1F2D;
   }
 }
 
-/* Subtle scientific grid pattern */
-.bg-tech-grid {
+/* Pristine, luminous scientific laboratory grid */
+.bg-tech-grid-light {
+  background-color: #F5FBFF;
   background-image: 
-    linear-gradient(to right, rgba(0, 217, 245, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 217, 245, 0.035) 1px, transparent 1px);
-  background-size: 32px 32px;
+    radial-gradient(circle at 50% 0%, rgba(0, 217, 245, 0.16) 0%, transparent 55%),
+    linear-gradient(to right, rgba(11, 31, 45, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 31, 45, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 36px 36px, 36px 36px;
 }
 
-.bg-tech-grid-dense {
-  background-image: 
-    linear-gradient(to right, rgba(0, 217, 245, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 217, 245, 0.05) 1px, transparent 1px);
-  background-size: 16px 16px;
-}
-
-/* Glowing edges & lab borders with high-contrast hover */
-.lab-card-glow {
-  position: relative;
+/* Light luminous laboratory cards */
+.lab-card-clean {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 217, 245, 0.35);
+  box-shadow: 0 4px 20px rgba(11, 31, 45, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  background: #0d2232;
-  border: 1px solid #1a3d56;
 }
 
-.lab-card-glow:hover {
-  background: #112d42;
+.lab-card-clean:hover {
+  background: #FFFFFF;
   border-color: #00D9F5;
-  box-shadow: 0 4px 20px rgba(0, 217, 245, 0.18), inset 0 0 15px rgba(0, 217, 245, 0.05);
+  box-shadow: 0 8px 30px rgba(0, 217, 245, 0.2), 0 2px 8px rgba(11, 31, 45, 0.06);
   transform: translateY(-2px);
 }
 
-/* Dense List Row Hover */
-.lab-list-row {
+/* Dense List Row Hover for Light Mode */
+.lab-list-row-clean {
   transition: all 0.15s ease-in-out;
 }
 
-.lab-list-row:hover {
-  background-color: #123047 !important;
+.lab-list-row-clean:hover {
+  background-color: #EBF8FF !important;
   border-color: #00D9F5 !important;
 }
 
@@ -68,11 +64,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #081621;
+  background: #E8F4FA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #183850;
+  background: #B3DCF0;
   border-radius: 3px;
 }
 

@@ -138,25 +138,25 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
     <div className="space-y-6">
       
       {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#143247]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#D0EBF7]">
         <div>
-          <h2 className="text-xl font-bold text-[#F5FBFF] tracking-tight">
+          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
             Gestión de Proyectos & Sistemas
           </h2>
-          <p className="text-xs font-mono text-[#F5FBFF]/60 mt-0.5">
+          <p className="text-xs font-mono text-[#64748B] mt-0.5">
             {projects.length} Sistemas en cartera · Vista en lista y control de visibilidad en la Landing Page
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           {/* List vs Grid view toggle */}
-          <div className="flex items-center p-1 bg-[#081722] rounded-lg border border-[#16364d] text-xs font-mono">
+          <div className="flex items-center p-1 bg-white rounded-lg border border-[#D0EBF7] text-xs font-mono shadow-2xs">
             <button
               onClick={() => setViewMode('list')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded transition-colors cursor-pointer ${
                 viewMode === 'list'
-                  ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold'
-                  : 'text-[#F5FBFF]/70 hover:text-[#00D9F5]'
+                  ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
+                  : 'text-[#1E3A52] hover:text-[#009bb3]'
               }`}
             >
               <List className="w-3.5 h-3.5" />
@@ -166,8 +166,8 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
               onClick={() => setViewMode('grid')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded transition-colors cursor-pointer ${
                 viewMode === 'grid'
-                  ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold'
-                  : 'text-[#F5FBFF]/70 hover:text-[#00D9F5]'
+                  ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
+                  : 'text-[#1E3A52] hover:text-[#009bb3]'
               }`}
             >
               <LayoutGrid className="w-3.5 h-3.5" />
@@ -177,7 +177,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-sm shadow-[#00D9F5]/20"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Nuevo Proyecto</span>
@@ -187,23 +187,23 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 
       {/* LIST VIEW (Default per user request) */}
       {viewMode === 'list' ? (
-        <div className="rounded-xl bg-[#0d2232] border border-[#1b3d56] overflow-hidden shadow-lg">
+        <div className="rounded-xl bg-white border border-[#D0EBF7] overflow-hidden shadow-xs">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#143247] bg-[#0a1b28] text-[11px] font-mono text-[#F5FBFF]/60 uppercase tracking-wider">
-                <th className="py-3 px-4 font-semibold">Proyecto</th>
-                <th className="py-3 px-4 font-semibold">Cliente & Empresa</th>
-                <th className="py-3 px-4 font-semibold">Categoría</th>
-                <th className="py-3 px-4 font-semibold">Estado</th>
-                <th className="py-3 px-4 font-semibold">Hitos Técnicos</th>
-                <th className="py-3 px-4 font-semibold">En Landing</th>
-                <th className="py-3 px-4 text-right font-semibold">Acciones</th>
+              <tr className="border-b border-[#D0EBF7] bg-[#F0F9FF] text-[11px] font-mono text-[#1E3A52] uppercase tracking-wider">
+                <th className="py-3 px-4 font-bold">Proyecto</th>
+                <th className="py-3 px-4 font-bold">Cliente & Empresa</th>
+                <th className="py-3 px-4 font-bold">Categoría</th>
+                <th className="py-3 px-4 font-bold">Estado</th>
+                <th className="py-3 px-4 font-bold">Hitos Técnicos</th>
+                <th className="py-3 px-4 font-bold">En Landing</th>
+                <th className="py-3 px-4 text-right font-bold">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#143247] text-xs">
+            <tbody className="divide-y divide-[#E0F2FE] text-xs">
               {projects.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-8 text-center text-xs font-mono text-[#F5FBFF]/40">
+                  <td colSpan={7} className="py-8 text-center text-xs font-mono text-[#64748B]">
                     No hay proyectos registrados aún.
                   </td>
                 </tr>
@@ -217,39 +217,39 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                     <tr
                       key={proj.id}
                       onClick={() => setSelectedProject(proj)}
-                      className="hover:bg-[#123047] hover:border-l-4 hover:border-l-[#00D9F5] transition-all cursor-pointer group"
+                      className="hover:bg-[#EAF6FD] transition-all cursor-pointer group"
                     >
-                      <td className="py-3 px-4 font-bold text-[#F5FBFF] group-hover:text-[#00D9F5] transition-colors">
+                      <td className="py-3 px-4 font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
                         <div>{proj.name}</div>
                         {proj.outcomeMetric && (
-                          <div className="text-[10px] font-mono text-[#00E3B2] flex items-center gap-1 mt-0.5">
+                          <div className="text-[10px] font-mono text-[#00897B] font-bold flex items-center gap-1 mt-0.5">
                             <Sparkles className="w-3 h-3" />
                             {proj.outcomeMetric}
                           </div>
                         )}
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-xs text-[#F5FBFF]/80">
-                        <div>{proj.clientName}</div>
-                        {proj.company && <div className="text-[10px] text-[#F5FBFF]/50">{proj.company}</div>}
+                      <td className="py-3 px-4 font-mono text-xs text-[#1E3A52]">
+                        <div className="font-semibold">{proj.clientName}</div>
+                        {proj.company && <div className="text-[10px] text-[#64748B]">{proj.company}</div>}
                       </td>
 
-                      <td className="py-3 px-4 font-mono text-[11px] text-[#00D9F5]">
+                      <td className="py-3 px-4 font-mono text-[11px] text-[#009bb3] font-bold">
                         {proj.category}
                       </td>
 
                       <td className="py-3 px-4 whitespace-nowrap">
-                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded border capitalize ${statusInfo.style}`}>
+                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded border capitalize font-medium ${statusInfo.style}`}>
                           {statusInfo.label}
                         </span>
                       </td>
 
                       <td className="py-3 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-[11px] text-[#00D9F5] font-bold tabular-nums">
+                          <span className="font-mono text-[11px] text-[#009bb3] font-bold tabular-nums">
                             {completedM}/{totalM}
                           </span>
-                          <div className="w-20 bg-[#081722] h-1.5 rounded-full overflow-hidden border border-[#1b3d56]">
+                          <div className="w-20 bg-[#E0F2FE] h-1.5 rounded-full overflow-hidden border border-[#BCE4F7]">
                             <div
                               className="bg-gradient-to-r from-[#00D9F5] to-[#00E3B2] h-full rounded-full"
                               style={{ width: `${totalM > 0 ? (completedM / totalM) * 100 : 0}%` }}
@@ -261,10 +261,10 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                       <td className="py-3 px-4 whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                         <button
                           onClick={(e) => handleToggleLandingVisibility(proj, e)}
-                          className={`flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-mono border transition-all cursor-pointer ${
+                          className={`flex items-center gap-1 px-2.5 py-1 rounded text-[10px] font-mono border transition-all cursor-pointer font-bold ${
                             proj.visibleOnLanding
-                              ? 'bg-[#00E3B2]/15 text-[#00E3B2] border-[#00E3B2]/40 hover:bg-[#00E3B2]/25'
-                              : 'bg-[#081722] text-[#F5FBFF]/40 border-[#1b3d56] hover:text-[#F5FBFF]'
+                              ? 'bg-[#00E3B2]/15 text-[#00897B] border-[#00E3B2]/40 hover:bg-[#00E3B2]/25'
+                              : 'bg-neutral-100 text-neutral-500 border-neutral-300 hover:text-[#0B1F2D]'
                           }`}
                         >
                           {proj.visibleOnLanding ? <Eye className="w-3 h-3" /> : <EyeOff className="w-3 h-3" />}
@@ -276,14 +276,14 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setSelectedProject(proj)}
-                            className="p-1.5 rounded bg-[#081722] hover:bg-[#00D9F5] hover:text-[#0B1F2D] text-[#00D9F5] transition-all"
+                            className="p-1.5 rounded hover:bg-[#EAF6FD] text-[#009bb3] transition-all cursor-pointer"
                             title="Ver detalles e hitos"
                           >
                             <Eye className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={(e) => handleDeleteProject(proj.id, proj.name, e)}
-                            className="p-1.5 rounded bg-[#081722] hover:bg-rose-950/60 text-[#F5FBFF]/40 hover:text-rose-400 transition-all"
+                            className="p-1.5 rounded hover:bg-rose-50 text-neutral-400 hover:text-rose-600 transition-all cursor-pointer"
                             title="Eliminar proyecto"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -309,11 +309,11 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
               <div
                 key={project.id}
                 onClick={() => setSelectedProject(project)}
-                className="p-5 rounded-xl bg-[#0d2232] border border-[#1b3d56] hover:border-[#00D9F5] hover:bg-[#112d42] hover:shadow-xl hover:shadow-[#00D9F5]/15 hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between group"
+                className="p-5 rounded-xl bg-white border border-[#D0EBF7] hover:border-[#00D9F5] hover:shadow-md hover:-translate-y-1 transition-all duration-200 cursor-pointer flex flex-col justify-between group shadow-xs"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="text-xs font-mono text-[#00D9F5]">
+                    <span className="text-xs font-mono text-[#009bb3] font-bold">
                       {project.category}
                     </span>
 

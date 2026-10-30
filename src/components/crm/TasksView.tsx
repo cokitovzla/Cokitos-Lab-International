@@ -116,17 +116,17 @@ export const TasksView: React.FC<TasksViewProps> = ({
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#F5FBFF] tracking-tight">
+          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
             Gestión Operativa de Tareas
           </h2>
-          <p className="text-xs font-mono text-[#F5FBFF]/60 mt-0.5">
+          <p className="text-xs font-mono text-[#64748B] mt-0.5">
             Compromisos con clientes y seguimiento de entregas del laboratorio
           </p>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer self-start sm:self-auto shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Nueva Tarea</span>
@@ -134,7 +134,7 @@ export const TasksView: React.FC<TasksViewProps> = ({
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center gap-2 p-1 bg-[#081722] rounded-lg border border-[#16364d] text-xs font-mono">
+      <div className="flex flex-wrap items-center gap-2 p-1 bg-white rounded-lg border border-[#D0EBF7] text-xs font-mono shadow-2xs">
         {[
           { id: 'all', label: `Todas (${tasks.length})` },
           { id: 'pending', label: `Pendientes (${tasks.filter(t => t.status !== 'completada').length})` },
@@ -146,10 +146,10 @@ export const TasksView: React.FC<TasksViewProps> = ({
             onClick={() => setFilterStatus(tab.id)}
             className={`px-3 py-1.5 rounded transition-colors cursor-pointer ${
               filterStatus === tab.id
-                ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold'
+                ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
                 : tab.isAlert
-                ? 'text-rose-400 hover:bg-[#143247]'
-                : 'text-[#F5FBFF]/70 hover:text-[#F5FBFF] hover:bg-[#122e43]'
+                ? 'text-rose-600 hover:bg-rose-50 font-bold'
+                : 'text-[#1E3A52] hover:text-[#009bb3] hover:bg-[#EAF6FD]'
             }`}
           >
             {tab.label}
@@ -160,7 +160,7 @@ export const TasksView: React.FC<TasksViewProps> = ({
       {/* Tasks List */}
       <div className="space-y-3">
         {filteredTasks.length === 0 ? (
-          <div className="p-12 text-center text-xs font-mono text-[#F5FBFF]/40 border border-dashed border-[#16364d] rounded-xl bg-[#081722]">
+          <div className="p-12 text-center text-xs font-mono text-[#64748B] border border-dashed border-[#D0EBF7] rounded-xl bg-white shadow-2xs">
             No hay tareas en esta categoría.
           </div>
         ) : (
@@ -173,63 +173,63 @@ export const TasksView: React.FC<TasksViewProps> = ({
               <div
                 key={task.id}
                 onClick={() => handleToggleTaskStatus(task)}
-                className={`p-4 rounded-xl bg-[#081722] border transition-all cursor-pointer flex items-start gap-4 group ${
+                className={`p-4 rounded-xl bg-white border transition-all cursor-pointer flex items-start gap-4 group shadow-xs ${
                   isCompleted
-                    ? 'border-[#16364d] opacity-60'
+                    ? 'border-[#E0F2FE] opacity-60 bg-[#F8FCFE]'
                     : isOverdue
-                    ? 'border-rose-500/40 hover:border-rose-500/60'
-                    : 'border-[#16364d] hover:border-[#00D9F5]/40'
+                    ? 'border-rose-300 hover:border-rose-500 bg-rose-50/20'
+                    : 'border-[#D0EBF7] hover:border-[#00D9F5]'
                 }`}
               >
                 {/* Checkbox */}
                 <button
                   type="button"
-                  className="mt-0.5 text-[#00D9F5] group-hover:scale-110 transition-transform"
+                  className="mt-0.5 text-[#009bb3] group-hover:scale-110 transition-transform"
                 >
                   {isCompleted ? (
-                    <CheckSquare className="w-5 h-5 text-[#00E3B2]" />
+                    <CheckSquare className="w-5 h-5 text-[#00897B]" />
                   ) : (
-                    <Square className="w-5 h-5 text-[#F5FBFF]/40 group-hover:text-[#00D9F5]" />
+                    <Square className="w-5 h-5 text-[#94A3B8] group-hover:text-[#009bb3]" />
                   )}
                 </button>
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${priorityInfo.style}`}>
+                    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase font-medium ${priorityInfo.style}`}>
                       {priorityInfo.label}
                     </span>
 
                     {task.leadName && (
-                      <span className="text-xs font-mono text-[#00D9F5] truncate">
+                      <span className="text-xs font-mono text-[#009bb3] truncate font-semibold">
                         Cliente: {task.leadName}
                       </span>
                     )}
 
                     {isOverdue && (
-                      <span className="text-[10px] font-mono text-rose-400 bg-rose-950/60 border border-rose-500/40 px-2 py-0.5 rounded flex items-center gap-1 font-bold">
+                      <span className="text-[10px] font-mono text-rose-700 bg-rose-50 border border-rose-300 px-2 py-0.5 rounded flex items-center gap-1 font-bold">
                         <AlertTriangle className="w-3 h-3" /> Vencida
                       </span>
                     )}
                   </div>
 
-                  <h4 className={`text-sm font-bold text-[#F5FBFF] ${isCompleted ? 'line-through text-[#F5FBFF]/40' : ''}`}>
+                  <h4 className={`text-sm font-bold text-[#0B1F2D] ${isCompleted ? 'line-through text-[#94A3B8]' : ''}`}>
                     {task.title}
                   </h4>
 
                   {task.description && (
-                    <p className="text-xs text-[#F5FBFF]/70 mt-1 leading-relaxed">
+                    <p className="text-xs text-[#1E3A52] mt-1 leading-relaxed">
                       {task.description}
                     </p>
                   )}
 
-                  <div className="flex flex-wrap items-center gap-4 mt-3 text-[11px] font-mono text-[#F5FBFF]/50">
-                    <span className="flex items-center gap-1">
-                      <User className="w-3 h-3 text-[#00E3B2]" />
+                  <div className="flex flex-wrap items-center gap-4 mt-3 text-[11px] font-mono text-[#64748B]">
+                    <span className="flex items-center gap-1 font-medium">
+                      <User className="w-3 h-3 text-[#00897B]" />
                       <span>{task.assignedTo}</span>
                     </span>
 
-                    <span className={`flex items-center gap-1 tabular-nums ${isOverdue ? 'text-rose-400 font-bold' : ''}`}>
+                    <span className={`flex items-center gap-1 tabular-nums font-medium ${isOverdue ? 'text-rose-600 font-bold' : ''}`}>
                       <Calendar className="w-3 h-3" />
                       <span>Límite: {task.dueDate}</span>
                     </span>
@@ -239,7 +239,7 @@ export const TasksView: React.FC<TasksViewProps> = ({
                 {/* Delete button */}
                 <button
                   onClick={(e) => handleDeleteTask(task.id, e)}
-                  className="p-1.5 text-[#F5FBFF]/30 hover:text-rose-400 hover:bg-rose-950/40 rounded transition-colors"
+                  className="p-1.5 text-neutral-300 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors"
                   title="Eliminar tarea"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -252,31 +252,31 @@ export const TasksView: React.FC<TasksViewProps> = ({
 
       {/* Create Task Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85">
-          <div className="w-full max-w-md bg-[#0B1F2D] border border-[#00D9F5]/40 rounded-2xl p-6 shadow-2xl animate-in zoom-in-95">
-            <h3 className="text-base font-bold text-[#F5FBFF] mb-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B1F2D]/50 backdrop-blur-sm animate-in fade-in">
+          <div className="w-full max-w-md bg-white border border-[#BCE4F7] rounded-2xl p-6 shadow-2xl animate-in zoom-in-95">
+            <h3 className="text-base font-bold text-[#0B1F2D] mb-4">
               Nueva Tarea de Seguimiento
             </h3>
 
             <form onSubmit={handleCreateSubmit} className="space-y-4">
               <div>
-                <label className="text-xs font-mono text-[#F5FBFF]/80 block mb-1">Título de la Tarea *</label>
+                <label className="text-xs font-mono text-[#0B1F2D] font-bold block mb-1">Título de la Tarea *</label>
                 <input
                   type="text"
                   required
                   value={newTaskTitle}
                   onChange={(e) => setNewTaskTitle(e.target.value)}
                   placeholder="Ej. Enviar cotización técnica preliminar"
-                  className="w-full px-3 py-2 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] outline-none"
+                  className="w-full px-3 py-2 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] outline-none font-mono"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-mono text-[#F5FBFF]/80 block mb-1">Cliente Vinculado</label>
+                <label className="text-xs font-mono text-[#0B1F2D] font-bold block mb-1">Cliente Vinculado</label>
                 <select
                   value={newTaskLeadId}
                   onChange={(e) => setNewTaskLeadId(e.target.value)}
-                  className="w-full px-2 py-2 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] font-mono"
+                  className="w-full px-2 py-2 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                 >
                   <option value="">(Tarea interna general / Sin cliente vinculado)</option>
                   {leads.map((l) => (
@@ -289,11 +289,11 @@ export const TasksView: React.FC<TasksViewProps> = ({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-mono text-[#F5FBFF]/80 block mb-1">Prioridad</label>
+                  <label className="text-xs font-mono text-[#0B1F2D] font-bold block mb-1">Prioridad</label>
                   <select
                     value={newTaskPriority}
                     onChange={(e) => setNewTaskPriority(e.target.value as TaskPriority)}
-                    className="w-full px-2 py-1.5 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] font-mono"
+                    className="w-full px-2 py-1.5 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                   >
                     <option value="baja">Baja</option>
                     <option value="media">Media</option>
@@ -303,40 +303,40 @@ export const TasksView: React.FC<TasksViewProps> = ({
                 </div>
 
                 <div>
-                  <label className="text-xs font-mono text-[#F5FBFF]/80 block mb-1">Fecha Límite</label>
+                  <label className="text-xs font-mono text-[#0B1F2D] font-bold block mb-1">Fecha Límite</label>
                   <input
                     type="date"
                     required
                     value={newTaskDueDate}
                     onChange={(e) => setNewTaskDueDate(e.target.value)}
-                    className="w-full px-2 py-1.5 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] font-mono"
+                    className="w-full px-2 py-1.5 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-mono text-[#F5FBFF]/80 block mb-1">Responsable</label>
+                <label className="text-xs font-mono text-[#0B1F2D] font-bold block mb-1">Responsable</label>
                 <select
                   value={newTaskAssignedTo}
                   onChange={(e) => setNewTaskAssignedTo(e.target.value)}
-                  className="w-full px-2 py-1.5 rounded bg-[#081722] border border-[#16364d] text-xs text-[#F5FBFF] font-mono"
+                  className="w-full px-2 py-1.5 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                 >
                   <option value="Director Cokito">Director Cokito</option>
                   <option value="Ingeniero de Sistemas">Ingeniero de Sistemas</option>
                 </select>
               </div>
 
-              <div className="pt-3 flex justify-end gap-3 border-t border-[#143247]">
+              <div className="pt-3 flex justify-end gap-3 border-t border-[#E0F2FE]">
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 text-xs font-mono text-[#F5FBFF]/70"
+                  className="px-4 py-2 text-xs font-mono text-[#64748B] hover:text-[#0B1F2D] cursor-pointer"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded bg-[#00D9F5] text-[#0B1F2D] text-xs font-bold font-mono hover:bg-[#00E3B2]"
+                  className="px-4 py-2 rounded bg-[#00D9F5] text-[#0B1F2D] text-xs font-bold font-mono hover:bg-[#00E3B2] cursor-pointer shadow-xs"
                 >
                   Guardar Tarea
                 </button>

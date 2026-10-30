@@ -138,10 +138,10 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
       {/* Title & Action Row */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#F5FBFF] tracking-tight">
+          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
             Gestión Integral de Contactos & Leads
           </h2>
-          <p className="text-xs font-mono text-[#F5FBFF]/60 mt-0.5">
+          <p className="text-xs font-mono text-[#64748B] mt-0.5">
             {leads.length} contactos registrados · Datos persistentes en base de datos
           </p>
         </div>
@@ -149,7 +149,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={handleExportCsv}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-[#081722] hover:bg-[#143247] border border-[#00D9F5]/30 text-xs font-mono text-[#00D9F5] transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-white hover:bg-[#EAF6FD] border border-[#BCE4F7] text-xs font-mono text-[#009bb3] font-bold transition-all cursor-pointer shadow-2xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Descargar CSV</span>
@@ -157,7 +157,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
 
           <button
             onClick={onOpenNewContactModal}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-sm shadow-[#00D9F5]/20"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Nuevo Contacto</span>
@@ -166,17 +166,17 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 rounded-xl bg-[#081722] border border-[#16364d]">
+      <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-4 rounded-xl bg-white border border-[#D0EBF7] shadow-xs">
         
         {/* Search */}
         <div className="sm:col-span-5 relative">
-          <Search className="w-4 h-4 text-[#00D9F5] absolute left-3 top-3" />
+          <Search className="w-4 h-4 text-[#009bb3] absolute left-3 top-3" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Buscar por nombre, empresa, correo o ID..."
-            className="w-full pl-9 pr-4 py-2 rounded-md bg-[#0B1F2D] border border-[#16364d] focus:border-[#00D9F5] text-xs font-mono text-[#F5FBFF] placeholder-[#F5FBFF]/40 outline-none"
+            className="w-full pl-9 pr-4 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] placeholder-[#94A3B8] outline-none"
           />
         </div>
 
@@ -185,7 +185,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full px-3 py-2 rounded-md bg-[#0B1F2D] border border-[#16364d] focus:border-[#00D9F5] text-xs font-mono text-[#F5FBFF] outline-none"
+            className="w-full px-3 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] outline-none"
           >
             <option value="all">Todas las etapas del pipeline</option>
             {stageOptions.map((st) => (
@@ -201,7 +201,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="w-full px-3 py-2 rounded-md bg-[#0B1F2D] border border-[#16364d] focus:border-[#00D9F5] text-xs font-mono text-[#F5FBFF] outline-none"
+            className="w-full px-3 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] outline-none"
           >
             <option value="all">Todos los servicios</option>
             {projectTypes.map((pt) => (
@@ -215,49 +215,49 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
       </div>
 
       {/* Contacts Data Table */}
-      <div className="rounded-xl bg-[#081722] border border-[#16364d] overflow-hidden shadow-lg">
+      <div className="rounded-xl bg-white border border-[#D0EBF7] overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#143247] bg-[#0B1F2D] text-[11px] font-mono text-[#F5FBFF]/60 uppercase tracking-wider">
-                <th className="py-3.5 px-4 font-semibold">ID / Lead</th>
+              <tr className="border-b border-[#D0EBF7] bg-[#F0F9FF] text-[11px] font-mono text-[#1E3A52] uppercase tracking-wider">
+                <th className="py-3.5 px-4 font-bold">ID / Lead</th>
                 <th
                   onClick={() => toggleSort('fullName')}
-                  className="py-3.5 px-4 font-semibold cursor-pointer hover:text-[#00D9F5] transition-colors"
+                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Nombre & Organización</span>
                     <ArrowUpDown className="w-3 h-3" />
                   </div>
                 </th>
-                <th className="py-3.5 px-4 font-semibold">Tipo de Proyecto</th>
+                <th className="py-3.5 px-4 font-bold">Tipo de Proyecto</th>
                 <th
                   onClick={() => toggleSort('status')}
-                  className="py-3.5 px-4 font-semibold cursor-pointer hover:text-[#00D9F5] transition-colors"
+                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Etapa / Estado</span>
                     <ArrowUpDown className="w-3 h-3" />
                   </div>
                 </th>
-                <th className="py-3.5 px-4 font-semibold">Responsable</th>
+                <th className="py-3.5 px-4 font-bold">Responsable</th>
                 <th
                   onClick={() => toggleSort('createdAt')}
-                  className="py-3.5 px-4 font-semibold cursor-pointer hover:text-[#00D9F5] transition-colors"
+                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
                 >
                   <div className="flex items-center gap-1.5">
                     <span>Fecha</span>
                     <ArrowUpDown className="w-3 h-3" />
                   </div>
                 </th>
-                <th className="py-3.5 px-4 text-right font-semibold">Acciones</th>
+                <th className="py-3.5 px-4 text-right font-bold">Acciones</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-[#143247] text-xs">
+            <tbody className="divide-y divide-[#E0F2FE] text-xs">
               {filteredLeads.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="py-12 text-center text-xs font-mono text-[#F5FBFF]/40">
+                  <td colSpan={7} className="py-12 text-center text-xs font-mono text-[#64748B]">
                     No se encontraron contactos que coincidan con los filtros aplicados.
                   </td>
                 </tr>
@@ -267,25 +267,25 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                     <tr
                       key={lead.id}
                       onClick={() => onSelectLead(lead)}
-                      className="hover:bg-[#0B1F2D]/90 transition-colors cursor-pointer group"
+                      className="hover:bg-[#EAF6FD] transition-colors cursor-pointer group"
                     >
                       {/* ID / Source */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono">
-                        <span className="text-[#00D9F5] font-semibold">{lead.id.split('_').slice(1).join('_')}</span>
-                        <span className="block text-[10px] text-[#F5FBFF]/40 uppercase">
+                        <span className="text-[#009bb3] font-bold">{lead.id.split('_').slice(1).join('_')}</span>
+                        <span className="block text-[10px] text-[#64748B] uppercase">
                           {lead.source === 'landing_page' ? 'Web Landing' : lead.source}
                         </span>
                       </td>
 
                       {/* Name & Company */}
                       <td className="py-3.5 px-4">
-                        <div className="font-bold text-[#F5FBFF] group-hover:text-[#00D9F5] transition-colors">
+                        <div className="font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
                           {lead.fullName}
                         </div>
-                        <div className="text-[11px] font-mono text-[#F5FBFF]/60 flex items-center gap-2 mt-0.5">
+                        <div className="text-[11px] font-mono text-[#64748B] flex items-center gap-2 mt-0.5">
                           {lead.company && (
-                            <span className="flex items-center gap-1">
-                              <Building className="w-3 h-3 text-[#00E3B2]" />
+                            <span className="flex items-center gap-1 font-medium text-[#00897B]">
+                              <Building className="w-3 h-3 text-[#00897B]" />
                               {lead.company}
                             </span>
                           )}
@@ -295,8 +295,8 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
 
                       {/* Project Type */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px]">
-                        <span className="text-[#F5FBFF] capitalize">{lead.projectType}</span>
-                        <span className="block text-[10px] text-[#F5FBFF]/40">
+                        <span className="text-[#0B1F2D] capitalize font-medium">{lead.projectType}</span>
+                        <span className="block text-[10px] text-[#64748B]">
                           Pref: {lead.contactPreference}
                         </span>
                       </td>
@@ -306,12 +306,12 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                         <select
                           value={lead.status}
                           onChange={(e) => handleStageChange(lead.id, e.target.value as PipelineStage, e)}
-                          className={`text-[11px] font-mono font-semibold px-2 py-1 rounded border outline-none cursor-pointer ${
-                            stageBadgeStyle[lead.status] || 'bg-neutral-800 text-neutral-200 border-neutral-700'
+                          className={`text-[11px] font-mono font-bold px-2 py-1 rounded border outline-none cursor-pointer ${
+                            stageBadgeStyle[lead.status] || 'bg-neutral-100 text-neutral-700 border-neutral-300'
                           }`}
                         >
                           {stageOptions.map((st) => (
-                            <option key={st.value} value={st.value} className="bg-[#0B1F2D] text-[#F5FBFF]">
+                            <option key={st.value} value={st.value} className="bg-white text-[#0B1F2D]">
                               {st.label}
                             </option>
                           ))}
@@ -319,12 +319,12 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                       </td>
 
                       {/* Responsible */}
-                      <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-[#F5FBFF]/80">
+                      <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-[#1E3A52]">
                         {lead.assignedTo}
                       </td>
 
                       {/* Date */}
-                      <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-[#F5FBFF]/60 tabular-nums">
+                      <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-[#64748B] tabular-nums">
                         {new Date(lead.createdAt).toLocaleDateString('es-ES', {
                           day: '2-digit',
                           month: 'short',
@@ -337,14 +337,14 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onSelectLead(lead)}
-                            className="p-1.5 rounded hover:bg-[#143247] text-[#00D9F5] transition-colors"
+                            className="p-1.5 rounded hover:bg-[#EAF6FD] text-[#009bb3] transition-colors"
                             title="Ver ficha completa"
                           >
                             <Eye className="w-4 h-4" />
                           </button>
                           <button
                             onClick={(e) => handleDelete(lead.id, lead.fullName, e)}
-                            className="p-1.5 rounded hover:bg-rose-950/60 text-[#F5FBFF]/40 hover:text-rose-400 transition-colors"
+                            className="p-1.5 rounded hover:bg-rose-50 text-neutral-400 hover:text-rose-600 transition-colors"
                             title="Eliminar contacto"
                           >
                             <Trash2 className="w-4 h-4" />

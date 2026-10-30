@@ -105,7 +105,7 @@ export const LabLogo: React.FC<LabLogoProps> = ({
 
       <div className="flex flex-col justify-center">
         <div className={`font-bold tracking-tight leading-none ${titleSizes} whitespace-nowrap`}>
-          <span className={isMonochrome ? 'text-black' : 'text-[#F5FBFF]'}>COKITO'S </span>
+          <span className={isMonochrome ? 'text-black' : 'text-[#0B1F2D]'}>COKITO'S </span>
           <span className={isMonochrome ? 'text-black' : 'text-[#00D9F5]'}>LAB</span>
         </div>
 
@@ -113,7 +113,7 @@ export const LabLogo: React.FC<LabLogoProps> = ({
           <span
             className={`font-mono uppercase tracking-widest leading-none mt-1 ${
               size === 'sm' ? 'text-[8px]' : 'text-[9.5px]'
-            } ${isMonochrome ? 'text-neutral-600' : 'text-[#F5FBFF]/60'}`}
+            } ${isMonochrome ? 'text-neutral-600' : 'text-[#0B1F2D]/60'}`}
           >
             LABORATORIO DE INNOVACIÓN Y TECNOLOGÍA APLICADA
           </span>

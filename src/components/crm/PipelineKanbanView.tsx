@@ -77,16 +77,16 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
       {/* Kanban Header & Info */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2">
         <div>
-          <h2 className="text-xl font-bold text-[#F5FBFF] tracking-tight">
+          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
             Pipeline Comercial
           </h2>
-          <p className="text-xs font-mono text-[#F5FBFF]/60">
+          <p className="text-xs font-mono text-[#64748B]">
             8 Etapas operativas · Desplaza horizontalmente para ver todas las etapas
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-[#F5FBFF]/60">
-          <span>Total Oportunidades: <strong className="text-[#00D9F5] tabular-nums">{leads.length}</strong></span>
+        <div className="flex items-center gap-2 text-xs font-mono text-[#64748B]">
+          <span>Total Oportunidades: <strong className="text-[#009bb3] tabular-nums font-bold">{leads.length}</strong></span>
         </div>
       </div>
 
@@ -98,16 +98,16 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
           return (
             <div
               key={col.stage}
-              className="w-72 shrink-0 flex flex-col rounded-xl bg-[#081722]/80 border border-[#16364d] overflow-hidden"
+              className="w-72 shrink-0 flex flex-col rounded-xl bg-[#F8FCFE] border border-[#D0EBF7] overflow-hidden shadow-xs"
             >
               {/* Column Header */}
-              <div className="p-3 bg-[#0B1F2D] border-b border-[#143247] flex items-center justify-between">
+              <div className="p-3 bg-[#F0F9FF] border-b border-[#D0EBF7] flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className={`text-xs font-mono font-bold ${col.accent}`}>
                     {col.label}
                   </span>
                 </div>
-                <span className={`font-mono text-xs px-2 py-0.5 rounded-full border tabular-nums ${col.bg}`}>
+                <span className={`font-mono text-xs px-2 py-0.5 rounded-full border tabular-nums font-bold ${col.bg}`}>
                   {stageLeads.length}
                 </span>
               </div>
@@ -115,7 +115,7 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
               {/* Cards Container */}
               <div className="p-2.5 flex-1 space-y-2.5 overflow-y-auto max-h-[70vh]">
                 {stageLeads.length === 0 ? (
-                  <div className="h-28 border border-dashed border-[#16364d]/60 rounded-lg flex items-center justify-center text-[11px] font-mono text-[#F5FBFF]/30 text-center p-3">
+                  <div className="h-28 border border-dashed border-[#D0EBF7] rounded-lg flex items-center justify-center text-[11px] font-mono text-[#94A3B8] text-center p-3">
                     Sin prospectos en esta etapa
                   </div>
                 ) : (
@@ -123,38 +123,38 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
                     <div
                       key={lead.id}
                       onClick={() => onSelectLead(lead)}
-                      className="p-3.5 rounded-lg bg-[#0B1F2D] border border-[#16364d] hover:border-[#00D9F5]/40 transition-all cursor-pointer shadow-sm group hover:shadow-md hover:shadow-[#00D9F5]/5"
+                      className="p-3.5 rounded-lg bg-white border border-[#D0EBF7] hover:border-[#00D9F5] transition-all cursor-pointer shadow-2xs group hover:shadow-md"
                     >
                       {/* Card Top: Type & Age */}
-                      <div className="flex items-center justify-between text-[10px] font-mono text-[#F5FBFF]/50 mb-2">
-                        <span className="text-[#00D9F5] uppercase tracking-wider">
+                      <div className="flex items-center justify-between text-[10px] font-mono text-[#64748B] mb-2 font-medium">
+                        <span className="text-[#009bb3] uppercase tracking-wider font-bold">
                           {lead.projectType}
                         </span>
                         <span>{getDaysAgo(lead.createdAt)}</span>
                       </div>
 
                       {/* Name & Company */}
-                      <h4 className="text-sm font-bold text-[#F5FBFF] group-hover:text-[#00D9F5] transition-colors leading-snug mb-1">
+                      <h4 className="text-sm font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors leading-snug mb-1">
                         {lead.fullName}
                       </h4>
 
                       {lead.company && (
-                        <div className="flex items-center gap-1.5 text-xs text-[#F5FBFF]/60 mb-2 font-mono truncate">
-                          <Building className="w-3 h-3 text-[#00E3B2] shrink-0" />
+                        <div className="flex items-center gap-1.5 text-xs text-[#64748B] mb-2 font-mono truncate">
+                          <Building className="w-3 h-3 text-[#00897B] shrink-0" />
                           <span className="truncate">{lead.company}</span>
                         </div>
                       )}
 
                       {/* Brief description snippet */}
-                      <p className="text-xs text-[#F5FBFF]/70 line-clamp-2 leading-relaxed mb-3">
+                      <p className="text-xs text-[#1E3A52] line-clamp-2 leading-relaxed mb-3">
                         {lead.description}
                       </p>
 
                       {/* Card Footer: Notes counter + Stage shift quick buttons */}
-                      <div className="pt-2 border-t border-[#143247] flex items-center justify-between text-[11px] font-mono text-[#F5FBFF]/60">
+                      <div className="pt-2 border-t border-[#E0F2FE] flex items-center justify-between text-[11px] font-mono text-[#64748B]">
                         <div className="flex items-center gap-2">
                           <span className="flex items-center gap-1">
-                            <MessageSquare className="w-3 h-3 text-[#00D9F5]" />
+                            <MessageSquare className="w-3 h-3 text-[#009bb3]" />
                             <span>{lead.notes.length}</span>
                           </span>
                         </div>
@@ -164,7 +164,7 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
                           {colIdx > 0 && (
                             <button
                               onClick={(e) => handleMoveStage(lead, 'backward', e)}
-                              className="p-1 hover:bg-[#143247] rounded text-[#F5FBFF]/60 hover:text-[#F5FBFF] transition-colors"
+                              className="p-1 hover:bg-[#EAF6FD] rounded text-[#64748B] hover:text-[#0B1F2D] transition-colors cursor-pointer"
                               title="Mover a etapa anterior"
                             >
                               <ChevronLeft className="w-3.5 h-3.5" />
@@ -173,7 +173,7 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
                           {colIdx < stageKeys.length - 1 && (
                             <button
                               onClick={(e) => handleMoveStage(lead, 'forward', e)}
-                              className="p-1 hover:bg-[#143247] rounded text-[#00D9F5] hover:text-[#00E3B2] transition-colors"
+                              className="p-1 hover:bg-[#EAF6FD] rounded text-[#009bb3] hover:text-[#00897B] transition-colors cursor-pointer"
                               title="Avanzar etapa"
                             >
                               <ChevronRight className="w-3.5 h-3.5" />
