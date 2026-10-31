@@ -4,7 +4,8 @@ import { api } from '../../lib/api.ts';
 import { INITIAL_PROJECTS } from '../../lib/initialData.ts';
 import { Language, translations } from '../../lib/i18n.ts';
 import { trackSectionNavigation } from '../../lib/analytics.ts';
-import { CheckCircle2, Clock, Sparkles, FolderGit2, ExternalLink, FlaskConical } from 'lucide-react';
+import { CheckCircle2, Clock, Sparkles, FolderGit2, ExternalLink, FlaskConical, Layers } from 'lucide-react';
+import { LegalTechSuiteSection } from './LegalTechSuiteSection.tsx';
 
 interface ProjectsSectionProps {
   currentLang: Language;
@@ -39,8 +40,12 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
   );
   const categories = ['all', ...allAvailableCategories];
 
-  const filteredProjects = activeCategory === 'all'
-    ? projects
+  const isLegalTechActive = activeCategory === 'all' || activeCategory === 'LegalTech' || activeCategory === 'CRM & Operaciones';
+
+  // For the grid below the LegalTech family:
+  // When 'all', display the non-legaltech projects to avoid repetition, or all when filtering by category
+  const displayProjects = activeCategory === 'all'
+    ? projects.filter(p => !p.id.startsWith('proj_legaltech_'))
     : projects.filter(p => (p.categories ? p.categories.includes(activeCategory) : p.category === activeCategory));
 
   const statusLabels: Record<string, { label: string; color: string }> = {
@@ -110,21 +115,46 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
           )}
         </div>
 
+        {/* LegalTech CRM Suite Master Family Component (when active or in all view) */}
+        {isLegalTechActive && (
+          <LegalTechSuiteSection currentLang={currentLang} />
+        )}
+
+        {/* Section title for other multidisciplinary systems if in 'all' view */}
+        {activeCategory === 'all' && displayProjects.length > 0 && (
+          <div className="pt-6 pb-6 border-t border-[#CCE8F6] flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono text-[#009bb3] uppercase tracking-wider font-bold mb-1">
+                <FlaskConical className="w-3.5 h-3.5 text-[#00897B]" />
+                <span>Portafolio Tecnológico Multidisciplinar</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] tracking-tight">
+                Otros Ecosistemas & Desarrollos de Cokito’s Lab
+              </h3>
+            </div>
+            <p className="text-xs font-mono text-[#64748B]">
+              EdTech · SportsTech · FinTech / Retail · SaaS Social
+            </p>
+          </div>
+        )}
+
         {/* Projects Cards List (Dense & High Contrast) */}
         {loading ? (
           <div className="py-10 text-center text-[#64748B] font-mono text-xs">
             Loading database records...
           </div>
-        ) : filteredProjects.length === 0 ? (
-          <div className="p-6 rounded-xl lab-card-clean bg-white border-[#BCE4F7] text-center max-w-xl mx-auto">
-            <FolderGit2 className="w-8 h-8 text-[#009bb3] mx-auto mb-2" />
-            <p className="text-xs text-[#1E3A52]">
-              {t.empty}
-            </p>
-          </div>
+        ) : displayProjects.length === 0 ? (
+          !isLegalTechActive && (
+            <div className="p-6 rounded-xl lab-card-clean bg-white border-[#BCE4F7] text-center max-w-xl mx-auto">
+              <FolderGit2 className="w-8 h-8 text-[#009bb3] mx-auto mb-2" />
+              <p className="text-xs text-[#1E3A52]">
+                {t.empty}
+              </p>
+            </div>
+          )
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {filteredProjects.map((project) => {
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {displayProjects.map((project) => {
               const statusInfo = statusLabels[project.status] || {
                 label: project.status,
                 color: 'text-neutral-600 bg-neutral-100 border-neutral-300',

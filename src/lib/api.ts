@@ -16,7 +16,7 @@ import {
 
 const TOKEN_KEY = 'cokitos_lab_auth_token';
 const USER_KEY = 'cokitos_lab_auth_user';
-const PROJECTS_STORAGE_KEY = 'cokitos_lab_projects_v2';
+const PROJECTS_STORAGE_KEY = 'cokitos_lab_projects_v3';
 const LEADS_STORAGE_KEY = 'cokitos_lab_leads_v2';
 const TASKS_STORAGE_KEY = 'cokitos_lab_tasks_v2';
 const SETTINGS_STORAGE_KEY = 'cokitos_lab_settings_v2';
@@ -210,16 +210,18 @@ export class ApiClient {
       });
       this.setToken(res.token, res.user);
       return res;
-    } catch {
-      // Offline / static hosting login fallback for demo & control
+    } catch (e: any) {
+      if (password.trim() !== '311044') {
+        throw new Error('Credenciales no válidas. Acceso restringido al personal autorizado de Cokito’s Lab.');
+      }
       const user = INITIAL_USERS.find(u => u.email.toLowerCase() === email.toLowerCase()) || {
         id: 'user_admin',
-        name: 'Director Cokito',
-        email: email || 'admin@cokitoslab.com',
+        name: email.toLowerCase().includes('anat') ? 'Ana Teresa Sandoval' : 'Director Cokito',
+        email: email || 'cokito.vzla@gmail.com',
         role: 'admin' as const,
         createdAt: new Date().toISOString(),
       };
-      const token = `demo_tok_${Date.now()}`;
+      const token = `cokitos_sess_${Date.now()}`;
       this.setToken(token, user);
       return { success: true, token, user };
     }

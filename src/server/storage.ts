@@ -52,7 +52,7 @@ class DatabaseManager {
       if (fs.existsSync(DB_PATH)) {
         const raw = fs.readFileSync(DB_PATH, 'utf-8');
         const parsed = JSON.parse(raw);
-        const hasOldMocks = !parsed.projects || parsed.projects.some((p: any) => p.id === 'proj_01' || p.id === 'proj_02');
+        const hasOldMocks = !parsed.projects || parsed.projects.some((p: any) => p.id === 'proj_01' || p.id === 'proj_02' || p.id === 'proj_binlegal' || p.id === 'proj_crm_omega');
         return {
           leads: parsed.leads || initialLeads,
           tasks: parsed.tasks || initialTasks,

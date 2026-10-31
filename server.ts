@@ -143,15 +143,20 @@ app.post('/api/auth/login', (req: Request, res: Response) => {
   const users = db.getUsers();
   const matchedUser = users.find(u => u.email.toLowerCase() === cleanEmail);
 
-  // Default master access for lab administrative panel
-  const isMasterAdmin = (cleanEmail === 'admin@cokitoslab.com' || cleanEmail === 'anat.vacaviejavzla@gmail.com');
-  const isValidPass = password === 'admin123' || password === 'cokito2026' || password.length >= 6;
+  // Authorized access with password 311044
+  const isMasterAdmin = (
+    cleanEmail === 'anat.vacaviejavzla@gmail.com' ||
+    cleanEmail === 'admin@cokitoslab.com' ||
+    cleanEmail === 'cokito.vzla@gmail.com' ||
+    cleanEmail === 'cokito.int@gmail.com'
+  );
+  const isValidPass = password.trim() === '311044';
 
   if ((matchedUser || isMasterAdmin) && isValidPass) {
     const token = `cokitos_sess_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
     const userObj = matchedUser || {
       id: 'user_master',
-      name: 'Director Cokito',
+      name: cleanEmail.includes('anat') ? 'Ana Teresa Sandoval' : 'Director Cokito',
       email: cleanEmail,
       role: 'admin',
       createdAt: new Date().toISOString(),
@@ -171,7 +176,7 @@ app.post('/api/auth/login', (req: Request, res: Response) => {
     });
   }
 
-  return res.status(401).json({ error: 'Credenciales inválidas. Usa admin@cokitoslab.com / admin123' });
+  return res.status(401).json({ error: 'Credenciales no válidas. Acceso restringido al personal autorizado de Cokito’s Lab.' });
 });
 
 app.get('/api/auth/me', authMiddleware, (req: Request, res: Response) => {
