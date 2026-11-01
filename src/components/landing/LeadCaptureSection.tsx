@@ -1,15 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { ProjectType, ContactPreference, Lead } from '../../types/index.ts';
+import { ProjectType, ContactPreference, Lead, LeadDiagnostic } from '../../types/index.ts';
 import { api } from '../../lib/api.ts';
 import { Language, translations } from '../../lib/i18n.ts';
 import { trackSectionNavigation } from '../../lib/analytics.ts';
-import { Send, CheckCircle2, AlertCircle, Loader2, ArrowRight } from 'lucide-react';
+import { DiagnosticFlowModal } from '../diagnostic/DiagnosticFlowModal.tsx';
+import { RecoverRequestModal } from '../diagnostic/RecoverRequestModal.tsx';
+import { 
+  Send, 
+  CheckCircle2, 
+  AlertCircle, 
+  Loader2, 
+  ArrowRight, 
+  Copy, 
+  Check, 
+  MessageCircle, 
+  Sparkles, 
+  Clock, 
+  ExternalLink,
+  Search,
+  Code2,
+  Users,
+  Zap,
+  Cpu,
+  Compass,
+  Globe,
+  Lightbulb
+} from 'lucide-react';
 
 interface LeadCaptureSectionProps {
   preselectedServiceType?: ProjectType | null;
   onLeadSubmitted?: (lead: Lead) => void;
   currentLang: Language;
 }
+
+const SERVICE_AREA_OPTIONS: { 
+  value: ProjectType; 
+  label: string; 
+  badge: string; 
+  description: string;
+  icon: React.ElementType;
+}[] = [
+  { 
+    value: 'software', 
+    label: 'Sistemas y software a medida', 
+    badge: 'Módulo 1', 
+    description: 'Plataformas web, apps móviles y portales personalizados',
+    icon: Code2 
+  },
+  { 
+    value: 'crm', 
+    label: 'CRM y gestión operativa', 
+    badge: 'Módulo 2', 
+    description: 'Embudo de ventas, seguimiento comercial y control de tareas',
+    icon: Users 
+  },
+  { 
+    value: 'automation', 
+    label: 'Automatización de procesos', 
+    badge: 'Módulo 3', 
+    description: 'Eliminación de tareas repetitivas y flujos automáticos',
+    icon: Zap 
+  },
+  { 
+    value: 'optimization', 
+    label: 'Optimización de sistemas existentes', 
+    badge: 'Módulo 4', 
+    description: 'Rendimiento, estabilidad y modernización de código',
+    icon: Cpu 
+  },
+  { 
+    value: 'consulting', 
+    label: 'Consultoría tecnológica', 
+    badge: 'Módulo 5', 
+    description: 'Decisiones de arquitectura, stack y auditoría técnica',
+    icon: Compass 
+  },
+  { 
+    value: 'landing', 
+    label: 'Landing pages y plataformas de captación', 
+    badge: 'Módulo 6', 
+    description: 'Web corporativa, páginas de conversión y tiendas online',
+    icon: Globe 
+  },
+  { 
+    value: 'idea', 
+    label: 'Tengo una idea y necesito orientación', 
+    badge: 'Módulo 7', 
+    description: 'Estructuración de prototipo, viabilidad y definición de MVP',
+    icon: Lightbulb 
+  },
+];
 
 export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
   preselectedServiceType,
@@ -21,7 +101,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
     company: '',
     email: '',
     phone: '',
-    projectType: (preselectedServiceType || 'software') as ProjectType,
+    serviceAreas: [(preselectedServiceType || 'software') as ProjectType],
     description: '',
     contactPreference: 'email' as ContactPreference,
     dataConsent: true,
@@ -29,25 +109,47 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [submittedLead, setSubmittedLead] = useState<Lead | null>(null);
+
+  // Success state with rich metadata
+  const [submissionResult, setSubmissionResult] = useState<{
+    lead: Lead;
+    referenceCode: string;
+    diagnostic?: LeadDiagnostic;
+    recoveryToken?: string;
+  } | null>(null);
+
+  // Modals state
+  const [showDiagnosticModal, setShowDiagnosticModal] = useState(false);
+  const [showRecoverModal, setShowRecoverModal] = useState(false);
+  const [copiedRef, setCopiedRef] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const t = translations[currentLang].contact;
 
   useEffect(() => {
     if (preselectedServiceType) {
-      setFormData(prev => ({ ...prev, projectType: preselectedServiceType }));
+      setFormData(prev => ({
+        ...prev,
+        serviceAreas: prev.serviceAreas.includes(preselectedServiceType)
+          ? prev.serviceAreas
+          : [preselectedServiceType, ...prev.serviceAreas]
+      }));
     }
   }, [preselectedServiceType]);
 
-  const projectTypeOptions: { value: ProjectType; label: string }[] = [
-    { value: 'software', label: currentLang === 'en' ? 'Custom Software & Platforms' : currentLang === 'fr' ? 'Logiciels et Systèmes sur Mesure' : 'Software a medida' },
-    { value: 'landing', label: currentLang === 'en' ? 'Landing Pages & Conversion Funnels' : currentLang === 'fr' ? 'Landing Pages et Tunnels de Conversion' : 'Landing pages y plataformas de captación' },
-    { value: 'crm', label: currentLang === 'en' ? 'CRM & Operations Management' : currentLang === 'fr' ? 'CRM et Gestion Opérationnelle' : 'CRM y gestión operativa' },
-    { value: 'automation', label: currentLang === 'en' ? 'Process Automation' : currentLang === 'fr' ? 'Automatisation des Processus' : 'Automatización de procesos' },
-    { value: 'optimization', label: currentLang === 'en' ? 'Existing Systems Optimization' : currentLang === 'fr' ? 'Optimisation de Systèmes Existants' : 'Optimización de sistemas' },
-    { value: 'consulting', label: currentLang === 'en' ? 'Technology Advisory' : currentLang === 'fr' ? 'Conseil Technologique' : 'Consultoría tecnológica' },
-    { value: 'idea', label: currentLang === 'en' ? 'I have an idea & need guidance' : currentLang === 'fr' ? 'J\'ai une idée et j\'ai besoin d\'orientation' : 'Tengo una idea y necesito orientación' },
-  ];
+  const handleToggleArea = (area: ProjectType) => {
+    setFormData(prev => {
+      const exists = prev.serviceAreas.includes(area);
+      let updated: ProjectType[];
+      if (exists) {
+        if (prev.serviceAreas.length === 1) return prev; // Keep at least one
+        updated = prev.serviceAreas.filter(a => a !== area);
+      } else {
+        updated = [...prev.serviceAreas, area];
+      }
+      return { ...prev, serviceAreas: updated };
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,17 +157,21 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
 
     // Client-side validations
     if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
-      setErrorMsg(currentLang === 'en' ? 'Please enter your full name (at least 2 letters).' : currentLang === 'fr' ? 'Veuillez renseigner votre nom complet (au moins 2 lettres).' : 'Por favor ingresa tu nombre completo (mínimo 2 caracteres).');
+      setErrorMsg('Por favor ingresa tu nombre completo (mínimo 2 caracteres).');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim() || !emailRegex.test(formData.email.trim())) {
-      setErrorMsg(currentLang === 'en' ? 'Please enter a valid email address.' : currentLang === 'fr' ? 'Veuillez saisir une adresse e-mail valide.' : 'Por favor introduce una dirección de correo electrónico válida.');
+      setErrorMsg('Por favor introduce una dirección de correo electrónico válida.');
       return;
     }
 
-    // Relaxed description validation so brief test submissions aren't blocked
+    if (formData.serviceAreas.length === 0) {
+      setErrorMsg('Por favor selecciona al menos un área de especialidad o interés.');
+      return;
+    }
+
     const cleanDesc = formData.description.trim() || 'Consulta inicial desde el portal web';
 
     setLoading(true);
@@ -76,43 +182,84 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
         company: formData.company || undefined,
         email: formData.email,
         phone: formData.phone || undefined,
-        projectType: formData.projectType,
+        projectType: formData.serviceAreas[0] || 'software',
+        serviceAreas: formData.serviceAreas,
         description: cleanDesc,
         contactPreference: formData.contactPreference,
         dataConsent: formData.dataConsent !== false,
       });
 
       trackSectionNavigation('/contact/success', 'lead_form_submitted');
-      setSubmittedLead(response.lead);
+      setSubmissionResult({
+        lead: response.lead,
+        referenceCode: response.referenceCode,
+        diagnostic: response.diagnostic,
+        recoveryToken: response.recoveryToken,
+      });
+
       if (onLeadSubmitted) {
         onLeadSubmitted(response.lead);
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Error communicating with laboratory.');
+      setErrorMsg(err.message || 'Error al comunicar con el laboratorio.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleReset = () => {
-    setSubmittedLead(null);
+    setSubmissionResult(null);
     setFormData({
       fullName: '',
       company: '',
       email: '',
       phone: '',
-      projectType: 'software',
+      serviceAreas: ['software'],
       description: '',
       contactPreference: 'email',
       dataConsent: true,
     });
   };
 
+  const getRecoveryUrl = () => {
+    if (!submissionResult) return '';
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    return `${origin}/#recuperar?ref=${encodeURIComponent(submissionResult.referenceCode)}${
+      submissionResult.recoveryToken ? `&token=${encodeURIComponent(submissionResult.recoveryToken)}` : ''
+    }`;
+  };
+
+  const handleCopyRef = () => {
+    if (!submissionResult) return;
+    navigator.clipboard.writeText(submissionResult.referenceCode);
+    setCopiedRef(true);
+    setTimeout(() => setCopiedRef(false), 2500);
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(getRecoveryUrl());
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 2500);
+  };
+
+  const handleOpenWhatsApp = () => {
+    if (!submissionResult) return;
+    const areas = formData.serviceAreas
+      .map(a => SERVICE_AREA_OPTIONS.find(opt => opt.value === a)?.label)
+      .filter(Boolean)
+      .join(', ');
+
+    const text = encodeURIComponent(
+      `Hola equipo de Cokito's Lab, acabo de registrar mi solicitud formal con referencia ${submissionResult.referenceCode} a nombre de ${formData.fullName}. Áreas de interés: ${areas}. Mi preferencia de contacto es WhatsApp.`
+    );
+    window.open(`https://wa.me/584242636400?text=${text}`, '_blank');
+  };
+
   return (
-    <section id="contacto" className="py-12 bg-[#F5FBFF] border-t border-[#E0F2FE] relative bg-tech-grid-light">
+    <section id="contacto" className="py-14 bg-[#F5FBFF] border-t border-[#E0F2FE] relative bg-tech-grid-light">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Compact Section Header */}
+        {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-8">
           <div className="inline-flex items-center gap-2 text-xs font-mono text-[#009bb3] uppercase tracking-wider mb-2 font-bold">
             <span className="w-1.5 h-1.5 rounded-full bg-[#00b38c]" />
@@ -126,60 +273,143 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
           </p>
         </div>
 
-        {/* Confirmation Screen */}
-        {submittedLead ? (
-          <div className="p-6 sm:p-8 rounded-2xl lab-card-clean bg-white border-[#00E3B2] text-center shadow-xl relative animate-in fade-in zoom-in-95">
-            <div className="w-12 h-12 rounded-full bg-[#00E3B2]/15 border border-[#00E3B2] flex items-center justify-center mx-auto mb-4 text-[#00897B]">
-              <CheckCircle2 className="w-6 h-6" />
+        {/* WELCOME & DECISION SCREEN (After successful submission) */}
+        {submissionResult ? (
+          <div className="p-6 sm:p-9 rounded-2xl lab-card-clean bg-white border-2 border-[#00E3B2] shadow-2xl relative animate-in fade-in zoom-in-95 space-y-6">
+            
+            <div className="text-center space-y-2">
+              <div className="w-14 h-14 rounded-full bg-[#00E3B2]/15 border-2 border-[#00E3B2] flex items-center justify-center mx-auto mb-2 text-[#00897B]">
+                <CheckCircle2 className="w-7 h-7" />
+              </div>
+              <span className="font-mono text-xs text-[#00897B] uppercase tracking-wider font-bold block">
+                Solicitud Registrada en el Laboratorio
+              </span>
+              <h3 className="text-2xl font-extrabold text-[#0B1F2D]">
+                ¡Bienvenido a Cokito's Lab, {formData.fullName}!
+              </h3>
+              <p className="text-xs sm:text-sm text-[#1E3A52] max-w-lg mx-auto leading-relaxed">
+                Tu solicitud ha sido ingresada con éxito a nuestro sistema central. Se ha emitido tu código oficial de seguimiento comercial:
+              </p>
             </div>
 
-            <span className="font-mono text-xs text-[#00897B] uppercase tracking-wider block mb-1 font-bold">
-              {t.successTag}
-            </span>
-
-            <h3 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] mb-2">
-              {t.successTitle}, {submittedLead.fullName}!
-            </h3>
-
-            <p className="text-xs sm:text-sm text-[#1E3A52] max-w-lg mx-auto mb-4 leading-relaxed">
-              {t.successMsg} ID: <strong className="font-mono text-[#009bb3]">{submittedLead.id}</strong>.
-            </p>
-
-            <div className="p-3.5 rounded-lg bg-[#F0F9FF] border border-[#BCE4F7] max-w-md mx-auto text-left text-xs font-mono mb-6 space-y-1.5 text-[#1E3A52]">
-              <div className="flex justify-between">
-                <span>Status:</span>
-                <span className="text-[#00897B] font-bold">{t.successState}</span>
+            {/* Official Reference Box with Copy */}
+            <div className="p-4 sm:p-5 rounded-xl bg-linear-to-r from-[#F0F9FF] to-[#E8FBF7] border border-[#00D9F5] max-w-lg mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+              <div className="text-center sm:text-left">
+                <span className="text-[11px] font-mono text-[#64748B] uppercase tracking-wider block">
+                  Referencia Comercial Única:
+                </span>
+                <span className="text-2xl sm:text-3xl font-mono font-extrabold text-[#0B1F2D] tracking-wide">
+                  {submissionResult.referenceCode}
+                </span>
               </div>
-              <div className="flex justify-between">
-                <span>{t.successType}</span>
-                <span className="text-[#0B1F2D] capitalize font-medium">{submittedLead.projectType}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>{t.successEmail}</span>
-                <span className="text-[#0B1F2D] font-medium">{submittedLead.email}</span>
-              </div>
+              <button
+                type="button"
+                onClick={handleCopyRef}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white hover:bg-[#EAF6FD] text-xs font-mono text-[#009bb3] font-bold border border-[#BCE4F7] transition-all cursor-pointer shadow-xs"
+              >
+                {copiedRef ? <Check className="w-4 h-4 text-[#00897B]" /> : <Copy className="w-4 h-4" />}
+                <span>{copiedRef ? 'Copiada' : 'Copiar Código'}</span>
+              </button>
             </div>
 
-            <button
-              onClick={handleReset}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-[#EAF6FD] hover:bg-[#00D9F5] border border-[#BCE4F7] hover:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] font-bold transition-all cursor-pointer shadow-xs"
-            >
-              <span>{t.newInquiryBtn}</span>
-              <ArrowRight className="w-3.5 h-3.5 text-[#00897B]" />
-            </button>
+            {/* Two Clear Choices */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto pt-2">
+              
+              {/* Option 1: Continue Diagnostic */}
+              <div className="p-5 rounded-xl border-2 border-[#00D9F5] bg-[#F0F9FF] flex flex-col justify-between space-y-4 hover:shadow-md transition-all">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#00D9F5]/20 text-[11px] font-mono font-bold text-[#0B1F2D]">
+                    <Sparkles className="w-3.5 h-3.5 text-[#009bb3]" />
+                    <span>Opción Recomendada</span>
+                  </div>
+                  <h4 className="text-base font-extrabold text-[#0B1F2D]">
+                    Continuar con el Diagnóstico
+                  </h4>
+                  <p className="text-xs text-[#1E3A52] leading-relaxed">
+                    Es opcional y nos permitirá conocer en profundidad los requerimientos específicos de tu proyecto para formular la arquitectura y presupuesto ideal.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setShowDiagnosticModal(true)}
+                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-mono font-bold text-xs sm:text-sm tracking-wide transition-all shadow-md cursor-pointer hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
+                >
+                  <span>Iniciar Diagnóstico Guiado</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Option 2: Finish for now */}
+              <div className="p-5 rounded-xl border border-[#CDE9F7] bg-white flex flex-col justify-between space-y-4 hover:border-[#00D9F5] transition-all">
+                <div className="space-y-2">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-100 text-[11px] font-mono font-semibold text-slate-700">
+                    <Clock className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Contacto Tradicional</span>
+                  </div>
+                  <h4 className="text-base font-extrabold text-[#0B1F2D]">
+                    Terminar por Ahora
+                  </h4>
+                  <p className="text-xs text-[#1E3A52] leading-relaxed">
+                    Puedes esperar a que nuestro equipo revise tu solicitud preliminar y te contacte por {formData.contactPreference === 'whatsapp' ? 'WhatsApp' : formData.contactPreference === 'call' ? 'llamada' : 'correo electrónico'}.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="w-full py-2.5 px-4 rounded-lg bg-[#EAF6FD] hover:bg-[#D5EBF9] text-[#1E3A52] font-mono font-bold text-xs border border-[#CDE9F7] transition-all cursor-pointer text-center"
+                >
+                  Esperar contacto del equipo
+                </button>
+              </div>
+
+            </div>
+
+            {/* Preserving Reference Channels (WhatsApp / Private Link) */}
+            <div className="max-w-xl mx-auto pt-4 border-t border-[#E0F2FE] space-y-3 text-center">
+              <span className="text-xs font-mono text-[#64748B] block font-medium">
+                ¿Deseas conservar tu referencia y enlace privado de recuperación?
+              </span>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleOpenWhatsApp}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-[#25D366] hover:bg-[#20BA5A] text-white font-mono font-bold text-xs transition-all shadow-xs cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Confirmar vía WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-white hover:bg-[#F0F9FF] border border-[#BCE4F7] text-xs font-mono text-[#0B1F2D] font-bold transition-all cursor-pointer"
+                >
+                  {copiedLink ? <Check className="w-4 h-4 text-[#00897B]" /> : <Copy className="w-4 h-4 text-[#009bb3]" />}
+                  <span>{copiedLink ? 'Enlace Copiado' : 'Copiar Enlace de Acceso'}</span>
+                </button>
+              </div>
+
+              <p className="text-[11px] text-[#64748B] max-w-md mx-auto">
+                WhatsApp abrirá una conversación con el mensaje prellenado para que tú lo confirmes y envíes. No se envían mensajes sin tu autorización.
+              </p>
+            </div>
+
           </div>
         ) : (
           /* High-Contrast Luminous Light Form */
-          <div className="rounded-2xl lab-card-clean bg-white p-5 sm:p-7 shadow-xl border border-[#BCE4F7] relative">
+          <div className="rounded-2xl lab-card-clean bg-white p-5 sm:p-8 shadow-xl border border-[#BCE4F7] relative">
             
             {errorMsg && (
-              <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-300 text-red-700 text-xs flex items-center gap-2.5 font-medium">
+              <div className="mb-5 p-3.5 rounded-lg bg-red-50 border border-red-300 text-red-700 text-xs flex items-center gap-2.5 font-medium animate-in fade-in">
                 <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
                 <span>{errorMsg}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               
               {/* Row 1: Nombre + Empresa */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -232,36 +462,74 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
 
                 <div>
                   <label htmlFor="phone" className="block text-xs font-mono text-[#0B1F2D] font-bold mb-1">
-                    {t.phoneLabel} <span className="text-[#64748B] font-normal">(opcional)</span>
+                    {t.phoneLabel} <span className="text-[#64748B] font-normal">(WhatsApp preferido)</span>
                   </label>
                   <input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder={t.phonePlaceholder}
+                    placeholder="+58 424 000 0000"
                     className="w-full px-3.5 py-2.5 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] focus:bg-white focus:ring-1 focus:ring-[#00D9F5] text-xs sm:text-sm text-[#0B1F2D] placeholder-[#94A3B8] outline-none transition-all font-mono"
                   />
                 </div>
               </div>
 
-              {/* Row 3: Tipo de proyecto */}
-              <div>
-                <label htmlFor="projectType" className="block text-xs font-mono text-[#0B1F2D] font-bold mb-1">
-                  {t.projectTypeLabel} <span className="text-[#009bb3]">*</span>
-                </label>
-                <select
-                  id="projectType"
-                  value={formData.projectType}
-                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value as ProjectType })}
-                  className="w-full px-3.5 py-2.5 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] focus:bg-white focus:ring-1 focus:ring-[#00D9F5] text-xs sm:text-sm text-[#0B1F2D] outline-none transition-all font-mono"
-                >
-                  {projectTypeOptions.map((opt) => (
-                    <option key={opt.value} value={opt.value} className="bg-white text-[#0B1F2D]">
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
+              {/* Row 3: 7 Áreas Especializadas (SELECCIÓN MÚLTIPLE) */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-mono text-[#0B1F2D] font-bold">
+                    Áreas de interés o requerimiento <span className="text-[#009bb3]">*</span>
+                  </label>
+                  <span className="text-[11px] font-mono text-[#009bb3]">
+                    {formData.serviceAreas.length} seleccionada(s)
+                  </span>
+                </div>
+                <p className="text-[11px] text-[#64748B] -mt-1">
+                  Puedes seleccionar una o varias según el alcance de tu proyecto:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                  {SERVICE_AREA_OPTIONS.map((area) => {
+                    const isSelected = formData.serviceAreas.includes(area.value);
+                    const IconComponent = area.icon;
+
+                    return (
+                      <button
+                        type="button"
+                        key={area.value}
+                        onClick={() => handleToggleArea(area.value)}
+                        className={`p-3 rounded-xl border text-left transition-all cursor-pointer flex items-start gap-3 ${
+                          isSelected
+                            ? 'bg-[#E0F8FF] border-[#00D9F5] text-[#0B1F2D] shadow-xs'
+                            : 'bg-[#F8FCFE] border-[#CDE9F7] text-[#1E3A52] hover:bg-white hover:border-[#00D9F5]/60'
+                        }`}
+                      >
+                        <div className={`p-2 rounded-lg shrink-0 ${
+                          isSelected ? 'bg-[#00D9F5] text-[#0B1F2D]' : 'bg-slate-100 text-slate-500'
+                        }`}>
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-1">
+                            <span className="font-mono text-xs font-bold truncate">
+                              {area.label}
+                            </span>
+                            <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                              isSelected ? 'bg-[#00D9F5]/30 text-[#00897B] font-bold' : 'text-[#64748B]'
+                            }`}>
+                              {area.badge}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-[#64748B] leading-tight mt-0.5 line-clamp-1">
+                            {area.description}
+                          </p>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Row 4: Descripción de la necesidad */}
@@ -271,7 +539,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                     {t.descLabel} <span className="text-[#009bb3]">*</span>
                   </label>
                   <span className="text-[10px] font-mono text-[#64748B]">
-                    {formData.description.length} chars
+                    {formData.description.length} caracteres
                   </span>
                 </div>
                 <textarea
@@ -327,9 +595,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                     onChange={(e) => setFormData({ ...formData, dataConsent: e.target.checked })}
                     className="mt-0.5 w-4 h-4 rounded border-[#CDE9F7] bg-white text-[#00D9F5] focus:ring-[#00D9F5]"
                   />
-                  <span>
-                    {t.consentText}
-                  </span>
+                  <span>{t.consentText}</span>
                 </label>
               </div>
 
@@ -343,7 +609,7 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>{t.submitting}</span>
+                      <span>Registrando solicitud...</span>
                     </>
                   ) : (
                     <>
@@ -355,10 +621,57 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
               </div>
 
             </form>
+
+            {/* Recover link under form */}
+            <div className="mt-6 pt-4 border-t border-[#E0F2FE] text-center">
+              <button
+                type="button"
+                onClick={() => setShowRecoverModal(true)}
+                className="text-xs font-mono text-[#009bb3] hover:text-[#0B1F2D] transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span>¿Ya iniciaste una solicitud anteriormente? Recuperar y continuar diagnóstico</span>
+              </button>
+            </div>
+
           </div>
         )}
 
       </div>
+
+      {/* Interactive Diagnostic Modal */}
+      {submissionResult && (
+        <DiagnosticFlowModal
+          isOpen={showDiagnosticModal}
+          referenceCode={submissionResult.referenceCode}
+          leadId={submissionResult.lead.id}
+          leadName={submissionResult.lead.fullName}
+          leadEmail={submissionResult.lead.email}
+          leadPhone={submissionResult.lead.phone}
+          initialSelectedAreas={formData.serviceAreas}
+          recoveryToken={submissionResult.recoveryToken}
+          onClose={() => setShowDiagnosticModal(false)}
+          onCompleted={(updatedDiag) => {
+            console.log('Diagnostic successfully completed:', updatedDiag);
+          }}
+        />
+      )}
+
+      {/* Recover Request Modal */}
+      <RecoverRequestModal
+        isOpen={showRecoverModal}
+        onClose={() => setShowRecoverModal(false)}
+        onRecovered={(lead, diagnostic, token) => {
+          setSubmissionResult({
+            lead,
+            referenceCode: lead.referenceCode || `CL-${new Date().getFullYear()}-00001`,
+            diagnostic,
+            recoveryToken: token,
+          });
+          setShowDiagnosticModal(true);
+        }}
+      />
+
     </section>
   );
 };

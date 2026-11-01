@@ -281,7 +281,10 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
                         </div>
 
                         {/* Company / Service Tag */}
-                        <div className="flex items-center gap-2 mb-2.5 flex-wrap">
+                        <div className="flex items-center gap-1.5 mb-2.5 flex-wrap">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#00D9F5]/10 text-[#009bb3] border border-[#00D9F5]/30 font-bold">
+                            {lead.referenceCode || lead.id}
+                          </span>
                           {lead.company && (
                             <span className="text-[11px] font-mono text-[#64748B] flex items-center gap-1">
                               <Building className="w-3 h-3 text-[#00897B]" />
@@ -291,6 +294,17 @@ export const PipelineKanbanView: React.FC<PipelineKanbanViewProps> = ({
                           <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#F0F9FF] text-[#009bb3] border border-[#BCE4F7] font-semibold">
                             {lead.projectType}
                           </span>
+                          {lead.diagnosticStatus && (
+                            <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded font-bold ${
+                              lead.diagnosticStatus === 'completado'
+                                ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                                : lead.diagnosticStatus === 'en_progreso'
+                                ? 'bg-sky-100 text-sky-800 border border-sky-300'
+                                : 'bg-slate-100 text-slate-600'
+                            }`}>
+                              {lead.diagnosticStatus === 'completado' ? '✓ Diag' : lead.diagnosticStatus === 'en_progreso' ? 'Diag...' : 'Diag pend.'}
+                            </span>
+                          )}
                           {lead.convertedProjectId && (
                             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00E3B2]/20 text-[#00897B] border border-[#00E3B2]/40 font-bold">
                               ✓ Proyecto Creado

@@ -76,6 +76,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
         (lead.company && lead.company.toLowerCase().includes(searchQuery.toLowerCase())) ||
         lead.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         lead.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (lead.referenceCode && lead.referenceCode.toLowerCase().includes(searchQuery.toLowerCase())) ||
         lead.description.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchStatus = statusFilter === 'all' || lead.status === statusFilter;
@@ -328,10 +329,24 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                             {lead.fullName.charAt(0).toUpperCase()}
                           </div>
                           <div>
-                            <div className="flex items-center gap-2">
+                            <div className="flex flex-wrap items-center gap-1.5">
                               <span className="font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
                                 {lead.fullName}
                               </span>
+                              <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#00D9F5]/10 text-[#009bb3] border border-[#00D9F5]/30 font-bold">
+                                {lead.referenceCode || lead.id}
+                              </span>
+                              {lead.diagnosticStatus && (
+                                <span className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-bold ${
+                                  lead.diagnosticStatus === 'completado'
+                                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                                    : lead.diagnosticStatus === 'en_progreso'
+                                    ? 'bg-sky-100 text-sky-800 border border-sky-300'
+                                    : 'bg-slate-100 text-slate-600'
+                                }`}>
+                                  {lead.diagnosticStatus === 'completado' ? 'Diag: Completo' : lead.diagnosticStatus === 'en_progreso' ? 'Diag: En Curso' : 'Diag: Pendiente'}
+                                </span>
+                              )}
                               {lead.isArchived && (
                                 <span className="text-[9px] font-mono bg-amber-500/10 text-amber-600 px-1.5 py-0.2 rounded border border-amber-300">
                                   Archivado

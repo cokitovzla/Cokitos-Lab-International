@@ -1,6 +1,47 @@
 {
   "leads": [
     {
+      "id": "lead_1793556588272_963",
+      "referenceCode": "CL-2026-00009",
+      "fullName": "Dra. Carolina Mendoza",
+      "company": "Mendoza & Asociados Legal",
+      "email": "carolina@mendozalegal.com",
+      "phone": "+584141234567",
+      "projectType": "software",
+      "serviceAreas": [
+        "software",
+        "crm",
+        "automation"
+      ],
+      "description": "Necesitamos automatizar los expedientes y seguimiento de casos con portal para clientes.",
+      "contactPreference": "whatsapp",
+      "dataConsent": true,
+      "status": "nuevo_contacto",
+      "diagnosticStatus": "completado",
+      "assignedTo": "Director Cokito",
+      "source": "landing_page",
+      "createdAt": "2026-11-01T18:09:48.272Z",
+      "updatedAt": "2026-11-01T18:10:17.692Z",
+      "notes": [],
+      "activity": [
+        {
+          "id": "act_1793556617692",
+          "type": "status_change",
+          "description": "Diagnóstico inteligente completado por el cliente [Ref: CL-2026-00009]",
+          "author": "Cliente",
+          "timestamp": "2026-11-01T18:10:17.692Z"
+        },
+        {
+          "id": "act_1793556588272",
+          "type": "contact_created",
+          "description": "Contacto capturado desde la Landing Page del laboratorio [Ref: CL-2026-00009]",
+          "author": "Sistema",
+          "timestamp": "2026-11-01T18:09:48.272Z"
+        }
+      ],
+      "diagnosticId": "diag_1793556588272_644"
+    },
+    {
       "id": "lead_1793490914419_382",
       "fullName": "Cliente Real Empresa",
       "email": "contacto@empresa.com",
@@ -22,7 +63,13 @@
           "author": "Sistema",
           "timestamp": "2026-10-31T23:55:14.419Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00008",
+      "serviceAreas": [
+        "software"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_160"
     },
     {
       "id": "lead_1793490058885_162",
@@ -46,7 +93,13 @@
           "author": "Sistema",
           "timestamp": "2026-10-31T23:40:58.885Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00007",
+      "serviceAreas": [
+        "crm"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_305"
     },
     {
       "id": "lead_1793489911489_619",
@@ -70,7 +123,13 @@
           "author": "Sistema",
           "timestamp": "2026-10-31T23:38:31.489Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00006",
+      "serviceAreas": [
+        "crm"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_579"
     },
     {
       "id": "lead_1793313270899_574",
@@ -94,7 +153,13 @@
           "author": "Sistema",
           "timestamp": "2026-10-29T22:34:30.899Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00005",
+      "serviceAreas": [
+        "automation"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_269"
     },
     {
       "id": "lead_101",
@@ -140,7 +205,13 @@
           "author": "Director Cokito",
           "timestamp": "2026-10-28T22:34:23.517Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00003",
+      "serviceAreas": [
+        "automation"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_73"
     },
     {
       "id": "lead_102",
@@ -180,7 +251,13 @@
           "author": "Director Cokito",
           "timestamp": "2026-10-27T22:34:23.517Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00001",
+      "serviceAreas": [
+        "crm"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_507"
     },
     {
       "id": "lead_103",
@@ -213,7 +290,13 @@
           "author": "Ingeniero de Sistemas",
           "timestamp": "2026-10-28T22:34:23.517Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00002",
+      "serviceAreas": [
+        "software"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_34"
     },
     {
       "id": "lead_104",
@@ -239,7 +322,13 @@
           "author": "Sistema",
           "timestamp": "2026-10-29T16:34:23.517Z"
         }
-      ]
+      ],
+      "referenceCode": "CL-2026-00004",
+      "serviceAreas": [
+        "idea"
+      ],
+      "diagnosticStatus": "no_iniciado",
+      "diagnosticId": "diag_1793556584804_537"
     }
   ],
   "tasks": [
@@ -766,6 +855,20 @@
   },
   "activityLog": [
     {
+      "id": "act_1793556617692",
+      "type": "status_change",
+      "description": "Diagnóstico inteligente completado por el cliente [Ref: CL-2026-00009]",
+      "author": "Cliente",
+      "timestamp": "2026-11-01T18:10:17.692Z"
+    },
+    {
+      "id": "act_1793556588272",
+      "type": "contact_created",
+      "description": "Contacto capturado desde la Landing Page del laboratorio [Ref: CL-2026-00009]",
+      "author": "Sistema",
+      "timestamp": "2026-11-01T18:09:48.272Z"
+    },
+    {
       "id": "act_1793490914419",
       "type": "contact_created",
       "description": "Contacto capturado desde la Landing Page del laboratorio",
@@ -799,6 +902,192 @@
       "description": "Inicialización de base de datos de Cokito's Lab",
       "author": "Sistema",
       "timestamp": "2026-10-29T22:34:23.517Z"
+    }
+  ],
+  "diagnostics": [
+    {
+      "id": "diag_1793556584804_160",
+      "leadId": "lead_1793490914419_382",
+      "referenceCode": "CL-2026-00008",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "software"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-31T23:55:14.419Z",
+      "updatedAt": "2026-10-31T23:55:14.419Z"
+    },
+    {
+      "id": "diag_1793556584804_305",
+      "leadId": "lead_1793490058885_162",
+      "referenceCode": "CL-2026-00007",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "crm"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-31T23:40:58.885Z",
+      "updatedAt": "2026-10-31T23:40:58.885Z"
+    },
+    {
+      "id": "diag_1793556584804_579",
+      "leadId": "lead_1793489911489_619",
+      "referenceCode": "CL-2026-00006",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "crm"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-31T23:38:31.489Z",
+      "updatedAt": "2026-10-31T23:38:31.489Z"
+    },
+    {
+      "id": "diag_1793556584804_269",
+      "leadId": "lead_1793313270899_574",
+      "referenceCode": "CL-2026-00005",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "automation"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-29T22:34:30.899Z",
+      "updatedAt": "2026-10-29T22:34:30.899Z"
+    },
+    {
+      "id": "diag_1793556584804_73",
+      "leadId": "lead_101",
+      "referenceCode": "CL-2026-00003",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "automation"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-26T22:34:23.517Z",
+      "updatedAt": "2026-10-26T22:34:23.517Z"
+    },
+    {
+      "id": "diag_1793556584804_507",
+      "leadId": "lead_102",
+      "referenceCode": "CL-2026-00001",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "crm"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-21T22:34:23.517Z",
+      "updatedAt": "2026-10-21T22:34:23.517Z"
+    },
+    {
+      "id": "diag_1793556584804_34",
+      "leadId": "lead_103",
+      "referenceCode": "CL-2026-00002",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "software"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-24T22:34:23.517Z",
+      "updatedAt": "2026-10-24T22:34:23.517Z"
+    },
+    {
+      "id": "diag_1793556584804_537",
+      "leadId": "lead_104",
+      "referenceCode": "CL-2026-00004",
+      "status": "no_iniciado",
+      "selectedAreas": [
+        "idea"
+      ],
+      "answers": {},
+      "progressPercentage": 0,
+      "currentStep": 0,
+      "totalSteps": 2,
+      "createdAt": "2026-10-29T16:34:23.517Z",
+      "updatedAt": "2026-10-29T16:34:23.517Z"
+    },
+    {
+      "id": "diag_1793556588272_644",
+      "leadId": "lead_1793556588272_963",
+      "referenceCode": "CL-2026-00009",
+      "status": "completado",
+      "selectedAreas": [
+        "software",
+        "crm",
+        "automation"
+      ],
+      "answers": {
+        "gen_organization_type": {
+          "questionId": "gen_organization_type",
+          "questionLabel": "¿Qué tipo de organización o perfil te describe mejor?",
+          "module": "general",
+          "value": "pyme",
+          "displayValue": "Pequeña o Mediana Empresa (PyME)"
+        },
+        "gen_industry": {
+          "questionId": "gen_industry",
+          "questionLabel": "¿En qué sector o industria opera tu proyecto?",
+          "module": "general",
+          "value": "legal_servicios",
+          "displayValue": "Servicios Profesionales / LegalTech"
+        },
+        "gen_main_challenge": {
+          "questionId": "gen_main_challenge",
+          "questionLabel": "¿Cuál es el principal obstáculo o problema que necesitas resolver?",
+          "module": "general",
+          "value": "Los abogados pierden 3 horas al día buscando documentos en carpetas físicas",
+          "displayValue": "Los abogados pierden 3 horas al día buscando documentos en carpetas físicas"
+        }
+      },
+      "progressPercentage": 100,
+      "currentStep": 0,
+      "totalSteps": 4,
+      "createdAt": "2026-11-01T18:09:48.272Z",
+      "updatedAt": "2026-11-01T18:10:17.692Z",
+      "completedAt": "2026-11-01T18:10:17.692Z"
+    }
+  ],
+  "recoveryTokens": [
+    {
+      "tokenHash": "1bb9df9b28a12a2ea1014bdf22759b32af9433d9cf0b937d2b46e0872b1eb04c",
+      "leadId": "lead_1793556588272_963",
+      "referenceCode": "CL-2026-00009",
+      "email": "carolina@mendozalegal.com",
+      "phone": "+584141234567",
+      "expiresAt": 1796148588272,
+      "attempts": 1,
+      "revoked": false,
+      "createdAt": "2026-11-01T18:09:48.272Z"
+    },
+    {
+      "tokenHash": "bd4d8a301f96282b8bd40d5573e4fb71ced9a9033e9c6aa66c963920a3b02152",
+      "leadId": "lead_1793556588272_963",
+      "referenceCode": "CL-2026-00009",
+      "email": "carolina@mendozalegal.com",
+      "phone": "+584141234567",
+      "expiresAt": 1796148605474,
+      "attempts": 0,
+      "revoked": false,
+      "createdAt": "2026-11-01T18:10:05.474Z"
     }
   ]
 }

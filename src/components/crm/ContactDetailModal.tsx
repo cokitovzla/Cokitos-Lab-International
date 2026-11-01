@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Lead, PipelineStage, TaskPriority, Task } from '../../types/index.ts';
+import { Lead, PipelineStage, TaskPriority, Task, LeadDiagnostic, ProjectType } from '../../types/index.ts';
 import { api } from '../../lib/api.ts';
+import { MODULE_METAS, GENERAL_QUESTIONS, SPECIALIZED_MODULE_QUESTIONS } from '../diagnostic/diagnosticConfig.ts';
+import { DiagnosticFlowModal } from '../diagnostic/DiagnosticFlowModal.tsx';
 import { 
   X, 
   Building, 
@@ -22,7 +24,13 @@ import {
   CheckSquare,
   Square,
   ShieldCheck,
-  Tag
+  Tag,
+  MessageSquare as MessageSquareIcon,
+  ClipboardList,
+  Sparkles,
+  ExternalLink,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 
 interface ContactDetailModalProps {
@@ -42,13 +50,18 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
 }) => {
   if (!isOpen || !lead) return null;
 
-  const [activeTab, setActiveTab] = useState<'info' | 'tasks' | 'notes' | 'activity'>('info');
+  const [activeTab, setActiveTab] = useState<'info' | 'diagnostic' | 'tasks' | 'notes' | 'activity'>('info');
   const [newNote, setNewNote] = useState('');
   const [addingNote, setAddingNote] = useState(false);
   
   // Associated Tasks
   const [leadTasks, setLeadTasks] = useState<Task[]>([]);
   const [loadingTasks, setLoadingTasks] = useState(false);
+
+  // Associated Diagnostic
+  const [leadDiagnostic, setLeadDiagnostic] = useState<LeadDiagnostic | null>(null);
+  const [loadingDiagnostic, setLoadingDiagnostic] = useState(false);
+  const [showDiagnosticFlow, setShowDiagnosticFlow] = useState(false);
 
   // Task form state
   const [showTaskForm, setShowTaskForm] = useState(false);
@@ -105,9 +118,25 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
     }
   };
 
+  // Load diagnostic for this specific lead
+  const fetchLeadDiagnostic = async () => {
+    try {
+      setLoadingDiagnostic(true);
+      const res = await api.getLeadDiagnostic(lead.id);
+      if (res.diagnostic) {
+        setLeadDiagnostic(res.diagnostic);
+      }
+    } catch (e) {
+      console.error('Error fetching lead diagnostic:', e);
+    } finally {
+      setLoadingDiagnostic(false);
+    }
+  };
+
   useEffect(() => {
     if (lead?.id) {
       fetchLeadTasks();
+      fetchLeadDiagnostic();
       setProjectName(`Sistema: ${lead.fullName}`);
       setProjectDescription(lead.description);
     }
@@ -266,8 +295,8 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
         {/* Modal Top Header */}
         <div className="px-6 py-4 bg-[#081722] border-b border-[#143247] flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-[#00D9F5] bg-[#00D9F5]/10 px-2 py-0.5 rounded border border-[#00D9F5]/30">
-              {lead.id}
+            <span className="font-mono text-xs text-[#00D9F5] bg-[#00D9F5]/10 px-2.5 py-1 rounded border border-[#00D9F5]/30 font-bold">
+              {lead.referenceCode || lead.id}
             </span>
             <div>
               <div className="flex items-center gap-2">
@@ -365,9 +394,14 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="px-6 border-b border-[#143247] bg-[#081722]/60 flex items-center gap-6 text-xs font-mono">
+        <div className="px-6 border-b border-[#143247] bg-[#081722]/60 flex items-center gap-6 text-xs font-mono overflow-x-auto">
           {[
             { id: 'info', label: 'Ficha & Requerimiento', icon: FileText },
+            { 
+              id: 'diagnostic', 
+              label: `Diagnóstico ${leadDiagnostic ? `(${leadDiagnostic.progressPercentage}%)` : ''}`, 
+              icon: ClipboardList 
+            },
             { id: 'tasks', label: `Tareas Operativas (${leadTasks.length})`, icon: ListTodo },
             { id: 'notes', label: `Notas Internas (${lead.notes.length})`, icon: MessageSquareIcon },
             { id: 'activity', label: `Historial (${lead.activity.length})`, icon: History },
@@ -610,6 +644,199 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
                   )}
                 </div>
               </div>
+
+            </div>
+          )}
+
+          {/* DIAGNOSTIC TAB PANEL */}
+          {activeTab === 'diagnostic' && (
+            <div className="space-y-6">
+              
+              {loadingDiagnostic ? (
+                <div className="py-16 text-center space-y-3">
+                  <div className="w-8 h-8 border-2 border-[#00D9F5] border-t-transparent rounded-full animate-spin mx-auto" />
+                  <p className="text-xs font-mono text-[#F5FBFF]/70">Cargando diagnóstico comercial...</p>
+                </div>
+              ) : !leadDiagnostic || leadDiagnostic.status === 'no_iniciado' ? (
+                /* Diagnostic Not Started */
+                <div className="p-6 rounded-xl bg-[#081722] border border-amber-500/30 space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <span className="w-3 h-3 rounded-full bg-amber-400 animate-pulse" />
+                      <h4 className="text-sm font-bold text-[#F5FBFF]">
+                        Diagnóstico Comercial No Iniciado por el Cliente
+                      </h4>
+                    </div>
+                    <span className="text-[11px] font-mono px-2.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                      Estado: No Iniciado
+                    </span>
+                  </div>
+
+                  <p className="text-xs text-[#F5FBFF]/70 leading-relaxed">
+                    El cliente registró la solicitud con referencia <strong className="text-[#00D9F5] font-mono">{lead.referenceCode || lead.id}</strong>. Aún no ha completado el cuestionario guiado. Puedes facilitarle su enlace de recuperación o abrir el formulario interactivo para completarlo tú misma con el cliente durante una llamada de descubrimiento.
+                  </p>
+
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowDiagnosticFlow(true)}
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] text-xs font-mono font-bold transition-all cursor-pointer shadow-sm"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      <span>Abrir Cuestionario de Diagnóstico en Llamada</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                        const url = `${origin}/#recuperar?ref=${encodeURIComponent(lead.referenceCode || lead.id)}`;
+                        navigator.clipboard.writeText(url);
+                        alert('Enlace copiado al portapapeles: ' + url);
+                      }}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#143247] hover:bg-[#1a405a] text-[#F5FBFF] text-xs font-mono border border-[#1c4563] transition-all cursor-pointer"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 text-[#00D9F5]" />
+                      <span>Copiar Enlace de Recuperación del Cliente</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Diagnostic In Progress or Completed */
+                <div className="space-y-6">
+                  
+                  {/* Top Diagnostic Status Banner */}
+                  <div className="p-5 rounded-xl bg-[#081722] border border-[#00D9F5]/40 space-y-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <span className="text-[10px] font-mono text-[#00E3B2] uppercase tracking-wider block font-bold">
+                          Diagnóstico Inteligente & Universal
+                        </span>
+                        <h4 className="text-base font-bold text-[#F5FBFF] flex items-center gap-2">
+                          <span>Ref: {lead.referenceCode || lead.id}</span>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase ${
+                            leadDiagnostic.status === 'completado'
+                              ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
+                              : 'bg-sky-500/20 text-sky-300 border-sky-500/30'
+                          }`}>
+                            {leadDiagnostic.status === 'completado' ? 'Completado' : 'En Progreso'}
+                          </span>
+                        </h4>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => setShowDiagnosticFlow(true)}
+                        className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] text-xs font-mono font-bold transition-all cursor-pointer shadow-sm"
+                      >
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Abrir / Editar Diagnóstico Completo</span>
+                      </button>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="space-y-1">
+                      <div className="flex justify-between text-xs font-mono text-[#F5FBFF]/70">
+                        <span>Progreso del Cuestionario</span>
+                        <strong className="text-[#00D9F5]">{leadDiagnostic.progressPercentage}%</strong>
+                      </div>
+                      <div className="w-full bg-[#0B1F2D] h-2 rounded-full overflow-hidden border border-[#16364d]">
+                        <div 
+                          className="bg-linear-to-r from-[#00D9F5] to-[#00E3B2] h-full transition-all duration-300"
+                          style={{ width: `${leadDiagnostic.progressPercentage}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Meta details strip */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono text-[#F5FBFF]/70 pt-1">
+                      <div>
+                        <span className="text-[10px] text-[#F5FBFF]/40 block">INICIADO</span>
+                        <span>{formatDate(leadDiagnostic.createdAt).split(',')[0]}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-[#F5FBFF]/40 block">ÚLTIMA ACTUALIZACIÓN</span>
+                        <span>{formatDate(leadDiagnostic.updatedAt).split(',')[0]}</span>
+                      </div>
+                      <div className="col-span-2">
+                        <span className="text-[10px] text-[#F5FBFF]/40 block">ÁREAS SELECCIONADAS</span>
+                        <div className="flex flex-wrap gap-1 mt-0.5">
+                          {leadDiagnostic.selectedAreas.map(a => (
+                            <span key={a} className="px-2 py-0.5 rounded bg-[#143247] text-[10px] text-[#00D9F5] font-bold">
+                              {MODULE_METAS[a]?.badge || a}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* General Answers Section */}
+                  <div className="p-5 rounded-xl bg-[#081722] border border-[#16364d] space-y-4">
+                    <div className="flex items-center gap-2 border-b border-[#143247] pb-2.5">
+                      <Building className="w-4 h-4 text-[#00D9F5]" />
+                      <h4 className="text-xs font-mono font-bold text-[#F5FBFF] uppercase tracking-wider">
+                        1. Diagnóstico General de Negocio
+                      </h4>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {GENERAL_QUESTIONS.map(q => {
+                        const ans = leadDiagnostic.answers?.[q.id];
+                        return (
+                          <div key={q.id} className="p-3 rounded-lg bg-[#0B1F2D] border border-[#143247] space-y-1">
+                            <span className="text-[11px] font-mono text-[#00D9F5] block font-medium">
+                              {q.label}
+                            </span>
+                            <span className="text-xs text-[#F5FBFF] block font-medium">
+                              {ans?.displayValue || <span className="text-slate-500 italic">No respondida aún</span>}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Specialized Modules Sections */}
+                  {leadDiagnostic.selectedAreas.map(area => {
+                    const meta = MODULE_METAS[area];
+                    const qList = SPECIALIZED_MODULE_QUESTIONS[area] || [];
+
+                    return (
+                      <div key={area} className="p-5 rounded-xl bg-[#081722] border border-[#16364d] space-y-4">
+                        <div className="flex items-center justify-between border-b border-[#143247] pb-2.5">
+                          <div className="flex items-center gap-2">
+                            <Sparkles className="w-4 h-4 text-[#00E3B2]" />
+                            <h4 className="text-xs font-mono font-bold text-[#F5FBFF] uppercase tracking-wider">
+                              {meta.name} ({meta.badge})
+                            </h4>
+                          </div>
+                          <span className="text-[10px] font-mono text-[#00E3B2] bg-[#00E3B2]/10 px-2 py-0.5 rounded border border-[#00E3B2]/30">
+                            Especializado
+                          </span>
+                        </div>
+
+                        <div className="space-y-3">
+                          {qList.map(q => {
+                            const ans = leadDiagnostic.answers?.[q.id];
+                            return (
+                              <div key={q.id} className="p-3 rounded-lg bg-[#0B1F2D] border border-[#143247] space-y-1">
+                                <span className="text-[11px] font-mono text-[#00E3B2] block font-medium">
+                                  {q.label}
+                                </span>
+                                <span className="text-xs text-[#F5FBFF] block font-medium">
+                                  {ans?.displayValue || <span className="text-slate-500 italic">No respondida aún</span>}
+                                </span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                </div>
+              )}
 
             </div>
           )}
@@ -931,25 +1158,24 @@ export const ContactDetailModal: React.FC<ContactDetailModalProps> = ({
         </div>
       )}
 
+      {/* Admin Interactive Diagnostic Modal */}
+      {showDiagnosticFlow && (
+        <DiagnosticFlowModal
+          isOpen={showDiagnosticFlow}
+          referenceCode={lead.referenceCode || lead.id}
+          leadId={lead.id}
+          leadName={lead.fullName}
+          leadEmail={lead.email}
+          leadPhone={lead.phone}
+          initialSelectedAreas={lead.serviceAreas || [lead.projectType]}
+          onClose={() => setShowDiagnosticFlow(false)}
+          onCompleted={(diag) => {
+            setLeadDiagnostic(diag);
+            fetchLeadDiagnostic();
+          }}
+        />
+      )}
+
     </div>
   );
 };
-
-function MessageSquareIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-    </svg>
-  );
-}

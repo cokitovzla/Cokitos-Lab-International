@@ -4,7 +4,9 @@ import {
   Project, 
   User, 
   LabSettings, 
-  DashboardStats 
+  DashboardStats,
+  LeadDiagnostic,
+  ProjectType
 } from '../types/index.ts';
 import { 
   INITIAL_PROJECTS, 
@@ -126,12 +128,27 @@ export class ApiClient {
     email: string;
     phone?: string;
     projectType: string;
+    serviceAreas?: ProjectType[];
     description: string;
     contactPreference: string;
     dataConsent: boolean;
-  }): Promise<{ success: boolean; message: string; lead: Lead }> {
+  }): Promise<{ 
+    success: boolean; 
+    message: string; 
+    lead: Lead; 
+    referenceCode: string; 
+    diagnostic?: LeadDiagnostic; 
+    recoveryToken?: string 
+  }> {
     try {
-      const res = await this.request<{ success: boolean; message: string; lead: Lead }>('/api/leads', {
+      const res = await this.request<{ 
+        success: boolean; 
+        message: string; 
+        lead: Lead; 
+        referenceCode: string; 
+        diagnostic?: LeadDiagnostic; 
+        recoveryToken?: string 
+      }>('/api/leads', {
         method: 'POST',
         body: JSON.stringify(data),
       });
@@ -148,17 +165,21 @@ export class ApiClient {
       // Fallback for static hosting (Vercel)
       console.warn('API unavailable, saving lead locally:', e);
       const leads = getStoredList<Lead>(LEADS_STORAGE_KEY, INITIAL_LEADS);
+      const refCode = `CL-${new Date().getFullYear()}-${String(leads.length + 1).padStart(5, '0')}`;
       const newLead: Lead = {
         id: `lead_${Date.now()}`,
+        referenceCode: refCode,
         fullName: data.fullName,
         company: data.company,
         email: data.email,
         phone: data.phone,
         projectType: data.projectType as any,
+        serviceAreas: data.serviceAreas || [data.projectType as any],
         description: data.description,
         contactPreference: data.contactPreference as any,
         dataConsent: data.dataConsent,
         status: 'nuevo_contacto',
+        diagnosticStatus: 'no_iniciado',
         assignedTo: 'Director Cokito',
         source: 'landing_page',
         createdAt: new Date().toISOString(),
@@ -168,7 +189,7 @@ export class ApiClient {
           {
             id: `act_${Date.now()}`,
             type: 'contact_created',
-            description: 'Solicitud registrada desde el portal web de Cokito’s Lab',
+            description: `Solicitud registrada desde el portal web de Cokito’s Lab [Ref: ${refCode}]`,
             author: 'Sistema',
             timestamp: new Date().toISOString(),
           }
@@ -180,8 +201,85 @@ export class ApiClient {
         success: true,
         message: 'Solicitud registrada exitosamente en el laboratorio.',
         lead: newLead,
+        referenceCode: refCode,
       };
     }
+  }
+
+  // PUBLIC DIAGNOSTIC METHODS
+  public async getPublicDiagnostic(referenceCode: string): Promise<{
+    success: boolean;
+    diagnostic: LeadDiagnostic;
+    leadSummary: {
+      fullName: string;
+      company?: string;
+      email: string;
+      referenceCode: string;
+      serviceAreas: ProjectType[];
+      status: string;
+      diagnosticStatus: string;
+      createdAt: string;
+    };
+  }> {
+    return this.request(`/api/public/diagnostic/${encodeURIComponent(referenceCode)}`);
+  }
+
+  public async savePublicDiagnostic(referenceCode: string, payload: {
+    answers?: Record<string, any>;
+    progressPercentage?: number;
+    currentStep?: number;
+    totalSteps?: number;
+    selectedAreas?: ProjectType[];
+  }): Promise<{ success: boolean; message: string; diagnostic: LeadDiagnostic }> {
+    return this.request(`/api/public/diagnostic/${encodeURIComponent(referenceCode)}/save`, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    });
+  }
+
+  public async completePublicDiagnostic(referenceCode: string): Promise<{
+    success: boolean;
+    message: string;
+    diagnostic: LeadDiagnostic;
+  }> {
+    return this.request(`/api/public/diagnostic/${encodeURIComponent(referenceCode)}/complete`, {
+      method: 'POST',
+    });
+  }
+
+  public async recoverLead(referenceCode: string, identifier: string): Promise<{
+    success: boolean;
+    message: string;
+    lead: Lead;
+    diagnostic: LeadDiagnostic;
+    recoveryToken: string;
+  }> {
+    return this.request('/api/public/leads/recover', {
+      method: 'POST',
+      body: JSON.stringify({ referenceCode, identifier }),
+    });
+  }
+
+  // CRM PROTECTED DIAGNOSTIC METHODS
+  public async getLeadDiagnostic(leadId: string): Promise<{
+    success: boolean;
+    diagnostic: LeadDiagnostic | null;
+    referenceCode?: string;
+  }> {
+    return this.request(`/api/leads/${leadId}/diagnostic`);
+  }
+
+  public async updateLeadDiagnostic(leadId: string, payload: {
+    answers?: Record<string, any>;
+    progressPercentage?: number;
+    currentStep?: number;
+    totalSteps?: number;
+    selectedAreas?: ProjectType[];
+  }): Promise<{ success: boolean; diagnostic: LeadDiagnostic }> {
+    return this.request(`/api/leads/${leadId}/diagnostic`, {
+      method: 'PATCH',
+      body: JSON.stringify(payload),
+    });
   }
 
   public async getPublicProjects(): Promise<{ projects: Project[] }> {

@@ -39,13 +39,52 @@ export interface ActivityItem {
   timestamp: string;
 }
 
+export interface DiagnosticAnswer {
+  questionId: string;
+  questionLabel: string;
+  module: 'general' | ProjectType;
+  value: any;
+  displayValue: string;
+}
+
+export type DiagnosticStatus = 'no_iniciado' | 'en_progreso' | 'completado';
+
+export interface LeadDiagnostic {
+  id: string;
+  leadId: string;
+  referenceCode: string;
+  status: DiagnosticStatus;
+  selectedAreas: ProjectType[];
+  answers: Record<string, DiagnosticAnswer>;
+  progressPercentage: number;
+  currentStep: number;
+  totalSteps: number;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+}
+
+export interface RecoveryTokenRecord {
+  tokenHash: string;
+  leadId: string;
+  referenceCode: string;
+  email: string;
+  phone?: string;
+  expiresAt: number;
+  attempts: number;
+  revoked: boolean;
+  createdAt: string;
+}
+
 export interface Lead {
   id: string;
+  referenceCode?: string; // Standard format CL-AAAA-NNNNN
   fullName: string;
   company?: string;
   email: string;
   phone?: string;
   projectType: ProjectType;
+  serviceAreas?: ProjectType[]; // Multi-select support for the 7 specialized areas
   description: string;
   contactPreference: ContactPreference;
   dataConsent: boolean;
@@ -59,6 +98,8 @@ export interface Lead {
   convertedProjectId?: string;
   isArchived?: boolean;
   archivedAt?: string;
+  diagnosticStatus?: DiagnosticStatus;
+  diagnosticId?: string;
 }
 
 export interface Task {

@@ -73,7 +73,18 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 // 1. Submit lead from landing page
 app.post('/api/leads', (req: Request, res: Response) => {
   try {
-    const { fullName, company, email, phone, projectType, description, contactPreference, dataConsent, source } = req.body;
+    const { 
+      fullName, 
+      company, 
+      email, 
+      phone, 
+      projectType, 
+      serviceAreas, 
+      description, 
+      contactPreference, 
+      dataConsent, 
+      source 
+    } = req.body;
 
     // Validation
     if (!fullName || typeof fullName !== 'string' || fullName.trim().length < 2) {
@@ -91,26 +102,43 @@ app.post('/api/leads', (req: Request, res: Response) => {
     }
 
     const validProjectTypes = ['software', 'landing', 'crm', 'automation', 'optimization', 'consulting', 'idea'];
-    const pType = validProjectTypes.includes(projectType) ? projectType : 'software';
+    
+    // Process serviceAreas (multi-select)
+    let sanitizedAreas: any[] = [];
+    if (Array.isArray(serviceAreas) && serviceAreas.length > 0) {
+      sanitizedAreas = serviceAreas.filter((a: any) => validProjectTypes.includes(a));
+    }
 
-    const newLead = db.createLead({
+    const primaryType = validProjectTypes.includes(projectType) 
+      ? projectType 
+      : (sanitizedAreas[0] || 'software');
+
+    if (sanitizedAreas.length === 0) {
+      sanitizedAreas = [primaryType];
+    }
+
+    const result = db.createLead({
       fullName,
       company: company || undefined,
       email,
       phone: phone || undefined,
-      projectType: pType,
+      projectType: primaryType,
+      serviceAreas: sanitizedAreas,
       description: desc,
       contactPreference: ['email', 'whatsapp', 'call'].includes(contactPreference) ? contactPreference : 'email',
       dataConsent: dataConsent !== false,
       source: source === 'manual' ? 'manual' : 'landing_page',
     });
 
-    console.log(`[CRM] Nueva solicitud registrada en base de datos: ${newLead.fullName} (${newLead.email})`);
+    console.log(`[CRM] Nueva solicitud registrada en base de datos: ${result.lead.fullName} (${result.lead.email}) [Ref: ${result.lead.referenceCode}]`);
 
     return res.status(201).json({
       success: true,
       message: 'Solicitud enviada exitosamente al laboratorio.',
-      lead: newLead,
+      lead: result.lead,
+      referenceCode: result.lead.referenceCode,
+      diagnostic: result.diagnostic,
+      recoveryToken: result.recoveryToken,
     });
   } catch (error) {
     console.error('Error creating lead:', error);
@@ -118,7 +146,117 @@ app.post('/api/leads', (req: Request, res: Response) => {
   }
 });
 
-// 2. Public visible projects for landing page
+// 2. Public Diagnostic Endpoints
+app.get('/api/public/diagnostic/:referenceCode', (req: Request, res: Response) => {
+  try {
+    const { referenceCode } = req.params;
+    const diagnostic = db.getDiagnosticByReference(referenceCode);
+    const lead = db.getLeadByReference(referenceCode);
+
+    if (!diagnostic || !lead) {
+      return res.status(404).json({ error: 'No se encontró el diagnóstico o solicitud solicitada.' });
+    }
+
+    // Return non-sensitive client details
+    return res.json({
+      success: true,
+      diagnostic,
+      leadSummary: {
+        fullName: lead.fullName,
+        company: lead.company,
+        email: lead.email,
+        referenceCode: lead.referenceCode,
+        serviceAreas: lead.serviceAreas || [lead.projectType],
+        status: lead.status,
+        diagnosticStatus: lead.diagnosticStatus,
+        createdAt: lead.createdAt,
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al consultar diagnóstico.' });
+  }
+});
+
+// 3. Save diagnostic answers (Auto-save & step progression)
+app.post('/api/public/diagnostic/:referenceCode/save', (req: Request, res: Response) => {
+  try {
+    const { referenceCode } = req.params;
+    const { answers, progressPercentage, currentStep, totalSteps, selectedAreas } = req.body;
+
+    const savedDiag = db.saveDiagnostic({
+      referenceCode,
+      answers,
+      progressPercentage,
+      currentStep,
+      totalSteps,
+      selectedAreas,
+    });
+
+    if (!savedDiag) {
+      return res.status(404).json({ error: 'Diagnóstico no encontrado.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Diagnóstico guardado correctamente.',
+      diagnostic: savedDiag,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al guardar diagnóstico.' });
+  }
+});
+
+// 4. Complete diagnostic
+app.post('/api/public/diagnostic/:referenceCode/complete', (req: Request, res: Response) => {
+  try {
+    const { referenceCode } = req.params;
+    const completedDiag = db.completeDiagnostic(referenceCode);
+
+    if (!completedDiag) {
+      return res.status(404).json({ error: 'Diagnóstico no encontrado.' });
+    }
+
+    return res.json({
+      success: true,
+      message: '¡Diagnóstico completado exitosamente! El equipo de Cokito\'s Lab ha sido notificado.',
+      diagnostic: completedDiag,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'Error al finalizar diagnóstico.' });
+  }
+});
+
+// 5. Secure Request Recovery
+app.post('/api/public/leads/recover', rateLimitMiddleware, (req: Request, res: Response) => {
+  try {
+    const { referenceCode, identifier } = req.body;
+
+    if (!referenceCode || !identifier) {
+      return res.status(400).json({ 
+        error: 'Por favor ingresa tu código de referencia comercial (CL-AAAA-NNNNN) y el correo electrónico o teléfono registrado.' 
+      });
+    }
+
+    const verification = db.verifyRecovery(referenceCode, identifier);
+
+    if (!verification.success || !verification.lead) {
+      return res.status(400).json({ error: verification.error || 'No fue posible validar la solicitud.' });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Solicitud verificada correctamente.',
+      lead: verification.lead,
+      diagnostic: verification.diagnostic,
+      recoveryToken: verification.token,
+    });
+  } catch (error) {
+    console.error('Error recovering lead:', error);
+    return res.status(500).json({ error: 'Error interno en la recuperación de solicitud.' });
+  }
+});
+
+// 6. Public visible projects for landing page
 app.get('/api/public/projects', (_req: Request, res: Response) => {
   try {
     const projects = db.getProjects(true);
@@ -128,7 +266,7 @@ app.get('/api/public/projects', (_req: Request, res: Response) => {
   }
 });
 
-// 3. Public lab settings (info)
+// 7. Public lab settings (info)
 app.get('/api/public/settings', (_req: Request, res: Response) => {
   try {
     const settings = db.getSettings();
@@ -231,6 +369,41 @@ app.get('/api/leads/:id', authMiddleware, (req: Request, res: Response) => {
   const lead = db.getLeadById(req.params.id);
   if (!lead) return res.status(404).json({ error: 'Lead no encontrado.' });
   return res.json({ lead });
+});
+
+// Lead Diagnostic (CRM view)
+app.get('/api/leads/:id/diagnostic', authMiddleware, (req: Request, res: Response) => {
+  const lead = db.getLeadById(req.params.id);
+  if (!lead) return res.status(404).json({ error: 'Lead no encontrado.' });
+  
+  let diagnostic = db.getDiagnosticByLeadId(lead.id);
+  if (!diagnostic && lead.referenceCode) {
+    diagnostic = db.getDiagnosticByReference(lead.referenceCode);
+  }
+
+  return res.json({ 
+    success: true, 
+    diagnostic: diagnostic || null,
+    referenceCode: lead.referenceCode 
+  });
+});
+
+// Update Lead Diagnostic from CRM
+app.patch('/api/leads/:id/diagnostic', authMiddleware, (req: Request, res: Response) => {
+  const lead = db.getLeadById(req.params.id);
+  if (!lead) return res.status(404).json({ error: 'Lead no encontrado.' });
+
+  const updatedDiag = db.saveDiagnostic({
+    leadId: lead.id,
+    referenceCode: lead.referenceCode,
+    answers: req.body.answers,
+    progressPercentage: req.body.progressPercentage,
+    currentStep: req.body.currentStep,
+    totalSteps: req.body.totalSteps,
+    selectedAreas: req.body.selectedAreas,
+  });
+
+  return res.json({ success: true, diagnostic: updatedDiag });
 });
 
 // Update lead (status, assign, details)
