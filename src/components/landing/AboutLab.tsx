@@ -54,40 +54,40 @@ export const AboutLab: React.FC<AboutLabProps> = ({ currentLang }) => {
       tag: t.personality.professionalTag,
       desc: t.personality.professionalDesc, 
       icon: FlaskConical,
-      color: 'text-[#00D9F5]',
-      badgeColor: 'bg-[#00D9F5]/15 border-[#00D9F5]/40 text-[#00D9F5]'
+      color: 'text-[#009bb3]',
+      badgeColor: 'bg-[#EAF6FD] border-[#BCE4F7] text-[#007b8f]'
     },
     { 
       name: t.personality.analyticalTitle, 
       tag: t.personality.analyticalTag,
       desc: t.personality.analyticalDesc, 
       icon: Binary,
-      color: 'text-[#00E3B2]',
-      badgeColor: 'bg-[#00E3B2]/15 border-[#00E3B2]/40 text-[#00E3B2]'
+      color: 'text-[#059669]',
+      badgeColor: 'bg-[#ECFDF5] border-[#A7F3D0] text-[#047857]'
     },
     { 
       name: t.personality.innovativeTitle, 
       tag: t.personality.innovativeTag,
       desc: t.personality.innovativeDesc, 
       icon: Lightbulb,
-      color: 'text-[#00D9F5]',
-      badgeColor: 'bg-[#00D9F5]/15 border-[#00D9F5]/40 text-[#00D9F5]'
+      color: 'text-[#009bb3]',
+      badgeColor: 'bg-[#EAF6FD] border-[#BCE4F7] text-[#007b8f]'
     },
     { 
       name: t.personality.resolutiveTitle, 
       tag: t.personality.resolutiveTag,
       desc: t.personality.resolutiveDesc, 
       icon: Wrench,
-      color: 'text-[#00E3B2]',
-      badgeColor: 'bg-[#00E3B2]/15 border-[#00E3B2]/40 text-[#00E3B2]'
+      color: 'text-[#059669]',
+      badgeColor: 'bg-[#ECFDF5] border-[#A7F3D0] text-[#047857]'
     },
     { 
       name: t.personality.closeTitle, 
       tag: t.personality.closeTag,
       desc: t.personality.closeDesc, 
       icon: MessageSquareText,
-      color: 'text-[#00D9F5]',
-      badgeColor: 'bg-[#00D9F5]/15 border-[#00D9F5]/40 text-[#00D9F5]'
+      color: 'text-[#009bb3]',
+      badgeColor: 'bg-[#EAF6FD] border-[#BCE4F7] text-[#007b8f]'
     },
   ];
 
@@ -180,26 +180,26 @@ export const AboutLab: React.FC<AboutLabProps> = ({ currentLang }) => {
               return (
                 <div
                   key={item.name}
-                  className="p-4 rounded-xl lab-card-clean bg-white hover:bg-[#0B1F2D] border-[#BCE4F7] hover:border-[#00D9F5] hover:-translate-y-1 hover:shadow-lg transition-all duration-300 flex flex-col justify-between group cursor-default"
+                  className="p-4 rounded-xl bg-white hover:bg-[#F8FCFE] border border-[#D0EBF7] hover:border-[#00D9F5] hover:-translate-y-1 hover:shadow-md hover:shadow-[#00D9F5]/15 transition-all duration-200 flex flex-col justify-between group cursor-default"
                 >
                   <div>
                     {/* Header Row: Icon + Name in the same line */}
                     <div className="flex items-center gap-2.5 mb-2.5">
-                      <div className="p-2 rounded-lg bg-[#F0F9FF] border border-[#BCE4F7] group-hover:border-[#00D9F5] group-hover:bg-[#133045] transition-colors shrink-0">
+                      <div className="p-2 rounded-lg bg-[#F0F9FF] border border-[#BCE4F7] group-hover:border-[#00D9F5] group-hover:bg-[#E0F7FE] transition-colors shrink-0">
                         <Icon className={`w-4 h-4 ${item.color}`} />
                       </div>
                       <div className="min-w-0">
-                        <h5 className="font-bold text-sm text-[#0B1F2D] group-hover:text-white transition-colors leading-tight">
+                        <h5 className="font-extrabold text-sm text-[#0B1F2D] group-hover:text-[#007b8f] transition-colors leading-tight">
                           {item.name}
                         </h5>
-                        <span className={`text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border ${item.badgeColor} mt-0.5 inline-block font-semibold`}>
+                        <span className={`text-[10px] font-mono uppercase px-1.5 py-0.2 rounded border ${item.badgeColor} mt-0.5 inline-block font-bold`}>
                           {item.tag}
                         </span>
                       </div>
                     </div>
 
-                    {/* Rich Descriptive Text */}
-                    <p className="text-xs text-[#1E3A52] group-hover:text-[#D0E6F5] transition-colors leading-relaxed pt-1.5 border-t border-[#E0F2FE] group-hover:border-[#1A384F]">
+                    {/* Rich Descriptive Text - High contrast dark slate/navy in all states */}
+                    <p className="text-xs text-[#334155] group-hover:text-[#0B1F2D] transition-colors leading-relaxed pt-2 border-t border-[#E2E8F0] font-normal">
                       {item.desc}
                     </p>
                   </div>

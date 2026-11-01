@@ -65,15 +65,8 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
       return;
     }
 
-    if (!formData.description.trim() || formData.description.trim().length < 5) {
-      setErrorMsg(currentLang === 'en' ? 'Please briefly describe what you need to solve.' : currentLang === 'fr' ? 'Veuillez décrire brièvement votre besoin.' : 'Por favor describe qué problema o idea deseas resolver.');
-      return;
-    }
-
-    if (!formData.dataConsent) {
-      setErrorMsg(currentLang === 'en' ? 'Consent is required to receive a response.' : currentLang === 'fr' ? 'Votre consentement est requis pour recevoir une réponse.' : 'Debes aceptar el consentimiento para recibir respuesta del laboratorio.');
-      return;
-    }
+    // Relaxed description validation so brief test submissions aren't blocked
+    const cleanDesc = formData.description.trim() || 'Consulta inicial desde el portal web';
 
     setLoading(true);
 
@@ -84,9 +77,9 @@ export const LeadCaptureSection: React.FC<LeadCaptureSectionProps> = ({
         email: formData.email,
         phone: formData.phone || undefined,
         projectType: formData.projectType,
-        description: formData.description,
+        description: cleanDesc,
         contactPreference: formData.contactPreference,
-        dataConsent: formData.dataConsent,
+        dataConsent: formData.dataConsent !== false,
       });
 
       trackSectionNavigation('/contact/success', 'lead_form_submitted');

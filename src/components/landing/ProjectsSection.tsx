@@ -4,7 +4,7 @@ import { api } from '../../lib/api.ts';
 import { INITIAL_PROJECTS } from '../../lib/initialData.ts';
 import { Language, translations } from '../../lib/i18n.ts';
 import { trackSectionNavigation } from '../../lib/analytics.ts';
-import { CheckCircle2, Clock, Sparkles, FolderGit2, ExternalLink, FlaskConical, Layers } from 'lucide-react';
+import { CheckCircle2, Clock, Sparkles, FolderGit2, ExternalLink, FlaskConical, Layers, ChevronRight } from 'lucide-react';
 import { LegalTechSuiteSection } from './LegalTechSuiteSection.tsx';
 
 interface ProjectsSectionProps {
@@ -265,9 +265,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
                   </div>
 
                   <div>
-                    {/* Demo / Live link if available */}
-                    {project.demoUrl && (
-                      <div className="mb-3">
+                    {/* Action buttons: Demo Link + Quote Request Button */}
+                    <div className="space-y-2 mb-3">
+                      {project.demoUrl && (
                         <a
                           href={project.demoUrl}
                           target="_blank"
@@ -278,8 +278,20 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ currentLang })
                           <span>Explorar en Producción</span>
                           <ExternalLink className="w-3.5 h-3.5 text-[#00D9F5] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                         </a>
-                      </div>
-                    )}
+                      )}
+
+                      <button
+                        onClick={() => {
+                          trackSectionNavigation('/contacto', `quote_request_${project.id}`);
+                          const el = document.getElementById('contacto');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        className="w-full py-2 px-3 rounded-lg bg-white hover:bg-[#EAF6FD] text-[#00897B] hover:text-[#0B1F2D] text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all border border-[#BCE4F7] hover:border-[#00D9F5] cursor-pointer shadow-2xs"
+                      >
+                        <span>Solicitar una cotización similar a esto</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-[#009bb3]" />
+                      </button>
+                    </div>
 
                     {/* Footer tags */}
                     <div className="pt-3 border-t border-[#E0F2FE] flex flex-wrap gap-1.5">

@@ -113,20 +113,25 @@ export const TasksView: React.FC<TasksViewProps> = ({
   return (
     <div className="space-y-6">
       
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
-            Gestión Operativa de Tareas
-          </h2>
-          <p className="text-xs font-mono text-[#64748B] mt-0.5">
-            Compromisos con clientes y seguimiento de entregas del laboratorio
-          </p>
+      {/* 1. UNIFIED VIEW HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D0EBF7]">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00D9F5] to-[#6366F1] flex items-center justify-center text-white shadow-sm shrink-0">
+            <CheckSquare className="w-5 h-5 font-bold" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] tracking-tight">
+              Gestión Operativa de Tareas
+            </h1>
+            <p className="text-xs font-mono text-[#64748B]">
+              Compromisos con clientes, asignaciones al equipo y seguimiento de entregas
+            </p>
+          </div>
         </div>
 
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer self-start sm:self-auto shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer self-start sm:self-auto shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>Nueva Tarea</span>
@@ -321,8 +326,10 @@ export const TasksView: React.FC<TasksViewProps> = ({
                   onChange={(e) => setNewTaskAssignedTo(e.target.value)}
                   className="w-full px-2 py-1.5 rounded bg-[#F8FCFE] border border-[#CDE9F7] text-xs text-[#0B1F2D] font-mono outline-none"
                 >
-                  <option value="Director Cokito">Director Cokito</option>
-                  <option value="Especialista de Sistemas">Especialista de Sistemas</option>
+                  <option value="Ana Teresa Sandoval">Ana Teresa Sandoval (Operaciones)</option>
+                  <option value="Morice Mojica">Morice Mojica (Tech Hub Francia)</option>
+                  <option value="Antonio Fuentes">Antonio Fuentes (Tech Hub USA)</option>
+                  <option value="Director Cokito">Director Cokito (Dirección General)</option>
                 </select>
               </div>
 

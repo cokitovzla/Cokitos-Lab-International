@@ -57,6 +57,8 @@ export interface Lead {
   notes: LeadNote[];
   activity: ActivityItem[];
   convertedProjectId?: string;
+  isArchived?: boolean;
+  archivedAt?: string;
 }
 
 export interface Task {

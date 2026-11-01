@@ -80,6 +80,17 @@ export const CrmLayout: React.FC<CrmLayoutProps> = ({
 
   useEffect(() => {
     refreshAllData();
+  }, [activeTab]);
+
+  useEffect(() => {
+    const handleFocus = () => refreshAllData();
+    window.addEventListener('focus', handleFocus);
+    // Auto-poll every 6 seconds so leads submitted outside in the landing page show up automatically
+    const interval = setInterval(refreshAllData, 6000);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleOpenLeadDetail = (lead: Lead) => {
@@ -185,10 +196,12 @@ export const CrmLayout: React.FC<CrmLayoutProps> = ({
         <div className="flex items-center gap-3">
           <button
             onClick={refreshAllData}
-            className="p-2 text-[#1E3A52] hover:text-[#009bb3] hover:bg-[#EAF6FD] rounded-md transition-colors"
-            title="Sincronizar datos"
+            disabled={loading}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EAF6FD] hover:bg-[#D8F0FD] border border-[#BCE4F7] text-[#009bb3] text-xs font-mono font-bold transition-all cursor-pointer shadow-2xs"
+            title="Sincronizar datos con el servidor en tiempo real"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+            <span className="hidden sm:inline">Sincronizar</span>
           </button>
 
           <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#1E3A52] font-semibold">

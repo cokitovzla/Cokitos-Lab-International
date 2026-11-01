@@ -233,6 +233,17 @@ export const LegalTechSuiteSection: React.FC<LegalTechSuiteSectionProps> = ({ cu
               <span>Explorar Caso BinLegal (Alfa)</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#00D9F5]" />
             </a>
+            <button
+              onClick={() => {
+                trackSectionNavigation('/contacto', 'quote_request_alfa_binlegal');
+                const el = document.getElementById('contacto');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full py-2 px-3 rounded-lg bg-[#EAF6FD] hover:bg-[#00D9F5] text-[#007b8f] hover:text-[#0B1F2D] text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all border border-[#BCE4F7] cursor-pointer"
+            >
+              <span>Solicitar una cotización similar a esto</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
             <span className="text-[10px] font-mono text-[#64748B] block text-center">
               Despliegue verificado en Vercel
             </span>
@@ -323,6 +334,17 @@ export const LegalTechSuiteSection: React.FC<LegalTechSuiteSectionProps> = ({ cu
               <span>Explorar Demo Beta (JurisNova)</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#0B1F2D]" />
             </a>
+            <button
+              onClick={() => {
+                trackSectionNavigation('/contacto', 'quote_request_beta_jurisnova');
+                const el = document.getElementById('contacto');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full py-2 px-3 rounded-lg bg-[#E0F8FF] hover:bg-[#00E3B2] text-[#006064] hover:text-[#0B1F2D] text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all border border-[#00D9F5]/40 cursor-pointer"
+            >
+              <span>Solicitar una cotización similar a esto</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
             <span className="text-[10px] font-mono text-[#64748B] block text-center">
               Demostrador multilingüe interactivo
             </span>
@@ -438,6 +460,17 @@ export const LegalTechSuiteSection: React.FC<LegalTechSuiteSectionProps> = ({ cu
               <span>Explorar Demo Omega 1.0 (Flagship)</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#00D9F5]" />
             </a>
+            <button
+              onClick={() => {
+                trackSectionNavigation('/contacto', 'quote_request_omega_flagship');
+                const el = document.getElementById('contacto');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="w-full py-2 px-3 rounded-lg bg-[#FAF5FF] hover:bg-[#8B5CF6] text-[#7C3AED] hover:text-white text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition-all border border-[#DDD6FE] cursor-pointer"
+            >
+              <span>Solicitar una cotización similar a esto</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </button>
             <span className="text-[10px] font-mono text-[#7C3AED] block text-center font-semibold">
               En desarrollo / Demo funcional activo
             </span>

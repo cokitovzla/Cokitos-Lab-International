@@ -1,6 +1,78 @@
 {
   "leads": [
     {
+      "id": "lead_1793490914419_382",
+      "fullName": "Cliente Real Empresa",
+      "email": "contacto@empresa.com",
+      "projectType": "software",
+      "description": "Necesito una cotización de sistema a medida",
+      "contactPreference": "email",
+      "dataConsent": true,
+      "status": "nuevo_contacto",
+      "assignedTo": "Director Cokito",
+      "source": "landing_page",
+      "createdAt": "2026-10-31T23:55:14.419Z",
+      "updatedAt": "2026-10-31T23:55:14.419Z",
+      "notes": [],
+      "activity": [
+        {
+          "id": "act_1793490914419",
+          "type": "contact_created",
+          "description": "Contacto capturado desde la Landing Page del laboratorio",
+          "author": "Sistema",
+          "timestamp": "2026-10-31T23:55:14.419Z"
+        }
+      ]
+    },
+    {
+      "id": "lead_1793490058885_162",
+      "fullName": "Ana Teresa Sandoval Test",
+      "email": "anat.test@cokitoslab.com",
+      "projectType": "crm",
+      "description": "Solicitud de prueba directa desde la landing",
+      "contactPreference": "whatsapp",
+      "dataConsent": true,
+      "status": "nuevo_contacto",
+      "assignedTo": "Director Cokito",
+      "source": "landing_page",
+      "createdAt": "2026-10-31T23:40:58.885Z",
+      "updatedAt": "2026-10-31T23:40:58.885Z",
+      "notes": [],
+      "activity": [
+        {
+          "id": "act_1793490058885",
+          "type": "contact_created",
+          "description": "Contacto capturado desde la Landing Page del laboratorio",
+          "author": "Sistema",
+          "timestamp": "2026-10-31T23:40:58.885Z"
+        }
+      ]
+    },
+    {
+      "id": "lead_1793489911489_619",
+      "fullName": "Prueba Diagnostico",
+      "email": "prueba@diagnostico.com",
+      "projectType": "crm",
+      "description": "Solicitud de prueba diagnostico",
+      "contactPreference": "email",
+      "dataConsent": true,
+      "status": "nuevo_contacto",
+      "assignedTo": "Director Cokito",
+      "source": "landing_page",
+      "createdAt": "2026-10-31T23:38:31.489Z",
+      "updatedAt": "2026-10-31T23:38:31.489Z",
+      "notes": [],
+      "activity": [
+        {
+          "id": "act_1793489911489",
+          "type": "contact_created",
+          "description": "Contacto capturado desde la Landing Page del laboratorio",
+          "author": "Sistema",
+          "timestamp": "2026-10-31T23:38:31.489Z"
+        }
+      ]
+    },
+    {
       "id": "lead_1793313270899_574",
       "fullName": "Empresas Polar Test",
       "email": "test@polar.com",
@@ -210,141 +282,438 @@
   ],
   "projects": [
     {
-      "id": "proj_01",
-      "name": "Control Center CRM & Captación",
-      "clientName": "Cokito's Lab Interno",
+      "id": "proj_legaltech_alfa",
+      "name": "LegalTech CRM Suite — Alfa [Gestión Esencial]",
+      "releasePhase": "ALFA 1.0",
+      "clientName": "Demostrador comercial para abogados independientes y pequeños despachos",
       "company": "Cokito's Lab",
-      "description": "Sistema operativo integral de captación, gestión de pipeline comercial de 8 etapas, seguimiento de tareas e instrumentación tecnológica interna.",
-      "status": "en_desarrollo",
-      "assignedLead": "Director Cokito",
-      "startDate": "2026-09-01",
+      "description": "Organiza el primer contacto, los datos del cliente y el seguimiento comercial en un entorno sencillo y accesible.",
+      "status": "pruebas",
+      "assignedLead": "Morice Mojica / Cokito's Lab",
+      "startDate": "2026-07-01",
       "targetDate": "2026-11-15",
       "milestones": [
         {
           "id": "m1",
-          "title": "Arquitectura y base de datos persistente",
+          "title": "Captación de solicitudes jurídicas y calificación inicial",
           "done": true
         },
         {
           "id": "m2",
-          "title": "Landing page y captación en tiempo real",
+          "title": "Registro centralizado de contactos y oportunidades",
           "done": true
         },
         {
           "id": "m3",
-          "title": "Pipeline Kanban y gestión de oportunidades",
+          "title": "Seguimiento comercial inicial y recordatorios",
           "done": true
         },
         {
           "id": "m4",
-          "title": "Módulo de conversión a proyectos",
-          "done": false,
-          "dueDate": "2026-11-05"
+          "title": "Organización básica de casos y catálogo de servicios",
+          "done": true
         }
       ],
-      "internalNotes": "V1.0 lista para producción y despliegue.",
+      "internalNotes": "Caso BinLegal — Implementación personalizada: Configuración desarrollada a medida para José Rafael Vásquez bajo el alcance esencial de Alfa. Sus datos y credenciales pertenecen a ese cliente y no representan a Beta ni a Omega.",
       "visibleOnLanding": true,
-      "category": "CRM & Gestión Operativa",
-      "outcomeMetric": "Centralización del 100% de oportunidades",
-      "tags": [
-        "Full-Stack",
-        "CRM",
-        "Automatización"
+      "category": "LegalTech",
+      "categories": [
+        "CRM & Operaciones",
+        "LegalTech",
+        "Plataformas Web & SaaS"
       ],
-      "createdAt": "2026-10-04T22:34:23.517Z"
+      "outcomeMetric": "Triaje inicial organizado y respuesta a prospectos en menos de 24 horas",
+      "tags": [
+        "LegalTech",
+        "CRM",
+        "Gestión Esencial",
+        "Caso BinLegal"
+      ],
+      "demoUrl": "https://bin-legal-beta-2-0.vercel.app",
+      "colorTheme": {
+        "primary": "#3B82F6",
+        "secondary": "#F59E0B",
+        "bgTint": "rgba(59, 130, 246, 0.05)",
+        "borderColor": "#3B82F6"
+      },
+      "createdAt": "2026-09-16T23:37:28.865Z"
     },
     {
-      "id": "proj_02",
-      "name": "Automatización de Conciliación y Facturación",
-      "clientName": "Grupo Logístico Delta",
-      "company": "Delta Logistics",
-      "description": "Flujo automatizado de ingesta de órdenes, verificación de pagos bancarios y generación de comprobantes fiscales electrónicos sin intervención manual.",
-      "status": "entregado",
-      "assignedLead": "Ingeniero de Sistemas",
-      "startDate": "2026-07-10",
-      "targetDate": "2026-09-20",
+      "id": "proj_legaltech_beta",
+      "name": "LegalTech CRM Suite — Beta [Operación Coordinada]",
+      "releasePhase": "BETA 2.0",
+      "clientName": "Demostrador comercial para pequeños equipos jurídicos",
+      "company": "Cokito's Lab",
+      "description": "Conecta la captación de clientes con la agenda y la coordinación diaria de los trámites del despacho.",
+      "status": "pruebas",
+      "assignedLead": "Director Cokito",
+      "startDate": "2026-08-01",
+      "targetDate": "2026-11-20",
       "milestones": [
         {
           "id": "m21",
-          "title": "Diseño de arquitectura de integración",
+          "title": "Agenda y reuniones de equipo coordinadas",
           "done": true
         },
         {
           "id": "m22",
-          "title": "Conectores bancarios y API fiscal",
+          "title": "Directorio organizado y gestión esencial de trámites",
           "done": true
         },
         {
           "id": "m23",
-          "title": "Pruebas de estrés y entrega en producción",
+          "title": "Asignación de abogados y tareas operativas",
+          "done": true
+        },
+        {
+          "id": "m24",
+          "title": "Experiencia multilingüe preparada para 6 idiomas europeos",
           "done": true
         }
       ],
-      "internalNotes": "Cliente reporta ahorro de 18 horas semanales en el equipo de finanzas.",
+      "internalNotes": "JurisNova es una firma ficticia utilizada para demostrar cómo puede personalizarse la plataforma para un cliente.",
       "visibleOnLanding": true,
-      "category": "Automatización Inteligente",
-      "outcomeMetric": "Reducción de 85% en tiempo de procesamiento",
-      "tags": [
-        "Integraciones",
-        "API",
-        "FinOps"
+      "category": "LegalTech",
+      "categories": [
+        "CRM & Operaciones",
+        "LegalTech",
+        "Plataformas Web & SaaS"
       ],
-      "createdAt": "2026-09-19T22:34:23.517Z"
+      "outcomeMetric": "Centralización de solicitudes, agenda compartida y -70% tiempo de triaje",
+      "tags": [
+        "CRM",
+        "LegalTech",
+        "Operación Coordinada",
+        "Multi-Idioma"
+      ],
+      "demoUrl": "https://cl-demo-legal-crm-beta-2-0.vercel.app",
+      "colorTheme": {
+        "primary": "#00D9F5",
+        "secondary": "#00E3B2",
+        "bgTint": "rgba(0, 217, 245, 0.05)",
+        "borderColor": "#00D9F5"
+      },
+      "createdAt": "2026-09-21T23:37:28.866Z"
     },
     {
-      "id": "proj_03",
-      "name": "Portal de Operaciones y Seguimiento de Flota",
-      "clientName": "Distribuidora Andina",
-      "company": "Andina S.A.",
-      "description": "Plataforma web reactiva para monitoreo en vivo de despachos, asignación de rutas y confirmación de entregas con geolocalización.",
-      "status": "pruebas",
+      "id": "proj_legaltech_omega",
+      "name": "LegalTech CRM Suite — Omega 1.0 [Gestión Jurídica Integral]",
+      "releasePhase": "OMEGA 1.0",
+      "clientName": "Demostrador comercial para firmas jurídicas",
+      "company": "Cokito's Lab",
+      "description": "Centraliza solicitudes, clientes, trámites, tareas, responsables, expedientes, documentos, presupuestos y seguimiento operativo en un solo entorno.",
+      "status": "en_desarrollo",
       "assignedLead": "Director Cokito",
-      "startDate": "2026-08-15",
-      "targetDate": "2026-11-30",
+      "startDate": "2026-09-15",
+      "targetDate": "2026-12-10",
       "milestones": [
         {
           "id": "m31",
-          "title": "Levantamiento de requerimientos de ruta",
+          "title": "Captación y seguimiento de solicitudes",
           "done": true
         },
         {
           "id": "m32",
-          "title": "Aplicación web progresiva para conductores",
+          "title": "Gestión de trámites, etapas y responsables",
           "done": true
         },
         {
           "id": "m33",
-          "title": "Panel de despacho y métricas operativas",
+          "title": "Tareas, agenda y coordinación del equipo",
           "done": false,
-          "dueDate": "2026-11-10"
+          "dueDate": "2026-11-20"
+        },
+        {
+          "id": "m34",
+          "title": "Expedientes digitales, documentos y permisos",
+          "done": false,
+          "dueDate": "2026-12-05"
         }
       ],
-      "internalNotes": "Fase de validación con 15 unidades de transporte.",
+      "internalNotes": "Solución integral insignia de Cokito's Lab para firmas jurídicas.",
       "visibleOnLanding": true,
-      "category": "Software a Medida",
-      "outcomeMetric": "Optimización de despachos en tiempo real",
-      "tags": [
-        "React",
-        "PWA",
-        "Logística"
+      "category": "LegalTech",
+      "categories": [
+        "CRM & Operaciones",
+        "LegalTech",
+        "Plataformas Web & SaaS"
       ],
-      "createdAt": "2026-09-24T22:34:23.517Z"
+      "outcomeMetric": "Centralización total de solicitudes, trámites, expedientes, documentos y presupuestos",
+      "tags": [
+        "LegalTech",
+        "CRM",
+        "Solución Integral",
+        "Flagship"
+      ],
+      "demoUrl": "https://cl-demo-legal-crm-omega-1-0.vercel.app",
+      "colorTheme": {
+        "primary": "#8B5CF6",
+        "secondary": "#00D9F5",
+        "bgTint": "rgba(139, 92, 246, 0.06)",
+        "borderColor": "#8B5CF6"
+      },
+      "createdAt": "2026-10-06T23:37:28.866Z"
+    },
+    {
+      "id": "proj_guakytopia",
+      "name": "Güakytopia — Ecosistema EdTech de Aprendizaje de Inglés",
+      "releasePhase": "BETA 2.0",
+      "clientName": "Teacher Cokitö (Ana Teresa Sandoval)",
+      "company": "Academia de Inglés Teacher Cokitö",
+      "description": "Plataforma educativa para la academia de inglés que automatiza la evaluación inicial del estudiante, reserva de sesiones y cobros internacionales y locales.",
+      "status": "pruebas",
+      "assignedLead": "Ana Teresa Sandoval",
+      "startDate": "2026-07-15",
+      "targetDate": "2026-10-31",
+      "milestones": [
+        {
+          "id": "m41",
+          "title": "Test de nivelación de inglés interactivo y automatizado",
+          "done": true
+        },
+        {
+          "id": "m42",
+          "title": "Pasarela dual multimoneda (USD PayPal y VES Pago Móvil BCV)",
+          "done": true
+        },
+        {
+          "id": "m43",
+          "title": "Portal del estudiante con acceso a materiales de apoyo",
+          "done": true
+        },
+        {
+          "id": "m44",
+          "title": "Agenda en tiempo real y sincronización de horarios de clases",
+          "done": true
+        }
+      ],
+      "internalNotes": "100% de hitos técnicos concluidos. Operando exitosamente en Beta 2.0.",
+      "visibleOnLanding": true,
+      "category": "EdTech & Formación",
+      "categories": [
+        "Plataformas Web & SaaS",
+        "EdTech & Formación"
+      ],
+      "outcomeMetric": "Cobros multimoneda (PayPal & Pago Móvil BCV) y diagnóstico 100% automático",
+      "tags": [
+        "EdTech",
+        "Idiomas",
+        "PayPal",
+        "Pago Móvil BCV"
+      ],
+      "demoUrl": "https://guakytopia-beta-2-0.vercel.app/",
+      "colorTheme": {
+        "primary": "#F59E0B",
+        "secondary": "#0284C7",
+        "bgTint": "rgba(245, 158, 11, 0.05)",
+        "borderColor": "#F59E0B"
+      },
+      "createdAt": "2026-09-11T23:37:28.866Z"
+    },
+    {
+      "id": "proj_wetto",
+      "name": "Wetto Training — Plataforma de Rendimiento Deportivo",
+      "releasePhase": "BETA 2.0",
+      "clientName": "Atletas y Entrenadores de Resistencia",
+      "company": "Wetto Sports",
+      "description": "Aplicación especializada para corredores, triatletas y entrenadores que simplifica el diseño de entrenamientos y el análisis de la evolución física.",
+      "status": "pruebas",
+      "assignedLead": "Antonio Fuentes / Cokito's Lab",
+      "startDate": "2026-08-10",
+      "targetDate": "2026-11-25",
+      "milestones": [
+        {
+          "id": "m51",
+          "title": "Calculadora de zonas de entrenamiento (ritmo, frecuencia cardíaca y potencia)",
+          "done": true
+        },
+        {
+          "id": "m52",
+          "title": "Planificador semanal con control de carga de trabajo",
+          "done": true
+        },
+        {
+          "id": "m53",
+          "title": "Perfiles diferenciados con control de acceso por rol (entrenador / atleta)",
+          "done": true
+        },
+        {
+          "id": "m54",
+          "title": "Generación y exportación de informes de rendimiento deportivo",
+          "done": false,
+          "dueDate": "2026-11-25"
+        }
+      ],
+      "internalNotes": "Probado con cohortes de fondistas. Interfaz de alto contraste adaptada para uso en exteriores.",
+      "visibleOnLanding": true,
+      "category": "SportsTech & Rendimiento",
+      "categories": [
+        "Plataformas Web & SaaS",
+        "SportsTech & Rendimiento"
+      ],
+      "outcomeMetric": "Historial deportivo integral, roles entrenador/atleta y ritmos sin hojas de cálculo",
+      "tags": [
+        "SportsTech",
+        "Health",
+        "Fitness",
+        "Atletas"
+      ],
+      "demoUrl": "https://wettos-app-beta20.vercel.app/",
+      "colorTheme": {
+        "primary": "#F97316",
+        "secondary": "#06B6D4",
+        "bgTint": "rgba(249, 115, 22, 0.05)",
+        "borderColor": "#F97316"
+      },
+      "createdAt": "2026-09-26T23:37:28.866Z"
+    },
+    {
+      "id": "proj_apetoy",
+      "name": "Apetöy Club — Ecosistema de Fidelización & Recompensas",
+      "releasePhase": "BETA 2.0",
+      "clientName": "Red de Comercios Aliados de Caracas",
+      "company": "Apetöy Club",
+      "description": "Ecosistema multicomercio que premia la lealtad del cliente mediante acumulación de puntos, validación de compras reales mediante OCR y beneficios exclusivos.",
+      "status": "en_desarrollo",
+      "assignedLead": "Ana Teresa Sandoval / Director Cokito",
+      "startDate": "2026-09-01",
+      "targetDate": "2026-12-05",
+      "milestones": [
+        {
+          "id": "m61",
+          "title": "Motor de puntos, saldo virtual y catálogo de canje en comercios afiliados",
+          "done": true
+        },
+        {
+          "id": "m62",
+          "title": "Módulo de escaneo y lectura OCR de tickets y facturas con validación fiscal",
+          "done": true
+        },
+        {
+          "id": "m63",
+          "title": "Panel de administración para comercios afiliados y métricas de consumo",
+          "done": true
+        },
+        {
+          "id": "m64",
+          "title": "Módulo de liquidación automatizada entre comercios y club",
+          "done": false,
+          "dueDate": "2026-12-05"
+        }
+      ],
+      "internalNotes": "Integración con lectura de facturas SENIAT en validación final.",
+      "visibleOnLanding": true,
+      "category": "FinTech & Recompensas",
+      "categories": [
+        "CRM & Operaciones",
+        "Plataformas Web & SaaS",
+        "FinTech & Recompensas"
+      ],
+      "outcomeMetric": "Trazabilidad de hábitos por ítem con validación fiscal SENIAT y lectura OCR",
+      "tags": [
+        "FinTech",
+        "Fidelización",
+        "OCR",
+        "Retail"
+      ],
+      "demoUrl": "https://apetoy-beta-2-0.vercel.app/",
+      "colorTheme": {
+        "primary": "#10B981",
+        "secondary": "#F43F5E",
+        "bgTint": "rgba(16, 185, 129, 0.05)",
+        "borderColor": "#10B981"
+      },
+      "createdAt": "2026-10-01T23:37:28.866Z"
+    },
+    {
+      "id": "proj_agir_ensemble",
+      "name": "Agir Ensemble — Plataforma de Intervención & Gestión Solidaire",
+      "releasePhase": "BETA 2.0",
+      "clientName": "Agir Ensemble (Arles-sur-Tech / Haut-Vallespir)",
+      "company": "Agir Ensemble Francia",
+      "description": "Plataforma de coordinación para proyectos sociales y de apoyo en territorio francés, optimizando tiempos de respuesta y supervisión remota de tareas comunitarias.",
+      "status": "pruebas",
+      "assignedLead": "Morice Mojica",
+      "startDate": "2026-06-20",
+      "targetDate": "2026-10-15",
+      "milestones": [
+        {
+          "id": "m71",
+          "title": "Módulo de recepción y triaje de solicitudes comunitarias",
+          "done": true
+        },
+        {
+          "id": "m72",
+          "title": "Asignación de recursos y brigadas de intervención en terreno",
+          "done": true
+        },
+        {
+          "id": "m73",
+          "title": "Validación fotográfica con inteligencia artificial para control de calidad",
+          "done": true
+        },
+        {
+          "id": "m74",
+          "title": "Exportación de informes para balances y justificaciones presupuestarias",
+          "done": true
+        }
+      ],
+      "internalNotes": "Hitos concluidos al 100%. En operación activa en los Pirineos Orientales franceses.",
+      "visibleOnLanding": true,
+      "category": "CRM & Operaciones",
+      "categories": [
+        "CRM & Operaciones",
+        "Plataformas Web & SaaS"
+      ],
+      "outcomeMetric": "-100% desplazamientos de supervisión mediante IA Vision y presupuestos automáticos",
+      "tags": [
+        "SaaS Social",
+        "CRM Solidario",
+        "IA Vision",
+        "Francia"
+      ],
+      "demoUrl": "https://agir-ensemble-nine.vercel.app/",
+      "colorTheme": {
+        "primary": "#2563EB",
+        "secondary": "#10B981",
+        "bgTint": "rgba(37, 99, 235, 0.05)",
+        "borderColor": "#2563EB"
+      },
+      "createdAt": "2026-09-06T23:37:28.866Z"
     }
   ],
   "users": [
     {
-      "id": "user_admin",
+      "id": "user_director",
       "name": "Director Cokito",
-      "email": "admin@cokitoslab.com",
+      "email": "cokito.int@gmail.com",
       "role": "admin",
-      "createdAt": "2026-09-29T22:34:23.516Z"
+      "location": "Global Hubs",
+      "createdAt": "2026-01-01T00:00:00Z"
     },
     {
-      "id": "user_lead_dev",
-      "name": "Ingeniero de Sistemas",
-      "email": "anat.vacaviejavzla@gmail.com",
-      "role": "ingeniero",
-      "createdAt": "2026-10-09T22:34:23.517Z"
+      "id": "user_morice",
+      "name": "Morice Mojica",
+      "email": "cokito.int@gmail.com",
+      "role": "especialista",
+      "location": "Hub Francia (Europa)",
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user_anateresa",
+      "name": "Ana Teresa Sandoval",
+      "email": "cokito.vzla@gmail.com",
+      "role": "consultor",
+      "location": "Hub Venezuela (América del Sur)",
+      "createdAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": "user_antonio",
+      "name": "Antonio Fuentes",
+      "email": "cokito.int@gmail.com",
+      "role": "consultor",
+      "location": "Hub USA (América del Norte)",
+      "createdAt": "2026-01-01T00:00:00Z"
     }
   ],
   "settings": {
@@ -352,12 +721,71 @@
     "descriptor": "Laboratorio de innovación y tecnología aplicada",
     "slogan": "Menos caos. Automatiza. Escala.",
     "philosophy": "Transformamos ideas en sistemas que funcionan.",
-    "contactEmail": "contacto@cokitoslab.com",
-    "contactPhone": "+58 412 000 0000",
-    "location": "Laboratorio Virtual & Operaciones Remotas",
-    "activeInquiries": true
+    "contactEmail": "cokito.int@gmail.com",
+    "contactPhone": "+58 422 461 2534",
+    "location": "Francia 🇫🇷 • Venezuela 🇻🇪 • USA 🇺🇸",
+    "activeInquiries": true,
+    "hubs": [
+      {
+        "id": "hub_fr",
+        "city": "París / Occitania",
+        "country": "Francia",
+        "flag": "🇫🇷",
+        "leadPerson": "Morice Mojica",
+        "role": "Responsable Hub Europa",
+        "email": "cokito.int@gmail.com",
+        "phone": "+33 (77) 4853604",
+        "description": "Operaciones europeas, desarrollo SaaS, iniciativas comunitarias y LegalTech.",
+        "isMain": false
+      },
+      {
+        "id": "hub_ve",
+        "city": "Caracas / Centro",
+        "country": "Venezuela",
+        "flag": "🇻🇪",
+        "leadPerson": "Ana Teresa Sandoval",
+        "role": "Responsable Hub América del Sur",
+        "email": "cokito.vzla@gmail.com",
+        "phone": "+58 (422) 4612534",
+        "description": "Captación regional, coordinación EdTech (Güakytopia) y desarrollo para retail.",
+        "isMain": true
+      },
+      {
+        "id": "hub_us",
+        "city": "Los Ángeles / Remoto",
+        "country": "Estados Unidos",
+        "flag": "🇺🇸",
+        "leadPerson": "Antonio Fuentes",
+        "role": "Responsable Hub América del Norte",
+        "email": "cokito.int@gmail.com",
+        "phone": "+1 (424) 3462359",
+        "description": "Expansión estratégica internacional, SportsTech y consultoría de automatización.",
+        "isMain": false
+      }
+    ]
   },
   "activityLog": [
+    {
+      "id": "act_1793490914419",
+      "type": "contact_created",
+      "description": "Contacto capturado desde la Landing Page del laboratorio",
+      "author": "Sistema",
+      "timestamp": "2026-10-31T23:55:14.419Z"
+    },
+    {
+      "id": "act_1793490058885",
+      "type": "contact_created",
+      "description": "Contacto capturado desde la Landing Page del laboratorio",
+      "author": "Sistema",
+      "timestamp": "2026-10-31T23:40:58.885Z"
+    },
+    {
+      "id": "act_1793489911489",
+      "type": "contact_created",
+      "description": "Contacto capturado desde la Landing Page del laboratorio",
+      "author": "Sistema",
+      "timestamp": "2026-10-31T23:38:31.489Z"
+    },
     {
       "id": "act_1793313270899",
       "type": "contact_created",

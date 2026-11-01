@@ -139,23 +139,28 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
   return (
     <div className="space-y-6">
       
-      {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#D0EBF7]">
-        <div>
-          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
-            Gestión de Proyectos & Sistemas
-          </h2>
-          <p className="text-xs font-mono text-[#64748B] mt-0.5">
-            {projects.length} Sistemas en cartera · Vista en lista y control de visibilidad en la Landing Page
-          </p>
+      {/* 1. UNIFIED VIEW HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D0EBF7]">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00D9F5] to-[#10B981] flex items-center justify-center text-[#0B1F2D] shadow-sm shrink-0">
+            <FolderGit2 className="w-5 h-5 font-bold" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] tracking-tight">
+              Gestión de Proyectos & Sistemas
+            </h1>
+            <p className="text-xs font-mono text-[#64748B]">
+              {projects.length} Sistemas en cartera · Hitos de avance y control de visibilidad pública
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           {/* List vs Grid view toggle */}
-          <div className="flex items-center p-1 bg-white rounded-lg border border-[#D0EBF7] text-xs font-mono shadow-2xs">
+          <div className="flex items-center p-1 bg-white rounded-xl border border-[#D0EBF7] text-xs font-mono shadow-2xs">
             <button
               onClick={() => setViewMode('list')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded transition-colors cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'list'
                   ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
                   : 'text-[#1E3A52] hover:text-[#009bb3]'
@@ -166,7 +171,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
             </button>
             <button
               onClick={() => setViewMode('grid')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded transition-colors cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
                 viewMode === 'grid'
                   ? 'bg-[#00D9F5] text-[#0B1F2D] font-bold shadow-xs'
                   : 'text-[#1E3A52] hover:text-[#009bb3]'
@@ -179,7 +184,7 @@ export const ProjectsView: React.FC<ProjectsViewProps> = ({
 
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Nuevo Proyecto</span>

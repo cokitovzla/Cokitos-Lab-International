@@ -12,6 +12,7 @@ import { ServicesSection } from './components/landing/ServicesSection.tsx';
 import { MethodologySection } from './components/landing/MethodologySection.tsx';
 import { ProjectsSection } from './components/landing/ProjectsSection.tsx';
 import { LeadCaptureSection } from './components/landing/LeadCaptureSection.tsx';
+import { InternationalHubsSection } from './components/landing/InternationalHubsSection.tsx';
 import { Footer } from './components/landing/Footer.tsx';
 import { MobileBottomBar } from './components/landing/MobileBottomBar.tsx';
 
@@ -200,6 +201,9 @@ export default function App() {
         />
         <LeadCaptureSection
           preselectedServiceType={preselectedService}
+          currentLang={currentLang}
+        />
+        <InternationalHubsSection
           currentLang={currentLang}
         />
       </main>

@@ -14,7 +14,10 @@ import {
   ArrowUpDown,
   MoreVertical,
   CheckCircle2,
-  Clock
+  Clock,
+  Users,
+  Archive,
+  ArchiveRestore
 } from 'lucide-react';
 
 interface ContactsViewProps {
@@ -32,6 +35,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
   onLeadDeleted,
   onOpenNewContactModal,
 }) => {
+  const [showArchived, setShowArchived] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
@@ -58,9 +62,14 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
     { value: 'idea', label: 'Idea / Diagnóstico' },
   ];
 
+  const activeCount = leads.filter(l => !l.isArchived).length;
+  const archivedCount = leads.filter(l => l.isArchived).length;
+
   // Filtering & Sorting
   const filteredLeads = useMemo(() => {
     return leads.filter((lead) => {
+      const matchArchived = showArchived ? lead.isArchived : !lead.isArchived;
+
       const matchSearch =
         searchQuery === '' ||
         lead.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -72,7 +81,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
       const matchStatus = statusFilter === 'all' || lead.status === statusFilter;
       const matchType = typeFilter === 'all' || lead.projectType === typeFilter;
 
-      return matchSearch && matchStatus && matchType;
+      return matchArchived && matchSearch && matchStatus && matchType;
     }).sort((a, b) => {
       let cmp = 0;
       if (sortField === 'createdAt') {
@@ -84,7 +93,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
       }
       return sortOrder === 'desc' ? -cmp : cmp;
     });
-  }, [leads, searchQuery, statusFilter, typeFilter, sortField, sortOrder]);
+  }, [leads, showArchived, searchQuery, statusFilter, typeFilter, sortField, sortOrder]);
 
   const handleStageChange = async (leadId: string, newStage: PipelineStage, e: React.ChangeEvent<HTMLSelectElement>) => {
     e.stopPropagation();
@@ -96,9 +105,22 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
     }
   };
 
+  const handleToggleArchive = async (lead: Lead, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const res = await api.updateLead(lead.id, {
+        isArchived: !lead.isArchived,
+        archivedAt: !lead.isArchived ? new Date().toISOString() : undefined
+      });
+      onLeadUpdated(res.lead);
+    } catch (err) {
+      console.error('Error archiving lead:', err);
+    }
+  };
+
   const handleDelete = async (leadId: string, leadName: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm(`¿Estás seguro de que deseas archivar/eliminar el lead de "${leadName}"?`)) {
+    if (confirm(`¿Estás seguro de que deseas eliminar permanentemente el lead de "${leadName}"?`)) {
       try {
         await api.deleteLead(leadId);
         onLeadDeleted(leadId);
@@ -122,34 +144,63 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
   };
 
   const stageBadgeStyle: Record<string, string> = {
-    nuevo_contacto: 'bg-[#00D9F5]/10 text-[#00D9F5] border-[#00D9F5]/30',
-    en_evaluacion: 'bg-sky-400/10 text-sky-400 border-sky-400/30',
-    contactado: 'bg-indigo-400/10 text-indigo-400 border-indigo-400/30',
-    reunion_programada: 'bg-violet-400/10 text-violet-400 border-violet-400/30',
-    propuesta_enviada: 'bg-amber-400/10 text-amber-400 border-amber-400/30',
-    negociacion: 'bg-orange-400/10 text-orange-400 border-orange-400/30',
-    ganado: 'bg-[#00E3B2]/10 text-[#00E3B2] border-[#00E3B2]/30',
-    perdido: 'bg-rose-400/10 text-rose-400 border-rose-400/30',
+    nuevo_contacto: 'bg-[#00D9F5]/10 text-[#009bb3] border-[#00D9F5]/30',
+    en_evaluacion: 'bg-sky-400/10 text-sky-600 border-sky-400/30',
+    contactado: 'bg-indigo-400/10 text-indigo-600 border-indigo-400/30',
+    reunion_programada: 'bg-violet-400/10 text-violet-600 border-violet-400/30',
+    propuesta_enviada: 'bg-amber-400/10 text-amber-700 border-amber-400/30',
+    negociacion: 'bg-orange-400/10 text-orange-700 border-orange-400/30',
+    ganado: 'bg-[#00E3B2]/15 text-emerald-700 border-[#00E3B2]/40',
+    perdido: 'bg-rose-400/10 text-rose-700 border-rose-400/30',
   };
 
   return (
     <div className="space-y-6">
       
-      {/* Title & Action Row */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-[#0B1F2D] tracking-tight">
-            Gestión Integral de Contactos & Leads
-          </h2>
-          <p className="text-xs font-mono text-[#64748B] mt-0.5">
-            {leads.length} contactos registrados · Datos persistentes en base de datos
-          </p>
+      {/* 1. UNIFIED VIEW HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D0EBF7]">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00D9F5] to-[#0284C7] flex items-center justify-center text-white shadow-sm shrink-0">
+            <Users className="w-5 h-5 font-bold" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-extrabold text-[#0B1F2D] tracking-tight">
+              Gestión Integral de Contactos & Leads
+            </h1>
+            <p className="text-xs font-mono text-[#64748B]">
+              Directorio de prospectos, clientes y empresas con sincronización operativa
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Active vs Archived Toggle */}
+          <div className="flex items-center p-1 bg-white rounded-xl border border-[#D0EBF7] text-xs font-mono shadow-2xs">
+            <button
+              onClick={() => setShowArchived(false)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer font-bold ${
+                !showArchived
+                  ? 'bg-[#00D9F5] text-[#0B1F2D] shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0B1F2D]'
+              }`}
+            >
+              Activos ({activeCount})
+            </button>
+            <button
+              onClick={() => setShowArchived(true)}
+              className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer font-bold ${
+                showArchived
+                  ? 'bg-[#00D9F5] text-[#0B1F2D] shadow-xs'
+                  : 'text-[#64748B] hover:text-[#0B1F2D]'
+              }`}
+            >
+              Archivados ({archivedCount})
+            </button>
+          </div>
+
           <button
             onClick={handleExportCsv}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-md bg-white hover:bg-[#EAF6FD] border border-[#BCE4F7] text-xs font-mono text-[#009bb3] font-bold transition-all cursor-pointer shadow-2xs"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white hover:bg-[#EAF6FD] border border-[#BCE4F7] text-xs font-mono text-[#009bb3] font-bold transition-all cursor-pointer shadow-2xs"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Descargar CSV</span>
@@ -157,7 +208,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
 
           <button
             onClick={onOpenNewContactModal}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-md bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#00D9F5] hover:bg-[#00E3B2] text-[#0B1F2D] font-bold text-xs font-mono transition-colors cursor-pointer shadow-xs shadow-[#00D9F5]/20 hover:shadow-[0_0_15px_rgba(0,217,245,0.4)]"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Nuevo Contacto</span>
@@ -175,35 +226,35 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar por nombre, empresa, correo o ID..."
-            className="w-full pl-9 pr-4 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] placeholder-[#94A3B8] outline-none"
+            placeholder="Buscar por nombre, empresa, email, ID o requerimiento..."
+            className="w-full pl-9 pr-3 py-2 text-xs rounded-lg bg-[#F5FBFF] border border-[#D0EBF7] text-[#0B1F2D] outline-none focus:border-[#00D9F5]"
           />
         </div>
 
-        {/* Filter Stage */}
+        {/* Status Filter */}
         <div className="sm:col-span-4">
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full px-3 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] outline-none"
+            className="w-full px-3 py-2 text-xs rounded-lg bg-[#F5FBFF] border border-[#D0EBF7] text-[#0B1F2D] font-mono outline-none focus:border-[#00D9F5] cursor-pointer"
           >
-            <option value="all">Todas las etapas del pipeline</option>
-            {stageOptions.map((st) => (
-              <option key={st.value} value={st.value}>
-                {st.label}
+            <option value="all">Todas las Etapas ({leads.length})</option>
+            {stageOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Filter Project Type */}
+        {/* Project Type Filter */}
         <div className="sm:col-span-3">
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="w-full px-3 py-2 rounded-md bg-[#F8FCFE] border border-[#CDE9F7] focus:border-[#00D9F5] text-xs font-mono text-[#0B1F2D] outline-none"
+            className="w-full px-3 py-2 text-xs rounded-lg bg-[#F5FBFF] border border-[#D0EBF7] text-[#0B1F2D] font-mono outline-none focus:border-[#00D9F5] cursor-pointer"
           >
-            <option value="all">Todos los servicios</option>
+            <option value="all">Todos los Tipos</option>
             {projectTypes.map((pt) => (
               <option key={pt.value} value={pt.value}>
                 {pt.label}
@@ -211,54 +262,55 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
             ))}
           </select>
         </div>
-
       </div>
 
-      {/* Contacts Data Table */}
-      <div className="rounded-xl bg-white border border-[#D0EBF7] overflow-hidden shadow-xs">
+      {/* Table Container */}
+      <div className="bg-white rounded-xl border border-[#D0EBF7] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-[#D0EBF7] bg-[#F0F9FF] text-[11px] font-mono text-[#1E3A52] uppercase tracking-wider">
-                <th className="py-3.5 px-4 font-bold">ID / Lead</th>
-                <th
-                  onClick={() => toggleSort('fullName')}
-                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Nombre & Organización</span>
+              <tr className="bg-[#EAF6FD] border-b border-[#D0EBF7] text-[#1E3A52] font-mono text-[11px] uppercase tracking-wider">
+                <th className="py-3 px-4 font-semibold">
+                  <button
+                    onClick={() => toggleSort('fullName')}
+                    className="flex items-center gap-1 hover:text-[#009bb3] cursor-pointer"
+                  >
+                    <span>Contacto / Empresa</span>
                     <ArrowUpDown className="w-3 h-3" />
-                  </div>
+                  </button>
                 </th>
-                <th className="py-3.5 px-4 font-bold">Tipo de Proyecto</th>
-                <th
-                  onClick={() => toggleSort('status')}
-                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>Etapa / Estado</span>
+                <th className="py-3 px-4 font-semibold">Tipo Solución</th>
+                <th className="py-3 px-4 font-semibold">Canal Preferido</th>
+                <th className="py-3 px-4 font-semibold">
+                  <button
+                    onClick={() => toggleSort('status')}
+                    className="flex items-center gap-1 hover:text-[#009bb3] cursor-pointer"
+                  >
+                    <span>Etapa Comercial</span>
                     <ArrowUpDown className="w-3 h-3" />
-                  </div>
+                  </button>
                 </th>
-                <th className="py-3.5 px-4 font-bold">Responsable</th>
-                <th
-                  onClick={() => toggleSort('createdAt')}
-                  className="py-3.5 px-4 font-bold cursor-pointer hover:text-[#009bb3] transition-colors"
-                >
-                  <div className="flex items-center gap-1.5">
+                <th className="py-3 px-4 font-semibold">Responsable</th>
+                <th className="py-3 px-4 font-semibold">
+                  <button
+                    onClick={() => toggleSort('createdAt')}
+                    className="flex items-center gap-1 hover:text-[#009bb3] cursor-pointer"
+                  >
                     <span>Fecha</span>
                     <ArrowUpDown className="w-3 h-3" />
-                  </div>
+                  </button>
                 </th>
-                <th className="py-3.5 px-4 text-right font-bold">Acciones</th>
+                <th className="py-3 px-4 text-right font-semibold">Acciones</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-[#E0F2FE] text-xs">
+            <tbody className="divide-y divide-[#D0EBF7]">
               {filteredLeads.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="py-12 text-center text-xs font-mono text-[#64748B]">
-                    No se encontraron contactos que coincidan con los filtros aplicados.
+                    {showArchived
+                      ? 'No hay contactos en la bandeja de archivados.'
+                      : 'No se encontraron contactos activos que coincidan con los filtros aplicados.'}
                   </td>
                 </tr>
               ) : (
@@ -267,37 +319,49 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                     <tr
                       key={lead.id}
                       onClick={() => onSelectLead(lead)}
-                      className="hover:bg-[#EAF6FD] transition-colors cursor-pointer group"
+                      className="hover:bg-[#F5FBFF] transition-colors cursor-pointer group"
                     >
-                      {/* ID / Source */}
-                      <td className="py-3.5 px-4 whitespace-nowrap font-mono">
-                        <span className="text-[#009bb3] font-bold">{lead.id.split('_').slice(1).join('_')}</span>
-                        <span className="block text-[10px] text-[#64748B] uppercase">
-                          {lead.source === 'landing_page' ? 'Web Landing' : lead.source}
-                        </span>
-                      </td>
-
                       {/* Name & Company */}
-                      <td className="py-3.5 px-4">
-                        <div className="font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
-                          {lead.fullName}
-                        </div>
-                        <div className="text-[11px] font-mono text-[#64748B] flex items-center gap-2 mt-0.5">
-                          {lead.company && (
-                            <span className="flex items-center gap-1 font-medium text-[#00897B]">
-                              <Building className="w-3 h-3 text-[#00897B]" />
-                              {lead.company}
-                            </span>
-                          )}
-                          <span className="truncate max-w-[150px]">{lead.email}</span>
+                      <td className="py-3.5 px-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-lg bg-[#0B1F2D] text-[#00D9F5] font-mono font-bold text-xs flex items-center justify-center shrink-0">
+                            {lead.fullName.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <span className="font-bold text-[#0B1F2D] group-hover:text-[#009bb3] transition-colors">
+                                {lead.fullName}
+                              </span>
+                              {lead.isArchived && (
+                                <span className="text-[9px] font-mono bg-amber-500/10 text-amber-600 px-1.5 py-0.2 rounded border border-amber-300">
+                                  Archivado
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2 text-[11px] text-[#64748B] font-mono">
+                              {lead.company && (
+                                <span className="flex items-center gap-1 text-[#00897B] font-semibold">
+                                  <Building className="w-3 h-3" />
+                                  {lead.company}
+                                </span>
+                              )}
+                              <span>{lead.email}</span>
+                            </div>
+                          </div>
                         </div>
                       </td>
 
                       {/* Project Type */}
                       <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px]">
-                        <span className="text-[#0B1F2D] capitalize font-medium">{lead.projectType}</span>
-                        <span className="block text-[10px] text-[#64748B]">
-                          Pref: {lead.contactPreference}
+                        <span className="px-2 py-0.5 rounded bg-[#EAF6FD] text-[#009bb3] border border-[#BCE4F7] uppercase font-semibold">
+                          {lead.projectType}
+                        </span>
+                      </td>
+
+                      {/* Channel */}
+                      <td className="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-[#64748B]">
+                        <span className="capitalize">
+                          {lead.contactPreference}
                         </span>
                       </td>
 
@@ -306,7 +370,7 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                         <select
                           value={lead.status}
                           onChange={(e) => handleStageChange(lead.id, e.target.value as PipelineStage, e)}
-                          className={`text-[11px] font-mono font-bold px-2 py-1 rounded border outline-none cursor-pointer ${
+                          className={`text-[11px] font-mono font-bold px-2 py-1 rounded-lg border outline-none cursor-pointer ${
                             stageBadgeStyle[lead.status] || 'bg-neutral-100 text-neutral-700 border-neutral-300'
                           }`}
                         >
@@ -337,14 +401,27 @@ export const ContactsView: React.FC<ContactsViewProps> = ({
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => onSelectLead(lead)}
-                            className="p-1.5 rounded hover:bg-[#EAF6FD] text-[#009bb3] transition-colors"
-                            title="Ver ficha completa"
+                            className="p-1.5 rounded-lg hover:bg-[#EAF6FD] text-[#009bb3] transition-colors"
+                            title="Ver ficha completa y asignar tareas"
                           >
                             <Eye className="w-4 h-4" />
                           </button>
+                          
+                          <button
+                            onClick={(e) => handleToggleArchive(lead, e)}
+                            className="p-1.5 rounded-lg hover:bg-[#EAF6FD] text-[#64748B] hover:text-[#0B1F2D] transition-colors"
+                            title={lead.isArchived ? "Desarchivar lead" : "Archivar lead"}
+                          >
+                            {lead.isArchived ? (
+                              <ArchiveRestore className="w-4 h-4 text-amber-600" />
+                            ) : (
+                              <Archive className="w-4 h-4" />
+                            )}
+                          </button>
+
                           <button
                             onClick={(e) => handleDelete(lead.id, lead.fullName, e)}
-                            className="p-1.5 rounded hover:bg-rose-50 text-neutral-400 hover:text-rose-600 transition-colors"
+                            className="p-1.5 rounded-lg hover:bg-rose-50 text-neutral-400 hover:text-rose-600 transition-colors"
                             title="Eliminar contacto"
                           >
                             <Trash2 className="w-4 h-4" />

@@ -120,7 +120,6 @@ export class ApiClient {
     return response.json();
   }
 
-  // PUBLIC
   public async submitLead(data: {
     fullName: string;
     company?: string;
@@ -132,10 +131,19 @@ export class ApiClient {
     dataConsent: boolean;
   }): Promise<{ success: boolean; message: string; lead: Lead }> {
     try {
-      return await this.request('/api/leads', {
+      const res = await this.request<{ success: boolean; message: string; lead: Lead }>('/api/leads', {
         method: 'POST',
         body: JSON.stringify(data),
       });
+      if (typeof window !== 'undefined' && res.lead) {
+        const leads = getStoredList<Lead>(LEADS_STORAGE_KEY, []);
+        const exists = leads.some(l => l.id === res.lead.id);
+        if (!exists) {
+          leads.unshift(res.lead);
+          setStoredList(LEADS_STORAGE_KEY, leads);
+        }
+      }
+      return res;
     } catch (e) {
       // Fallback for static hosting (Vercel)
       console.warn('API unavailable, saving lead locally:', e);
@@ -254,7 +262,11 @@ export class ApiClient {
       if (filters?.status && filters.status !== 'all') params.set('status', filters.status);
       if (filters?.projectType && filters.projectType !== 'all') params.set('projectType', filters.projectType);
       const qs = params.toString();
-      return await this.request(`/api/leads${qs ? `?${qs}` : ''}`);
+      const res = await this.request<{ leads: Lead[] }>(`/api/leads${qs ? `?${qs}` : ''}`);
+      if (typeof window !== 'undefined' && res.leads && (!filters || Object.keys(filters).length === 0)) {
+        setStoredList(LEADS_STORAGE_KEY, res.leads);
+      }
+      return res;
     } catch {
       let leads = getStoredList<Lead>(LEADS_STORAGE_KEY, INITIAL_LEADS);
       if (filters?.search) {
